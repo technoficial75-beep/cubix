@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <title>Cubix | Hlasovanie</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .vote-section { padding: 60px 0; text-align: center; }
+        .hero-title { font-size: 3.5rem; font-weight: 800; margin-bottom: 20px; color: #fff; }
+        .hero-subtitle { color: #8b949e; font-size: 1.1rem; margin-bottom: 50px; max-width: 700px; margin-left: auto; margin-right: auto; }
+
+        .vote-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .vote-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 15px;
+            padding: 35px;
+            text-align: center;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .vote-card:hover { 
+            transform: translateY(-10px) scale(1.02); 
+            border-color: #009dff; 
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); 
+        }
+
+        .vote-card i { font-size: 3rem; color: #009dff; margin-bottom: 20px; }
+        .vote-card h3 { font-size: 1.8rem; margin-bottom: 15px; color: #fff; }
+        .vote-card p { color: #8b949e; margin-bottom: 25px; font-size: 0.95rem; }
+
+        .vote-btn {
+            display: inline-block;
+            width: 100%;
+            padding: 12px;
+            background: #009dff;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            transition: 0.3s;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+        .vote-btn:hover { background: #007ccb; }
+
+        /* SEKČIA ODMENY */
+        .separator { width: 100%; height: 1px; background: linear-gradient(90deg, #30363d 0%, transparent 100%); margin: 50px 0; }
+        
+        .rewards-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .reward-box {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 15px;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            text-align: left;
+            transition: 0.3s;
+        }
+        .reward-box:hover { border-color: #009dff; background: #1c2128; }
+
+        .reward-rank { font-size: 2.5rem; min-width: 60px; text-align: center; }
+        .reward-info h4 { color: #fff; margin-bottom: 5px; font-size: 1.2rem; }
+        .reward-info p { color: #8b949e; font-size: 0.95rem; margin: 0; }
+
+        /* VLAJKY */
+        .lang-menu { display: flex; gap: 10px; margin-left: 15px; align-items: center; border-left: 1px solid #30363d; padding-left: 15px; }
+        .lang-flag { width: 28px; height: 18px; object-fit: cover; border-radius: 4px; cursor: pointer; opacity: 0.4; transition: 0.3s; border: 2px solid transparent; }
+        .lang-flag:hover { opacity: 0.8; }
+        .lang-flag.active { opacity: 1; border-color: #009dff; box-shadow: 0 0 8px rgba(0, 157, 255, 0.4); }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container header-wrap">
+        <a href="index.html" class="logo"><img src="cubixtext.png" alt="Logo"></a>
+        <div style="display: flex; align-items: center;">
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-home"></i> <span data-lang="nav_home">Domov</span></a></li>
+                <li><a href="pravidla.html"><i class="fas fa-book"></i> <span data-lang="nav_rules">Pravidlá</span></a></li>
+                <li><a href="team.html"><i class="fas fa-users"></i> <span data-lang="nav_team">Tím</span></a></li>
+                <li><a href="nabory.html"><i class="fas fa-user-plus"></i> <span data-lang="nav_staff">Nábory</span></a></li>
+                <li><a href="hlasovanie.html" class="active"><i class="fas fa-check-square"></i> <span data-lang="nav_vote">Hlasovanie</span></a></li>
+            </ul>
+            <div class="lang-menu">
+                <img src="https://flagcdn.com/w80/sk.png" class="lang-flag" id="lang-sk" onclick="setLang('sk')" title="Slovenčina">
+                <img src="https://flagcdn.com/w80/cz.png" class="lang-flag" id="lang-cz" onclick="setLang('cz')" title="Čeština">
+                <img src="https://flagcdn.com/w80/gb.png" class="lang-flag" id="lang-en" onclick="setLang('en')" title="English">
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+    <section class="vote-section">
+        <h1 class="hero-title"><span data-lang="vote_title_1">Podpor</span> <span style="color: #009dff;" data-lang="vote_title_2">Náš Server</span></h1>
+        <p class="hero-subtitle" data-lang="vote_subtitle">Hlasuj za nás na herných portáloch a získaj skvelé odmeny priamo v hre!</p>
+
+        <div class="vote-grid">
+            <div class="vote-card">
+                <i class="fas fa-trophy"></i>
+                <h3>Craftlist</h3>
+                <p data-lang="vote_desc">Hlasuj na Craftlist.org a pomôž nám v CZ/SK rebríčku.</p>
+                <a href="https://craftlist.org/cubix" target="_blank" class="vote-btn" data-lang="btn_vote">Hlasovať</a>
+            </div>
+
+            <div class="vote-card">
+                <i class="fas fa-medal"></i>
+                <h3>CzechCraft</h3>
+                <p data-lang="vote_desc">Podpor nás na známom portáli Czech-Craft.eu.</p>
+                <a href="https://czech-craft.eu/server/cubix/" target="_blank" class="vote-btn" data-lang="btn_vote">Hlasovať</a>
+            </div>
+
+            <div class="vote-card">
+                <i class="fas fa-star"></i>
+                <h3>MServri.eu</h3>
+                <p data-lang="vote_desc">Tvoj hlas na MinecraftServery.eu nás posúva vpred.</p>
+                <a href="https://minecraftservery.eu/server/cubix" target="_blank" class="vote-btn" data-lang="btn_vote">Hlasovať</a>
+            </div>
+        </div>
+
+        <div class="separator"></div>
+
+        <h2 style="margin-bottom: 40px;" data-lang="rewards_title">Mesačné odmeny pre Top Hlasujúcich</h2>
+        
+        <div class="rewards-container">
+            <div class="reward-box">
+                <div class="reward-rank">🥇</div>
+                <div class="reward-info">
+                    <h4 data-lang="reward_1st">1. Miesto</h4>
+                    <p data-lang="desc_1st">VIP na 1 mesiac + 3x VIP Key + [VIP] Tag na Discorde</p>
+                </div>
+            </div>
+
+            <div class="reward-box">
+                <div class="reward-rank">🥈</div>
+                <div class="reward-info">
+                    <h4 data-lang="reward_2nd">2. Miesto</h4>
+                    <p data-lang="desc_2nd">VIP na 14 dní + 2x VIP Key + [VIP] Tag na Discorde</p>
+                </div>
+            </div>
+
+            <div class="reward-box">
+                <div class="reward-rank">🥉</div>
+                <div class="reward-info">
+                    <h4 data-lang="reward_3rd">3. Miesto</h4>
+                    <p data-lang="desc_3rd">VIP na 7 dní + 1x VIP Key</p>
+                </div>
+            </div>
+        </div>
+
+        <p style="margin-top: 30px; font-size: 0.9rem; color: #8b949e;" data-lang="reward_info">* Odmeny sa vyhodnocujú a odovzdávajú automaticky na konci každého mesiaca.</p>
+
+    </section>
+</main>
+
+<script>
+    const translations = {
+        sk: {
+            nav_home: "Domov", nav_rules: "Pravidlá", nav_team: "Tím", nav_staff: "Nábory", nav_vote: "Hlasovanie",
+            vote_title_1: "Podpor", vote_title_2: "Náš Server",
+            vote_subtitle: "Hlasuj za nás na herných portáloch a získaj skvelé odmeny priamo v hre!",
+            vote_desc: "Hlasuj na tomto portáli a pomôž nám rásť v rebríčku.",
+            btn_vote: "Hlasovať",
+            rewards_title: "Mesačné odmeny pre Top Hlasujúcich",
+            reward_1st: "1. Miesto", desc_1st: "VIP na 1 mesiac + 3x VIP Key + [VIP] Tag na Discorde",
+            reward_2nd: "2. Miesto", desc_2nd: "VIP na 14 dní + 2x VIP Key + [VIP] Tag na Discorde",
+            reward_3rd: "3. Miesto", desc_3rd: "VIP na 7 dní + 1x VIP Key",
+            reward_info: "* Odmeny sa vyhodnocujú a odovzdávajú automaticky na konci každého mesiaca."
+        },
+        cz: {
+            nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování",
+            vote_title_1: "Podpoř", vote_title_2: "Náš Server",
+            vote_subtitle: "Hlasuj pro nás na herních portálech a získej skvělé odměny přímo ve hře!",
+            vote_desc: "Hlasuj na tomto portálu a pomoz nám růst v žebříčku.",
+            btn_vote: "Hlasovat",
+            rewards_title: "Měsíční odměny pro Top Hlasující",
+            reward_1st: "1. Místo", desc_1st: "VIP na 1 měsíc + 3x VIP Key + [VIP] Tag na Discordu",
+            reward_2nd: "2. Místo", desc_2nd: "VIP na 14 dní + 2x VIP Key + [VIP] Tag na Discordu",
+            reward_3rd: "3. Místo", desc_3rd: "VIP na 7 dní + 1x VIP Key",
+            reward_info: "* Odměny se vyhodnocují a odevzdávají automaticky na konci každého měsíce."
+        },
+        en: {
+            nav_home: "Home", nav_rules: "Rules", nav_team: "Team", nav_staff: "Staff", nav_vote: "Vote",
+            vote_title_1: "Support", vote_title_2: "Our Server",
+            vote_subtitle: "Vote for us on gaming portals and get great rewards directly in-game!",
+            vote_desc: "Vote on this portal and help us grow in the rankings.",
+            btn_vote: "Vote Now",
+            rewards_title: "Monthly Rewards for Top Voters",
+            reward_1st: "1st Place", desc_1st: "VIP for 1 month + 3x VIP Key + [VIP] Discord Tag",
+            reward_2nd: "2nd Place", desc_2nd: "VIP for 14 days + 2x VIP Key + [VIP] Discord Tag",
+            reward_3rd: "3rd Place", desc_3rd: "VIP for 7 days + 1x VIP Key",
+            reward_info: "* Rewards are evaluated and distributed automatically at the end of each month."
+        }
+    };
+
+    function setLang(langId) {
+        localStorage.setItem('selectedLanguage', langId);
+        updateUI(langId);
+    }
+
+    function updateUI(langId) {
+        document.querySelectorAll('.lang-flag').forEach(flag => flag.classList.remove('active'));
+        const selected = document.getElementById('lang-' + langId);
+        if (selected) selected.classList.add('active');
+
+        document.querySelectorAll('[data-lang]').forEach(element => {
+            const key = element.getAttribute('data-lang');
+            if (translations[langId] && translations[langId][key]) {
+                element.innerText = translations[langId][key];
+            }
+        });
+    }
+
+    window.onload = function() {
+        const savedLang = localStorage.getItem('selectedLanguage') || 'sk';
+        updateUI(savedLang);
+    };
+</script>
+</body>
+</html>
