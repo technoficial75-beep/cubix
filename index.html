@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <title>Cubix | Domov</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Štýly pre vnútro domovskej stránky */
+        .hero-section { padding: 60px 0; text-align: left; }
+        
+        .hero-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .hero-title { font-size: 3.5rem; font-weight: 800; margin-bottom: 25px; line-height: 1.1; }
+        
+        .hero-description { 
+            max-width: 700px; 
+            color: #8b949e; 
+            line-height: 1.6; 
+            margin-bottom: 35px;
+            font-size: 1.1rem;
+        }
+
+        .hero-right-box {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            min-width: 300px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.3s ease;
+        }
+        .hero-right-box:hover {
+            transform: translateY(-10px) scale(1.03);
+            border-color: #009dff;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .status-dot {
+            height: 12px;
+            width: 12px;
+            background-color: #2ecc71;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 10px;
+            box-shadow: 0 0 10px #2ecc71;
+        }
+
+        .ip-container {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 12px 25px;
+            display: inline-flex;
+            align-items: center;
+            cursor: pointer;
+            margin-bottom: 45px;
+            transition: 0.2s;
+        }
+        .ip-container:hover { border-color: #009dff; background: #1c2128; }
+        .ip-version {
+            margin-left: 15px;
+            color: #009dff;
+            font-weight: bold;
+            border-left: 1px solid #30363d;
+            padding-left: 15px;
+        }
+
+        .separator { width: 100%; height: 1px; background: linear-gradient(90deg, #30363d 0%, transparent 100%); margin: 50px 0; }
+
+        .gamemodes-container { display: flex; gap: 25px; flex-wrap: wrap; margin-bottom: 60px; }
+        .gamemode-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 30px;
+            width: 380px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.3s ease;
+        }
+        .gamemode-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: #009dff;
+            box-shadow: 0 15px 30px rgba(0, 157, 255, 0.2);
+        }
+        .gamemode-card h3 { margin: 15px 0; font-size: 1.5rem; }
+        .gamemode-card p { color: #8b949e; margin-bottom: 25px; flex-grow: 1; }
+
+        .mode-footer {
+            margin-top: auto;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .bg-blue { background: #009dff; color: white; }
+        .bg-gray { background: #21262d; color: #8b949e; }
+
+        .about-section {
+            background: rgba(22, 27, 34, 0.5);
+            border: 1px solid #30363d;
+            border-radius: 15px;
+            padding: 40px;
+            margin-top: 20px;
+        }
+        .about-section h2 { margin-bottom: 20px; color: #fff; }
+        .about-text { color: #8b949e; line-height: 1.8; font-size: 1rem; }
+        .about-text p { margin-bottom: 15px; }
+
+        /* VLAJKY */
+        .lang-menu { 
+            display: flex; 
+            gap: 10px; 
+            margin-left: 15px; 
+            align-items: center;
+            border-left: 1px solid #30363d;
+            padding-left: 15px;
+        }
+        .lang-flag { 
+            width: 28px; 
+            height: 18px; 
+            object-fit: cover;
+            border-radius: 4px; 
+            cursor: pointer; 
+            opacity: 0.4; 
+            transition: 0.3s;
+            border: 2px solid transparent;
+        }
+        .lang-flag:hover { opacity: 0.8; }
+        .lang-flag.active { 
+            opacity: 1; 
+            border-color: #009dff; 
+            box-shadow: 0 0 8px rgba(0, 157, 255, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container header-wrap">
+        <a href="index.html" class="logo"><img src="cubixtext.png" alt="Logo"></a>
+        <div style="display: flex; align-items: center;">
+            <ul class="nav-links">
+                <li><a href="index.html" class="active"><i class="fas fa-home"></i> <span data-lang="nav_home">Domov</span></a></li>
+                <li><a href="pravidla.html"><i class="fas fa-book"></i> <span data-lang="nav_rules">Pravidlá</span></a></li>
+                <li><a href="team.html"><i class="fas fa-users"></i> <span data-lang="nav_team">Tím</span></a></li>
+                <li><a href="nabory.html"><i class="fas fa-user-plus"></i> <span data-lang="nav_staff">Nábory</span></a></li>
+                <li><a href="hlasovanie.html"><i class="fas fa-check-square"></i> <span data-lang="nav_vote">Hlasovanie</span></a></li>
+            </ul>
+            <div class="lang-menu">
+                <img src="https://flagcdn.com/w80/sk.png" class="lang-flag" id="lang-sk" onclick="setLang('sk')" title="Slovenčina">
+                <img src="https://flagcdn.com/w80/cz.png" class="lang-flag" id="lang-cz" onclick="setLang('cz')" title="Čeština">
+                <img src="https://flagcdn.com/w80/gb.png" class="lang-flag" id="lang-en" onclick="setLang('en')" title="English">
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+    <section class="hero-section">
+        <div class="hero-container">
+            <div class="hero-left">
+                <h1 class="hero-title"><span data-lang="hero_title">Vitajte na</span><br><span style="color: #009dff;">Cubix.cz</span></h1>
+                <div class="hero-description">
+                    <p data-lang="hero_desc">Zaži novú dimenziu Minecraftu na poprednom československom <strong>Boxfight</strong> serveri. Pridaj sa k stovkám hráčov v svete plnom akcie.</p>
+                </div>
+                <div class="ip-container" onclick="copyIP()">
+                    <span id="serverIP" style="font-weight: 600;"><i class="fas fa-copy" style="margin-right: 10px;"></i>play.cubix.cz</span>
+                    <span class="ip-version">1.21.4+</span>
+                </div>
+            </div>
+
+            <div class="hero-right-box">
+                <div style="margin-bottom: 15px;">
+                    <span class="status-dot" id="server-dot"></span>
+                    <span id="server-status-text" style="font-size: 0.9rem; font-weight: 600; color: #2ecc71;">ONLINE</span>
+                </div>
+                <div id="player-count" style="font-size: 3rem; font-weight: 800; color: #fff;">0</div>
+                <div style="color: #8b949e; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;" data-lang="players_online">Hráčov online</div>
+            </div>
+        </div>
+
+        <div class="separator"></div>
+
+        <h2 style="margin-bottom: 30px;" data-lang="modes_title">Naše herné módy</h2>
+        <div class="gamemodes-container">
+            <div class="gamemode-card">
+                <div style="font-size: 2.5rem;">⚔️</div>
+                <h3>Boxfight</h3>
+                <p data-lang="box_desc">Náš hlavný mód s unikátnymi mapami a bleskovým PvP. Ukáž svoje skilly a vybuduj si rešpekt v aréne!</p>
+                <div class="mode-footer bg-blue">1.21.4+</div>
+            </div>
+
+            <div class="gamemode-card" style="border-style: dashed; opacity: 0.7;">
+                <div style="font-size: 2.5rem;">🛠️</div>
+                <h3 data-lang="coming_soon">Pripravujeme</h3>
+                <p data-lang="soon_desc">Sleduj náš Discord pre informácie o nových updatoch a pripravovaných módoch, ktoré čoskoro pribudnú.</p>
+                <div class="mode-footer bg-gray" data-lang="soon_badge">Již brzy</div>
+            </div>
+        </div>
+
+        <div class="about-section">
+            <h2 data-lang="about_title">Viac o našom projekte</h2>
+            <div class="about-text">
+                <p data-lang="about_p1">Cubix vznikol s víziou priniesť kvalitné Boxfight zázemie. Veríme v komunitu a technickú precíznosť.</p>
+                <p data-lang="about_p2">Náš Admin Tím a moderný hardvér sú zárukou plynulého zážitku bez lagov. Pridaj sa k nám a tvor s nami najlepší server!</p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script>
+    // --- PREKLADOVÝ SLOVNÍK ---
+    const translations = {
+        sk: {
+            nav_home: "Domov", nav_rules: "Pravidlá", nav_team: "Tím", nav_staff: "Nábory", nav_vote: "Hlasovanie",
+            hero_title: "Vitajte na", hero_desc: "Zaži novú dimenziu Minecraftu na poprednom československom Boxfight serveri. Pridaj sa k stovkám hráčov v svete plnom akcie.",
+            players_online: "Hráčov online", modes_title: "Naše herné módy",
+            box_desc: "Náš hlavný mód s unikátnymi mapami a bleskovým PvP. Ukáž svoje skilly a vybuduj si rešpekt v aréne!",
+            coming_soon: "Pripravujeme", soon_desc: "Sleduj náš Discord pre informácie o nových updatoch a pripravovaných módoch, ktoré čoskoro pribudnú.",
+            soon_badge: "Čoskoro", about_title: "Viac o našom projekte",
+            about_p1: "Cubix vznikol s víziou priniesť kvalitné Boxfight zázemie. Veríme v komunitu a technickú precíznosť.",
+            about_p2: "Náš Admin Tím a moderný hardvér sú zárukou plynulého zážitku bez lagov. Pridaj sa k nám a tvor s nami najlepší server!"
+        },
+        cz: {
+            nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování",
+            hero_title: "Vítejte na", hero_desc: "Zažij novou dimenzi Minecraftu na předním československém Boxfight serveru. Přidej se ke stovkám hráčů ve světě plném akce.",
+            players_online: "Hráčů online", modes_title: "Naše herní módy",
+            box_desc: "Náš hlavní mód s unikátními mapami a bleskovým PvP. Ukaž své skilly a vybuduj si respekt v aréně!",
+            coming_soon: "Připravujeme", soon_desc: "Sleduj náš Discord pro informace o nových updatech a připravovaných módech, které brzy přibudou.",
+            soon_badge: "Již brzy", about_title: "Více o našem projektu",
+            about_p1: "Cubix vznikl s vizí přinést kvalitní Boxfight zázemí. Věříme v komunitu a technickou preciznost.",
+            about_p2: "Náš Admin Tým a moderní hardware jsou zárukou plynulého zážitku bez lagů. Přidej se k nám a tvoř s námi nejlepší server!"
+        },
+        en: {
+            nav_home: "Home", nav_rules: "Rules", nav_team: "Team", nav_staff: "Staff", nav_vote: "Vote",
+            hero_title: "Welcome to", hero_desc: "Experience a new dimension of Minecraft on the leading Czechoslovak Boxfight server. Join hundreds of players in a world full of action.",
+            players_online: "Players online", modes_title: "Our game modes",
+            box_desc: "Our main mode with unique maps and lightning-fast PvP. Show your skills and earn respect in the arena!",
+            coming_soon: "Coming Soon", soon_desc: "Follow our Discord for information about new updates and upcoming modes coming soon.",
+            soon_badge: "Soon", about_title: "More about our project",
+            about_p1: "Cubix was created with a vision to bring quality Boxfight background. We believe in community and technical precision.",
+            about_p2: "Our Admin Team and modern hardware guarantee a smooth experience without lags. Join us and create the best server with us!"
+        }
+    };
+
+    function copyIP() {
+        navigator.clipboard.writeText("play.cubix.cz");
+        const el = document.getElementById('serverIP');
+        el.innerHTML = "IP skopírovaná!";
+        setTimeout(() => { el.innerHTML = '<i class="fas fa-copy" style="margin-right: 10px;"></i>play.cubix.cz'; }, 2000);
+    }
+
+    function setLang(langId) {
+        localStorage.setItem('selectedLanguage', langId);
+        updateUI(langId);
+    }
+
+    function updateUI(langId) {
+        // Aktualizácia vlajok
+        document.querySelectorAll('.lang-flag').forEach(flag => flag.classList.remove('active'));
+        const selected = document.getElementById('lang-' + langId);
+        if (selected) selected.classList.add('active');
+
+        // Aktualizácia textov
+        document.querySelectorAll('[data-lang]').forEach(element => {
+            const key = element.getAttribute('data-lang');
+            if (translations[langId][key]) {
+                element.innerText = translations[langId][key];
+            }
+        });
+    }
+
+    // Funkcia pre reálny počet hráčov
+    function updateServerStatus() {
+        const ip = 'play.cubix.cz'; 
+        fetch(`https://mcapi.us/server/status?ip=${ip}`)
+            .then(response => response.json())
+            .then(data => {
+                const countEl = document.getElementById('player-count');
+                const statusText = document.getElementById('server-status-text');
+                const dot = document.getElementById('server-dot');
+                if (data.online) {
+                    countEl.innerText = data.players.now;
+                    statusText.innerText = "ONLINE";
+                    statusText.style.color = "#2ecc71";
+                    dot.style.backgroundColor = "#2ecc71";
+                    dot.style.boxShadow = "0 0 10px #2ecc71";
+                } else {
+                    countEl.innerText = "0";
+                    statusText.innerText = "OFFLINE";
+                    statusText.style.color = "#ff4d4d";
+                    dot.style.backgroundColor = "#ff4d4d";
+                    dot.style.boxShadow = "0 0 10px #ff4d4d";
+                }
+            })
+            .catch(err => console.error('Chyba pri načítaní statusu:', err));
+    }
+
+    window.onload = function() {
+        const savedLang = localStorage.getItem('selectedLanguage') || 'sk';
+        updateUI(savedLang);
+        updateServerStatus();
+        setInterval(updateServerStatus, 30000);
+    };
+</script>
+</body>
+</html>

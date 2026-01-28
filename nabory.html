@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <title>Cubix | Nábory</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .nabor-section { padding: 60px 0; text-align: center; }
+        .hero-title { font-size: 3.5rem; font-weight: 800; margin-bottom: 20px; color: #fff; }
+        .hero-subtitle { color: #8b949e; font-size: 1.1rem; margin-bottom: 50px; max-width: 700px; margin-left: auto; margin-right: auto; }
+
+        .nabor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .nabor-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.3s ease;
+        }
+
+        .nabor-card:hover { transform: translateY(-10px) scale(1.02); border-color: #009dff; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
+
+        .nabor-status { display: inline-block; padding: 5px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 800; margin-bottom: 20px; width: fit-content; text-transform: uppercase; }
+        .status-open { background: rgba(46, 204, 113, 0.1); color: #2ecc71; border: 1px solid #2ecc71; }
+        .status-closed { background: rgba(231, 76, 60, 0.1); color: #e74c3c; border: 1px solid #e74c3c; }
+
+        .nabor-card h3 { font-size: 1.6rem; margin-bottom: 12px; color: #fff; display: flex; align-items: center; gap: 10px; }
+        .nabor-card p { color: #8b949e; line-height: 1.6; margin-bottom: 30px; flex-grow: 1; }
+
+        .apply-btn {
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            padding: 12px;
+            background: #009dff;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            transition: 0.3s;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
+        }
+        .apply-btn:hover { background: #007ccb; }
+        .apply-btn.disabled { background: #21262d; color: #484f58; cursor: not-allowed; pointer-events: none; }
+
+        /* VLAJKY - PODĽA INDEXU */
+        .lang-menu { 
+            display: flex; 
+            gap: 10px; 
+            margin-left: 15px; 
+            align-items: center;
+            border-left: 1px solid #30363d;
+            padding-left: 15px;
+        }
+        .lang-flag { 
+            width: 28px; 
+            height: 18px; 
+            object-fit: cover;
+            border-radius: 4px; 
+            cursor: pointer; 
+            opacity: 0.4; 
+            transition: 0.3s;
+            border: 2px solid transparent;
+        }
+        .lang-flag:hover { opacity: 0.8; }
+        .lang-flag.active { 
+            opacity: 1; 
+            border-color: #009dff; 
+            box-shadow: 0 0 8px rgba(0, 157, 255, 0.4);
+        }
+
+        /* MODAL */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            align-items: center; justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .close-modal { position: absolute; top: 20px; right: 20px; color: #8b949e; font-size: 1.5rem; cursor: pointer; }
+
+        .modal-form { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
+        .modal-form label { color: #fff; font-size: 0.9rem; font-weight: 600; text-align: left; }
+        .modal-form input, .modal-form textarea {
+            background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 12px; color: #fff; outline: none;
+        }
+
+        /* TOAST OZNÁMENIE */
+        .toast-notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #009dff;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            display: none;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            font-weight: 600;
+            animation: slideIn 0.5s ease-out;
+            transition: opacity 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container header-wrap">
+        <a href="index.html" class="logo"><img src="cubixtext.png" alt="Logo"></a>
+        <div style="display: flex; align-items: center;">
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-home"></i> <span data-lang="nav_home">Domov</span></a></li>
+                <li><a href="pravidla.html"><i class="fas fa-book"></i> <span data-lang="nav_rules">Pravidlá</span></a></li>
+                <li><a href="team.html"><i class="fas fa-users"></i> <span data-lang="nav_team">Tím</span></a></li>
+                <li><a href="nabory.html" class="active"><i class="fas fa-user-plus"></i> <span data-lang="nav_staff">Nábory</span></a></li>
+                <li><a href="hlasovanie.html"><i class="fas fa-check-square"></i> <span data-lang="nav_vote">Hlasovanie</span></a></li>
+            </ul>
+            <div class="lang-menu">
+                <img src="https://flagcdn.com/w80/sk.png" class="lang-flag" id="lang-sk" onclick="setLang('sk')" title="Slovenčina">
+                <img src="https://flagcdn.com/w80/cz.png" class="lang-flag" id="lang-cz" onclick="setLang('cz')" title="Čeština">
+                <img src="https://flagcdn.com/w80/gb.png" class="lang-flag" id="lang-en" onclick="setLang('en')" title="English">
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+    <section class="nabor-section">
+        <h1 class="hero-title"><span data-lang="apply_title_1">Aktuálne</span> <span style="color: #009dff;" data-lang="apply_title_2">Nábory</span></h1>
+        <p class="hero-subtitle" data-lang="apply_subtitle">Vyber si pozíciu a vyplň formulár.</p>
+
+        <div class="nabor-grid">
+            <div class="nabor-card">
+                <span class="nabor-status status-open" data-lang="status_open">OTVORENÉ</span>
+                <h3>Developer</h3>
+                <p data-lang="desc_dev">Technická správa servera.</p>
+                <button onclick="openModal('Developer')" class="apply-btn" data-lang="btn_apply">Poslať prihlášku</button>
+            </div>
+
+            <div class="nabor-card">
+                <span class="nabor-status status-open" data-lang="status_open">OTVORENÉ</span>
+                <h3>Moderator</h3>
+                <p data-lang="desc_mod">Dohľad nad poriadkom.</p>
+                <button onclick="openModal('Moderator')" class="apply-btn" data-lang="btn_apply">Poslať prihlášku</button>
+            </div>
+
+            <div class="nabor-card">
+                <span class="nabor-status status-open" data-lang="status_open">OTVORENÉ</span>
+                <h3>Builder</h3>
+                <p data-lang="desc_build">Stavba máp.</p>
+                <button onclick="openModal('Builder')" class="apply-btn" data-lang="btn_apply">Poslať prihlášku</button>
+            </div>
+
+            <div class="nabor-card">
+                <span class="nabor-status status-closed" data-lang="status_closed">ZATVORENÉ</span>
+                <h3>Manager</h3>
+                <p data-lang="desc_man">Vedenie tímu.</p>
+                <button class="apply-btn disabled" data-lang="btn_closed">Pozastavené</button>
+            </div>
+
+            <div class="nabor-card">
+                <span class="nabor-status status-open" data-lang="status_open">OTVORENÉ</span>
+                <h3>Creator</h3>
+                <p data-lang="desc_cre">Tvorba obsahu.</p>
+                <button onclick="openModal('Creator')" class="apply-btn" data-lang="btn_apply">Poslať prihlášku</button>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div id="applyModal" class="modal-overlay">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <h2 id="modalRoleTitle" style="color: #fff;">Prihláška</h2>
+        <form class="modal-form" id="applicationForm">
+            <input type="hidden" id="formPosition" name="role">
+            
+            <label data-lang="form_nick">Minecraft Nick:</label>
+            <input type="text" name="nick" placeholder="Zadaj svoje meno v hre..." required>
+            
+            <label data-lang="form_age">Vek:</label>
+            <input type="number" name="age" placeholder="Napr. 15" required>
+            
+            <label data-lang="form_discord">Discord:</label>
+            <input type="text" name="discord" placeholder="tvoj_nick#0000" required>
+            
+            <label data-lang="form_experience">Tvoje skúsenosti:</label>
+            <textarea name="experience" rows="3" placeholder="Popíš svoje doterajšie skúsenosti na iných serveroch..." required></textarea>
+            
+            <label data-lang="form_why">Prečo práve ty?</label>
+            <textarea name="message" rows="3" placeholder="Povedz nám, prečo by sme si mali vybrať práve teba..." required></textarea>
+
+            <button type="submit" class="apply-btn" data-lang="btn_send">Odoslať</button>
+        </form>
+    </div>
+</div>
+
+<div id="customToast" class="toast-notification">
+    <i class="fas fa-check-circle"></i>
+    <span id="toastText">Prihláška bola úspešne odoslaná!</span>
+</div>
+
+<script>
+    const translations = {
+        sk: {
+            nav_home: "Domov", nav_rules: "Pravidlá", nav_team: "Tím", nav_staff: "Nábory", nav_vote: "Hlasovanie",
+            apply_title_1: "Aktuálne", apply_title_2: "Nábory", apply_subtitle: "Vyber si pozíciu a vyplň formulár.",
+            status_open: "Otvorené", status_closed: "Zatvorené", btn_apply: "Poslať prihlášku", btn_closed: "Pozastavené",
+            desc_dev: "Technická správa servera.", desc_mod: "Dohľad nad poriadkom.", desc_build: "Stavba máp.",
+            desc_man: "Vedenie tímu.", desc_cre: "Tvorba obsahu.", form_nick: "Minecraft Nick:", form_age: "Vek:",
+            form_discord: "Discord:", form_why: "Prečo práve ty?", form_experience: "Tvoje skúsenosti:", btn_send: "Odoslať",
+            toast_success: "Prihláška bola úspešne odoslaná!"
+        },
+        cz: {
+            nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování",
+            apply_title_1: "Aktuální", apply_title_2: "Nábory", apply_subtitle: "Vyber si pozici a vyplň formulář.",
+            status_open: "Otevřeno", status_closed: "Zavřeno", btn_apply: "Poslat přihlášku", btn_closed: "Pozastaveno",
+            desc_dev: "Technická správa serveru.", desc_mod: "Dohled nad pořádkem.", desc_build: "Stavba map.",
+            desc_man: "Vedení týmu.", desc_cre: "Tvorba obsahu.", form_nick: "Minecraft Nick:", form_age: "Věk:",
+            form_discord: "Discord:", form_why: "Proč právě ty?", form_experience: "Tvé zkušenosti:", btn_send: "Odeslat",
+            toast_success: "Přihláška byla úspěšně odeslána!"
+        },
+        en: {
+            nav_home: "Home", nav_rules: "Rules", nav_team: "Team", nav_staff: "Apply", nav_vote: "Vote",
+            apply_title_1: "Current", apply_title_2: "Recruitment", apply_subtitle: "Pick a position and fill out the form.",
+            status_open: "Open", status_closed: "Closed", btn_apply: "Apply Now", btn_closed: "Suspended",
+            desc_dev: "Server tech management.", desc_mod: "Server moderation.", desc_build: "Building maps.",
+            desc_man: "Team leadership.", desc_cre: "Content creation.", form_nick: "Minecraft Nick:", form_age: "Age:",
+            form_discord: "Discord:", form_why: "Why you?", form_experience: "Your experience:", btn_send: "Submit",
+            toast_success: "Application successfully submitted!"
+        }
+    };
+
+    function openModal(role) {
+        document.getElementById('modalRoleTitle').innerText = 'Nábor: ' + role;
+        document.getElementById('formPosition').value = role;
+        document.getElementById('applyModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('applyModal').style.display = 'none';
+        document.getElementById('applicationForm').reset();
+    }
+
+    document.getElementById('applicationForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const toast = document.getElementById('customToast');
+        const lang = localStorage.getItem('selectedLanguage') || 'sk';
+
+        try {
+            const response = await fetch('save_nabor.php', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                document.getElementById('toastText').innerText = translations[lang].toast_success;
+                toast.style.display = 'flex';
+                
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    setTimeout(() => { 
+                        toast.style.display = 'none'; 
+                        toast.style.opacity = '1'; 
+                    }, 500);
+                }, 4000);
+
+                closeModal();
+            } else {
+                alert('Chyba na serveri.');
+            }
+        } catch (error) {
+            alert('Chyba pri odosielaní.');
+        }
+    });
+
+    function setLang(langId) {
+        localStorage.setItem('selectedLanguage', langId);
+        updateUI(langId);
+    }
+
+    function updateUI(langId) {
+        // Aktualizácia vlajok (aktívny štýl)
+        document.querySelectorAll('.lang-flag').forEach(flag => flag.classList.remove('active'));
+        const selected = document.getElementById('lang-' + langId);
+        if (selected) selected.classList.add('active');
+
+        // Aktualizácia textov
+        document.querySelectorAll('[data-lang]').forEach(element => {
+            const key = element.getAttribute('data-lang');
+            if (translations[langId] && translations[langId][key]) {
+                element.innerText = translations[langId][key];
+            }
+        });
+    }
+
+    window.onload = function() {
+        const savedLang = localStorage.getItem('selectedLanguage') || 'sk';
+        updateUI(savedLang);
+    };
+</script>
+</body>
+</html>
