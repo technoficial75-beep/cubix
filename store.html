@@ -1,106 +1,109 @@
 <!DOCTYPE html>
 <html lang="sk">
 <head>
+    <link rel="icon" type="image/x-icon" href="favicon.ico?v=2">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cubix | Store</title>
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --bg-body: #0d1117;
-            --bg-card: #161b22;
-            --border: #30363d;
-            --accent: #009dff;
-            --text-main: #ffffff;
-            --text-dim: #8b949e;
-            --gold: #ffca28;
-        }
+        .store-section { padding: 60px 0; }
+        .hero-title { font-size: 3.5rem; font-weight: 800; margin-bottom: 20px; color: #fff; text-align: center; }
+        .hero-title span { color: #009dff; }
+        .hero-subtitle { color: #8b949e; font-size: 1.1rem; margin-bottom: 50px; max-width: 700px; margin-left: auto; margin-right: auto; text-align: center; }
 
-        body { background: var(--bg-body); color: var(--text-main); font-family: 'Segoe UI', sans-serif; margin: 0; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
-
-        /* Nadpis */
-        .hero-title { text-align: center; font-size: 3rem; font-weight: 800; margin-bottom: 10px; }
-        .hero-title span { color: var(--accent); }
-        .hero-subtitle { text-align: center; color: var(--text-dim); margin-bottom: 40px; }
-
-        /* Prepínač času */
+        /* Trvanie */
         .duration-selector {
             display: flex; justify-content: center; gap: 10px; margin-bottom: 40px;
-            background: var(--bg-card); padding: 8px; border-radius: 12px; border: 1px solid var(--border);
+            background: #161b22; padding: 8px; border-radius: 12px; border: 1px solid #30363d;
             max-width: fit-content; margin: 0 auto 40px auto;
         }
         .duration-btn {
             padding: 10px 20px; border-radius: 8px; border: none; background: transparent;
-            color: var(--text-dim); cursor: pointer; font-weight: 700; transition: 0.3s; text-transform: uppercase;
+            color: #8b949e; cursor: pointer; font-weight: 700; transition: 0.3s;
+            text-transform: uppercase; font-size: 0.8rem;
         }
-        .duration-btn.active { background: var(--accent); color: white; }
+        .duration-btn.active { background: #009dff; color: white; }
 
-        .store-container { display: flex; gap: 30px; align-items: flex-start; }
+        .store-container { display: flex; gap: 30px; margin-top: 40px; align-items: flex-start; }
 
         /* Sidebar */
-        .sidebar { width: 260px; flex-shrink: 0; }
+        .sidebar { width: 250px; flex-shrink: 0; position: sticky; top: 100px; }
         .sidebar-item {
-            background: var(--bg-card); border: 1px solid var(--border); padding: 15px 20px; margin-bottom: 10px;
-            border-radius: 10px; cursor: pointer; font-weight: 700; transition: 0.3s; display: flex; align-items: center; gap: 12px;
+            background: #161b22; border: 1px solid #30363d; padding: 15px 20px; margin-bottom: 10px;
+            border-radius: 10px; cursor: pointer; font-weight: 700; color: #fff; transition: 0.3s;
+            display: flex; align-items: center; gap: 12px; text-transform: uppercase; font-size: 0.9rem;
         }
-        .sidebar-item.active { border-color: var(--accent); box-shadow: inset 0 0 10px rgba(0, 157, 255, 0.1); }
-        .sidebar-item.donate-link { color: var(--gold); border-color: rgba(255, 202, 40, 0.2); }
-        .sidebar-item.donate-link.active { border-color: var(--gold); background: rgba(255, 202, 40, 0.05); }
+        .sidebar-item.active { border-color: #009dff; background: #1c2128; box-shadow: inset 0 0 10px rgba(0, 157, 255, 0.2); }
+        .sidebar-item.donate-link { color: #ffca28; border-color: rgba(255, 202, 40, 0.3); }
+        .sidebar-item.donate-link.active { border-color: #ffca28; background: rgba(255, 202, 40, 0.05); }
 
         /* Top Donator */
         .top-donator-card {
-            background: var(--bg-card); border: 1px solid var(--gold); border-radius: 12px; padding: 20px;
-            text-align: center; margin-top: 20px; box-shadow: 0 4px 15px rgba(255, 202, 40, 0.1);
+            background: #161b22; border: 1px solid #ffca28; border-radius: 12px; padding: 20px;
+            text-align: center; margin-top: 25px; box-shadow: 0 4px 15px rgba(255, 202, 40, 0.1);
         }
-        .donator-avatar { width: 64px; height: 64px; border-radius: 8px; margin-bottom: 10px; image-rendering: pixelated; }
+        .donator-avatar { width: 64px; height: 64px; border-radius: 8px; border: 2px solid #30363d; margin-bottom: 10px; image-rendering: pixelated; }
 
-        /* Grid */
+        /* Grid a Karty */
         .ranks-grid { flex-grow: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-
-        /* Karta Ranku */
         .rank-card {
-            background: var(--bg-card); border: 1px solid var(--border); border-radius: 15px; padding: 30px;
+            background: #161b22; border: 1px solid #30363d; border-radius: 15px; padding: 30px;
             text-align: center; transition: 0.3s; display: flex; flex-direction: column; justify-content: space-between;
         }
-        .rank-card:hover { transform: translateY(-5px); border-color: var(--accent); }
-
-        /* ŠTÝL PRE NEDOSTUPNÝ RANK (N/A) */
+        
+        /* ÚPRAVA PRE N/A RANKY */
         .rank-card.disabled {
-            opacity: 0.6;
-            filter: grayscale(0.8);
+            opacity: 0.5;
+            filter: grayscale(1);
             background: #0d1117;
-            cursor: not-allowed;
             border-color: #21262d;
+            cursor: not-allowed;
         }
-        .rank-card.disabled .rank-name, 
-        .rank-card.disabled .price-tag { color: var(--text-dim) !important; }
+        .rank-card.disabled .rank-name, .rank-card.disabled .price-tag { color: #8b949e !important; }
 
-        .rank-name { font-size: 1.8rem; font-weight: 800; text-transform: uppercase; margin-bottom: 10px; }
-        .rank-desc { color: var(--text-dim); font-size: 0.9rem; min-height: 45px; margin-bottom: 20px; }
-        .price-tag { font-size: 2.2rem; font-weight: 800; margin-bottom: 20px; display: block; }
+        .rank-name { font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; text-transform: uppercase; }
+        .price-tag { font-size: 2.2rem; font-weight: 800; margin: 15px 0; display: block; }
 
         .btn-buy {
-            width: 100%; padding: 12px; border-radius: 8px; border: none; font-weight: 700;
-            background: var(--accent); color: white; cursor: pointer; text-transform: uppercase;
+            width: 100%; padding: 12px; background: #009dff; color: white; border: none;
+            border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase;
         }
-        .btn-buy:disabled {
-            background: #30363d;
-            color: #8b949e;
-            cursor: not-allowed;
-            opacity: 0.5;
-        }
-        .btn-donate { background: var(--gold); color: black; }
+        .btn-buy:disabled { background: #30363d; cursor: not-allowed; opacity: 0.6; }
+        .btn-donate { background: #ffca28; color: #000; }
 
-        @media (max-width: 900px) { .store-container { flex-direction: column; } .sidebar { width: 100%; } }
+        /* Vlajky */
+        .lang-menu { display: flex; gap: 12px; margin-left: 15px; align-items: center; border-left: 1px solid #30363d; padding-left: 15px; }
+        .lang-flag { width: 28px; height: 18px; border-radius: 4px; cursor: pointer; opacity: 0.3; transition: 0.3s; border: 2px solid transparent; }
+        .lang-flag.active { opacity: 1; border-color: #009dff; box-shadow: 0 0 12px rgba(0, 157, 255, 0.8); }
+
+        @media (max-width: 768px) { .store-container { flex-direction: column; } .sidebar { width: 100%; } }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1 class="hero-title">Oficiálny <span>Obchod</span></h1>
-    <p class="hero-subtitle">Podporte server a získajte exkluzívne výhody.</p>
+<header>
+    <div class="container header-wrap" style="display: flex; justify-content: space-between; align-items: center;">
+        <a href="index.html" class="logo"><img src="cubixtext.png" alt="Logo"></a>
+        <div style="display: flex; align-items: center;">
+            <ul class="nav-links" style="display: flex; list-style: none; gap: 20px; margin: 0; padding: 0;">
+                <li><a href="index.html" style="color: #fff; text-decoration: none;"><i class="fas fa-home"></i> Domov</a></li>
+                <li><a href="store.html" style="color: #ffca28; text-decoration: none;"><i class="fas fa-shopping-cart"></i> Store</a></li>
+            </ul>
+            <div class="lang-menu">
+                <img src="https://flagcdn.com/w80/sk.png" class="lang-flag" id="lang-sk" onclick="setLang('sk')">
+                <img src="https://flagcdn.com/w80/cz.png" class="lang-flag" id="lang-cz" onclick="setLang('cz')">
+                <img src="https://flagcdn.com/w80/gb.png" class="lang-flag" id="lang-en" onclick="setLang('en')">
+            </div>
+        </div>
+    </div>
+</header>
 
+<main class="container store-section">
+    <h1 class="hero-title">Oficiálny <span>Obchod</span></h1>
+    <p class="hero-subtitle">Vyberte si balíček výhod a podporte rozvoj nášho servera.</p>
+    
     <div class="duration-selector" id="dur-box">
         <button class="duration-btn" onclick="setDuration('week')" id="btn-week">Týždeň</button>
         <button class="duration-btn" onclick="setDuration('month')" id="btn-month">Mesiac</button>
@@ -110,24 +113,20 @@
 
     <div class="store-container">
         <aside class="sidebar">
-            <div class="sidebar-item active" id="side-ranks" onclick="switchTab('ranks')">
-                <i class="fas fa-crown"></i> RANKS
-            </div>
-            <div class="sidebar-item donate-link" id="side-donate" onclick="switchTab('donate')">
-                <i class="fas fa-heart"></i> DONATE
-            </div>
-            
+            <div class="sidebar-item active" id="side-ranks" onclick="switchTab('ranks')"><i class="fas fa-crown"></i> RANKS</div>
+            <div class="sidebar-item donate-link" id="side-donate" onclick="switchTab('donate')"><i class="fas fa-heart"></i> DONATE</div>
+
             <div class="top-donator-card">
-                <span style="color:var(--gold); font-size: 0.8rem; font-weight: 800;">TOP KUPEC</span><br><br>
+                <span style="color: #ffca28; font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">Top Kupec Mesiaca</span><br><br>
                 <img src="https://mc-heads.net/avatar/Steve" class="donator-avatar">
-                <div style="font-weight: 700;">Steve</div>
-                <div style="color: #2ed573;">150.00€</div>
+                <div style="color: #fff; font-weight: 700;">Steve</div>
+                <div style="color: #2ed573; font-weight: 800;">150.00€</div>
             </div>
         </aside>
 
         <section class="ranks-grid" id="grid"></section>
     </div>
-</div>
+</main>
 
 <script>
     const ranks = [
@@ -144,6 +143,12 @@
     
     let currentTab = 'ranks';
     let currentDur = 'lifetime';
+
+    function setLang(l) { 
+        document.querySelectorAll('.lang-flag').forEach(f => f.classList.remove('active'));
+        document.getElementById('lang-'+l).classList.add('active');
+        render(); 
+    }
 
     function setDuration(d) {
         currentDur = d;
@@ -168,12 +173,11 @@
             ranks.forEach(r => {
                 const isNA = (currentDur === 'lifetime' && !r.life);
                 const finalPrice = isNA ? "N/A" : (r.price * mults[currentDur]).toFixed(2) + "€";
-                
                 grid.innerHTML += `
                     <div class="rank-card ${isNA ? 'disabled' : ''}">
                         <div>
                             <div class="rank-name" style="color:${r.color}">${r.name}</div>
-                            <div class="rank-desc">${r.desc}</div>
+                            <div style="color:#8b949e; font-size:0.9rem;">${r.desc}</div>
                         </div>
                         <div>
                             <div class="price-tag">${finalPrice}</div>
@@ -182,24 +186,22 @@
                     </div>`;
             });
         } else {
-            donates.forEach(amount => {
+            donates.forEach(amt => {
                 grid.innerHTML += `
                     <div class="rank-card">
                         <div>
-                            <div class="rank-name" style="color:var(--gold)">DONATE</div>
-                            <div class="rank-desc">Dobrovoľný príspevok na rozvoj.</div>
+                            <div class="rank-name" style="color:#ffca28">DONATE</div>
+                            <div style="color:#8b949e; font-size:0.9rem;">Dobrovoľný príspevok.</div>
                         </div>
                         <div>
-                            <div class="price-tag">${amount}.00€</div>
+                            <div class="price-tag">${amt}.00€</div>
                             <button class="btn-buy btn-donate">DAROVAŤ</button>
                         </div>
                     </div>`;
             });
         }
     }
-
-    render();
+    setLang('sk');
 </script>
-
 </body>
 </html>
