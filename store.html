@@ -13,30 +13,15 @@
         .hero-subtitle { color: #8b949e; font-size: 1.1rem; margin-bottom: 50px; max-width: 700px; margin-left: auto; margin-right: auto; text-align: center; }
 
         .duration-selector {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 40px;
-            background: #161b22;
-            padding: 8px;
-            border-radius: 12px;
-            border: 1px solid #30363d;
-            max-width: fit-content;
-            margin-left: auto;
-            margin-right: auto;
+            display: flex; justify-content: center; gap: 10px; margin-bottom: 40px;
+            background: #161b22; padding: 8px; border-radius: 12px; border: 1px solid #30363d;
+            max-width: fit-content; margin-left: auto; margin-right: auto;
         }
 
         .duration-btn {
-            padding: 10px 20px;
-            border-radius: 8px;
-            border: none;
-            background: transparent;
-            color: #8b949e;
-            cursor: pointer;
-            font-weight: 700;
-            transition: 0.3s;
-            text-transform: uppercase;
-            font-size: 0.8rem;
+            padding: 10px 20px; border-radius: 8px; border: none; background: transparent;
+            color: #8b949e; cursor: pointer; font-weight: 700; transition: 0.3s;
+            text-transform: uppercase; font-size: 0.8rem;
         }
 
         .duration-btn.active { background: #009dff; color: white; }
@@ -61,7 +46,7 @@
         .rank-card:hover { transform: translateY(-10px); border-color: #009dff; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
 
         .rank-name { font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; display: block; text-transform: uppercase; }
-        .rank-desc { color: #8b949e; font-size: 0.9rem; line-height: 1.4; margin-bottom: 20px; min-height: 40px; }
+        .rank-desc { color: #8b949e; font-size: 0.9rem; line-height: 1.4; margin-bottom: 20px; min-height: 45px; }
         .price-tag { font-size: 2.2rem; font-weight: 800; margin: 15px 0; display: block; color: #fff; }
 
         .btn-buy {
@@ -73,8 +58,8 @@
         .btn-buy:disabled { background: #30363d; cursor: not-allowed; opacity: 0.6; }
 
         .lang-menu { display: flex; gap: 10px; margin-left: 15px; align-items: center; border-left: 1px solid #30363d; padding-left: 15px; }
-        .lang-flag { width: 28px; height: 18px; object-fit: cover; border-radius: 4px; cursor: pointer; opacity: 0.4; transition: 0.3s; border: 2px solid transparent; }
-        .lang-flag.active { opacity: 1; border-color: #009dff; }
+        .lang-flag { width: 28px; height: 18px; object-fit: cover; border-radius: 4px; cursor: pointer; opacity: 0.4; transition: 0.3s; }
+        .lang-flag.active { opacity: 1; border: 1px solid #009dff; }
 
         @media (max-width: 768px) { .store-container { flex-direction: column; } .sidebar { width: 100%; position: static; } }
     </style>
@@ -118,67 +103,59 @@
             <div class="sidebar-item" style="opacity:0.5; cursor:default;"><i class="fas fa-box-open"></i> CRATES (Soon)</div>
         </aside>
 
-        <section class="ranks-grid" id="ranks-container">
-            </section>
+        <section class="ranks-grid" id="ranks-container"></section>
     </div>
 </main>
 
 <script>
-    // Konfigurácia rankov: lifetimePrice je základ, od neho sa rátajú ostatné
     const rankData = [
-        { id: "immortal", name: "Immortal", color: "#ff4757", lifetimePrice: 40, allowLifetime: false, desc: { sk: "Najvyššia moc na serveri s exkluzívnymi časticami.", cz: "Nejvyšší moc na serveru s exkluzivními částicemi.", en: "The ultimate power on the server with exclusive particles." }},
-        { id: "overlord", name: "Overlord", color: "#ffa502", lifetimePrice: 20, allowLifetime: true, desc: { sk: "Ovládni lobby a získaj prístup k špeciálnym príkazom.", cz: "Ovládni lobby a získej přístup ke speciálním příkazům.", en: "Dominate the lobby and get access to special commands." }},
-        { id: "legend", name: "Legend", color: "#2ed573", lifetimePrice: 15, allowLifetime: true, desc: { sk: "Staň sa legendou s unikátnym prefixom a výhodami.", cz: "Staň se legendou s unikátním prefixem a výhodami.", en: "Become a legend with a unique prefix and perks." }},
-        { id: "ultra", name: "Ultra", color: "#1e90ff", lifetimePrice: 10, allowLifetime: true, desc: { sk: "Pokročilé výhody pre skúsených hráčov Cubixu.", cz: "Pokročilé výhody pro zkušené hráče Cubixu.", en: "Advanced perks for experienced Cubix players." }},
-        { id: "elite", name: "Elite", color: "#a29bfe", lifetimePrice: 7, allowLifetime: true, desc: { sk: "Získaj elitný status a farebné písanie v chate.", cz: "Získej elitní status a barevné psaní v chatu.", en: "Get elite status and colored chat messaging." }},
-        { id: "vip_plus", name: "VIP+", color: "#55efc4", lifetimePrice: 5, allowLifetime: true, desc: { sk: "Vylepšené VIP s viacerými domovmi a kity.", cz: "Vylepšené VIP s více domovy a kity.", en: "Enhanced VIP with more homes and kits." }},
-        { id: "vip", name: "VIP", color: "#ffeaa7", lifetimePrice: 3, allowLifetime: true, desc: { sk: "Základná podpora servera a prístup k VIP zóne.", cz: "Základní podpora serveru a přístup k VIP zóně.", en: "Basic server support and access to the VIP zone." }}
+        { id: "immortal", name: "Immortal", color: "#ff4757", lifetimePrice: 40, allowLifetime: false, desc: { sk: "Najvyššia moc s exkluzívnymi efektami.", cz: "Nejvyšší moc s exkluzivními efekty.", en: "Supreme power with exclusive effects." }},
+        { id: "overlord", name: "Overlord", color: "#ffa502", lifetimePrice: 20, allowLifetime: true, desc: { sk: "Ovládni lobby a špeciálne príkazy.", cz: "Ovládni lobby a speciální příkazy.", en: "Master the lobby and special commands." }},
+        { id: "legend", name: "Legend", color: "#2ed573", lifetimePrice: 15, allowLifetime: true, desc: { sk: "Staň sa legendou s unikátnym prefixom.", cz: "Staň se legendou s unikátním prefixem.", en: "Become a legend with a unique prefix." }},
+        { id: "ultra", name: "Ultra", color: "#1e90ff", lifetimePrice: 10, allowLifetime: true, desc: { sk: "Pokročilé výhody pre skúsených hráčov.", cz: "Pokročilé výhody pro zkušené hráče.", en: "Advanced perks for experienced players." }},
+        { id: "elite", name: "Elite", color: "#a29bfe", lifetimePrice: 7, allowLifetime: true, desc: { sk: "Získaj elitný status a farebný chat.", cz: "Získej elitní status a barevný chat.", en: "Get elite status and colored chat." }},
+        { id: "vip_plus", name: "VIP+", color: "#55efc4", lifetimePrice: 5, allowLifetime: true, desc: { sk: "Vylepšené VIP s viacerými výhodami.", cz: "Vylepšené VIP s více výhodami.", en: "Enhanced VIP with more perks." }},
+        { id: "vip", name: "VIP", color: "#ffeaa7", lifetimePrice: 3, allowLifetime: true, desc: { sk: "Základná podpora a VIP zóna.", cz: "Základní podpora a VIP zóna.", en: "Basic support and VIP zone." }}
     ];
 
-    // Koeficienty: Lifetime je 100%, rok je 50%, mesiac 20%, týždeň 10% ceny Lifetime
     const multipliers = { week: 0.1, month: 0.2, year: 0.5, lifetime: 1 };
 
     const translations = {
-        sk: { nav_home: "Domov", nav_rules: "Pravidlá", nav_team: "Tím", nav_staff: "Nábory", nav_vote: "Hlasovanie", nav_store: "Store", store_title_1: "Oficiálny", store_title_2: "Obchod", dur_week: "Týždeň", dur_month: "Mesiac", dur_year: "Rok", dur_life: "Navždy", btn_buy: "Kúpiť", rate: 1, suffix: "€", na: "NEDOSTUPNÉ" },
-        cz: { nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování", nav_store: "Obchod", store_title_1: "Oficiální", store_title_2: "Obchod", dur_week: "Týden", dur_month: "Měsíc", dur_year: "Rok", dur_life: "Navždy", btn_buy: "Koupit", rate: 25, suffix: " Kč", na: "NEDOSTUPNÉ" },
+        sk: { nav_home: "Domov", nav_rules: "Pravidlá", nav_team: "Tím", nav_staff: "Nábory", nav_vote: "Hlasovanie", nav_store: "Store", store_title_1: "Oficiálny", store_title_2: "Obchod", dur_week: "Týždeň", dur_month: "Mesiac", dur_year: "Rok", dur_life: "Navždy", btn_buy: "Kúpiť", rate: 1, suffix: "€", na: "N/A" },
+        cz: { nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování", nav_store: "Obchod", store_title_1: "Oficiální", store_title_2: "Obchod", dur_week: "Týden", dur_month: "Měsíc", dur_year: "Rok", dur_life: "Navždy", btn_buy: "Koupit", rate: 25, suffix: " Kč", na: "N/A" },
         en: { nav_home: "Home", nav_rules: "Rules", nav_team: "Team", nav_staff: "Staff", nav_vote: "Vote", nav_store: "Store", store_title_1: "Official", store_title_2: "Store", dur_week: "Week", dur_month: "Month", dur_year: "Year", dur_life: "Lifetime", btn_buy: "Buy Now", rate: 1.1, suffix: "$", na: "N/A" }
     };
 
     let currentDuration = 'lifetime';
 
-    function setLang(langId) {
-        localStorage.setItem('selectedLanguage', langId);
-        renderStore();
-    }
-
-    function setDuration(dur) {
-        currentDuration = dur;
+    function setLang(langId) { localStorage.setItem('selectedLanguage', langId); renderStore(); }
+    function setDuration(dur) { 
+        currentDuration = dur; 
         document.querySelectorAll('.duration-btn').forEach(btn => btn.classList.remove('active'));
         document.getElementById('btn-' + dur).classList.add('active');
-        renderStore();
+        renderStore(); 
     }
 
     function renderStore() {
         const langId = localStorage.getItem('selectedLanguage') || 'sk';
         const langData = translations[langId];
-
-        document.querySelectorAll('.lang-flag').forEach(f => f.classList.remove('active'));
-        if(document.getElementById('lang-' + langId)) document.getElementById('lang-' + langId).classList.add('active');
-
         const container = document.getElementById('ranks-container');
         container.innerHTML = '';
 
         rankData.forEach(rank => {
-            let priceText = "";
+            let priceDisplay = "";
             let disabled = false;
 
             if (currentDuration === 'lifetime' && !rank.allowLifetime) {
-                priceText = langData.na;
+                priceDisplay = langData.na;
                 disabled = true;
             } else {
-                let finalPrice = Math.round(rank.lifetimePrice * multipliers[currentDuration] * langData.rate);
-                if (finalPrice < 1) finalPrice = 1;
-                priceText = langId === 'en' ? langData.suffix + finalPrice : finalPrice + langData.suffix;
+                let rawPrice = rank.lifetimePrice * multipliers[currentDuration] * langData.rate;
+                
+                // Formátovanie: Ak je cena pod 10, ukážeme desatinné miesta (centy), ak nad 10, tak celé číslo
+                let formattedPrice = (rawPrice < 10) ? rawPrice.toFixed(2) : Math.round(rawPrice);
+                
+                priceDisplay = langId === 'en' ? langData.suffix + formattedPrice : formattedPrice + langData.suffix;
             }
 
             container.innerHTML += `
@@ -188,14 +165,13 @@
                         <p class="rank-desc">${rank.desc[langId]}</p>
                     </div>
                     <div>
-                        <span class="price-tag">${priceText}</span>
+                        <span class="price-tag">${priceDisplay}</span>
                         <button class="btn-buy" ${disabled ? 'disabled' : ''}>${langData.btn_buy}</button>
                     </div>
                 </div>
             `;
         });
     }
-
     window.onload = renderStore;
 </script>
 </body>
