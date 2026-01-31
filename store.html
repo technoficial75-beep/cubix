@@ -12,6 +12,7 @@
         .hero-title { font-size: 3.5rem; font-weight: 800; margin-bottom: 20px; color: #fff; text-align: center; }
         .hero-subtitle { color: #8b949e; font-size: 1.1rem; margin-bottom: 50px; max-width: 700px; margin-left: auto; margin-right: auto; text-align: center; }
 
+        /* Prepínač kategórií */
         .duration-selector {
             display: flex; justify-content: center; gap: 10px; margin-bottom: 40px;
             background: #161b22; padding: 8px; border-radius: 12px; border: 1px solid #30363d;
@@ -28,16 +29,18 @@
 
         .store-container { display: flex; gap: 30px; margin-top: 40px; align-items: flex-start; }
 
+        /* Sidebar */
         .sidebar { width: 250px; flex-shrink: 0; position: sticky; top: 100px; }
         .sidebar-item {
             background: #161b22; border: 1px solid #30363d; padding: 15px 20px; margin-bottom: 10px;
             border-radius: 10px; cursor: pointer; font-weight: 700; color: #fff; transition: 0.3s;
             display: flex; align-items: center; gap: 12px; text-transform: uppercase; font-size: 0.9rem;
         }
-        .sidebar-item.active { border-color: #009dff; background: #1c2128; }
+        .sidebar-item.active { border-color: #009dff; background: #1c2128; box-shadow: inset 0 0 10px rgba(0, 157, 255, 0.2); }
+        .sidebar-item.inactive { opacity: 0.5; cursor: not-allowed; }
 
+        /* Karty Rankov */
         .ranks-grid { flex-grow: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-
         .rank-card {
             background: #161b22; border: 1px solid #30363d; border-radius: 15px; padding: 30px;
             text-align: center; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -57,9 +60,18 @@
         .btn-buy:hover:not(:disabled) { background: #007ccb; box-shadow: 0 0 15px rgba(0, 157, 255, 0.4); }
         .btn-buy:disabled { background: #30363d; cursor: not-allowed; opacity: 0.6; }
 
-        .lang-menu { display: flex; gap: 10px; margin-left: 15px; align-items: center; border-left: 1px solid #30363d; padding-left: 15px; }
-        .lang-flag { width: 28px; height: 18px; object-fit: cover; border-radius: 4px; cursor: pointer; opacity: 0.4; transition: 0.3s; }
-        .lang-flag.active { opacity: 1; border: 1px solid #009dff; }
+        /* Jazykové menu a vlajky */
+        .lang-menu { display: flex; gap: 12px; margin-left: 15px; align-items: center; border-left: 1px solid #30363d; padding-left: 15px; }
+        .lang-flag {
+            width: 28px; height: 18px; object-fit: cover; border-radius: 4px;
+            cursor: pointer; opacity: 0.4; transition: 0.3s; border: 2px solid transparent;
+        }
+        .lang-flag:hover { opacity: 0.8; }
+        .lang-flag.active {
+            opacity: 1 !important;
+            border-color: #009dff !important;
+            box-shadow: 0 0 12px rgba(0, 157, 255, 0.8) !important;
+        }
 
         @media (max-width: 768px) { .store-container { flex-direction: column; } .sidebar { width: 100%; position: static; } }
     </style>
@@ -89,6 +101,7 @@
 
 <main class="container store-section">
     <h1 class="hero-title"><span data-lang="store_title_1">Oficiálny</span> <span style="color: #009dff;" data-lang="store_title_2">Obchod</span></h1>
+    <p class="hero-subtitle" data-lang="store_subtitle">Vyberte si balíček výhod a podporte rozvoj nášho servera.</p>
     
     <div class="duration-selector">
         <button class="duration-btn" onclick="setDuration('week')" id="btn-week" data-lang="dur_week">Týždeň</button>
@@ -100,7 +113,7 @@
     <div class="store-container">
         <aside class="sidebar">
             <div class="sidebar-item active"><i class="fas fa-crown"></i> RANKS</div>
-            <div class="sidebar-item" style="opacity:0.5; cursor:default;"><i class="fas fa-box-open"></i> CRATES (Soon)</div>
+            <div class="sidebar-item inactive"><i class="fas fa-box-open"></i> CRATES (Soon)</div>
         </aside>
 
         <section class="ranks-grid" id="ranks-container"></section>
@@ -108,27 +121,31 @@
 </main>
 
 <script>
+    // Konfigurácia rankov (Overlord odstránený)
     const rankData = [
-        { id: "immortal", name: "Immortal", color: "#ff4757", lifetimePrice: 40, allowLifetime: false, desc: { sk: "Najvyššia moc s exkluzívnymi efektami.", cz: "Nejvyšší moc s exkluzivními efekty.", en: "Supreme power with exclusive effects." }},
-        { id: "overlord", name: "Overlord", color: "#ffa502", lifetimePrice: 20, allowLifetime: true, desc: { sk: "Ovládni lobby a špeciálne príkazy.", cz: "Ovládni lobby a speciální příkazy.", en: "Master the lobby and special commands." }},
-        { id: "legend", name: "Legend", color: "#2ed573", lifetimePrice: 15, allowLifetime: true, desc: { sk: "Staň sa legendou s unikátnym prefixom.", cz: "Staň se legendou s unikátním prefixem.", en: "Become a legend with a unique prefix." }},
-        { id: "ultra", name: "Ultra", color: "#1e90ff", lifetimePrice: 10, allowLifetime: true, desc: { sk: "Pokročilé výhody pre skúsených hráčov.", cz: "Pokročilé výhody pro zkušené hráče.", en: "Advanced perks for experienced players." }},
-        { id: "elite", name: "Elite", color: "#a29bfe", lifetimePrice: 7, allowLifetime: true, desc: { sk: "Získaj elitný status a farebný chat.", cz: "Získej elitní status a barevný chat.", en: "Get elite status and colored chat." }},
+        { id: "immortal", name: "Immortal", color: "#ff4757", lifetimePrice: 35, allowLifetime: false, desc: { sk: "Najvyššia moc s exkluzívnymi efektami.", cz: "Nejvyšší moc s exkluzivními efekty.", en: "Supreme power with exclusive effects." }},
+        { id: "legend", name: "Legend", color: "#2ed573", lifetimePrice: 18, allowLifetime: true, desc: { sk: "Staň sa legendou s unikátnym prefixom.", cz: "Staň se legendou s unikátním prefixem.", en: "Become a legend with a unique prefix." }},
+        { id: "ultra", name: "Ultra", color: "#1e90ff", lifetimePrice: 12, allowLifetime: true, desc: { sk: "Pokročilé výhody pre skúsených hráčov.", cz: "Pokročilé výhody pro zkušené hráče.", en: "Advanced perks for experienced players." }},
+        { id: "elite", name: "Elite", color: "#a29bfe", lifetimePrice: 8, allowLifetime: true, desc: { sk: "Získaj elitný status a farebný chat.", cz: "Získej elitní status a barevný chat.", en: "Get elite status and colored chat." }},
         { id: "vip_plus", name: "VIP+", color: "#55efc4", lifetimePrice: 5, allowLifetime: true, desc: { sk: "Vylepšené VIP s viacerými výhodami.", cz: "Vylepšené VIP s více výhodami.", en: "Enhanced VIP with more perks." }},
         { id: "vip", name: "VIP", color: "#ffeaa7", lifetimePrice: 3, allowLifetime: true, desc: { sk: "Základná podpora a VIP zóna.", cz: "Základní podpora a VIP zóna.", en: "Basic support and VIP zone." }}
     ];
 
-    const multipliers = { week: 0.1, month: 0.2, year: 0.5, lifetime: 1 };
+    const multipliers = { week: 0.12, month: 0.25, year: 0.6, lifetime: 1 };
 
     const translations = {
-        sk: { nav_home: "Domov", nav_rules: "Pravidlá", nav_team: "Tím", nav_staff: "Nábory", nav_vote: "Hlasovanie", nav_store: "Store", store_title_1: "Oficiálny", store_title_2: "Obchod", dur_week: "Týždeň", dur_month: "Mesiac", dur_year: "Rok", dur_life: "Navždy", btn_buy: "Kúpiť", rate: 1, suffix: "€", na: "N/A" },
-        cz: { nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování", nav_store: "Obchod", store_title_1: "Oficiální", store_title_2: "Obchod", dur_week: "Týden", dur_month: "Měsíc", dur_year: "Rok", dur_life: "Navždy", btn_buy: "Koupit", rate: 25, suffix: " Kč", na: "N/A" },
-        en: { nav_home: "Home", nav_rules: "Rules", nav_team: "Team", nav_staff: "Staff", nav_vote: "Vote", nav_store: "Store", store_title_1: "Official", store_title_2: "Store", dur_week: "Week", dur_month: "Month", dur_year: "Year", dur_life: "Lifetime", btn_buy: "Buy Now", rate: 1.1, suffix: "$", na: "N/A" }
+        sk: { nav_home: "Domov", nav_rules: "Pravidlá", nav_team: "Tím", nav_staff: "Nábory", nav_vote: "Hlasovanie", nav_store: "Store", store_title_1: "Oficiálny", store_title_2: "Obchod", store_subtitle: "Vyberte si balíček výhod a podporte rozvoj nášho servera.", dur_week: "Týždeň", dur_month: "Mesiac", dur_year: "Rok", dur_life: "Navždy", btn_buy: "Kúpiť", rate: 1, suffix: "€", na: "N/A" },
+        cz: { nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování", nav_store: "Obchod", store_title_1: "Oficiální", store_title_2: "Obchod", store_subtitle: "Vyberte si balíček výhod a podpořte rozvoj našeho serveru.", dur_week: "Týden", dur_month: "Měsíc", dur_year: "Rok", dur_life: "Navždy", btn_buy: "Koupit", rate: 25, suffix: " Kč", na: "N/A" },
+        en: { nav_home: "Home", nav_rules: "Rules", nav_team: "Team", nav_staff: "Staff", nav_vote: "Vote", nav_store: "Store", store_title_1: "Official", store_title_2: "Store", store_subtitle: "Choose a reward package and support the development of our server.", dur_week: "Week", dur_month: "Month", dur_year: "Year", dur_life: "Lifetime", btn_buy: "Buy Now", rate: 1.1, suffix: "$", na: "N/A" }
     };
 
     let currentDuration = 'lifetime';
 
-    function setLang(langId) { localStorage.setItem('selectedLanguage', langId); renderStore(); }
+    function setLang(langId) {
+        localStorage.setItem('selectedLanguage', langId);
+        renderStore();
+    }
+
     function setDuration(dur) { 
         currentDuration = dur; 
         document.querySelectorAll('.duration-btn').forEach(btn => btn.classList.remove('active'));
@@ -139,6 +156,18 @@
     function renderStore() {
         const langId = localStorage.getItem('selectedLanguage') || 'sk';
         const langData = translations[langId];
+
+        // Oprava zvýraznenia vlajky
+        document.querySelectorAll('.lang-flag').forEach(f => f.classList.remove('active'));
+        const activeFlag = document.getElementById('lang-' + langId);
+        if (activeFlag) activeFlag.classList.add('active');
+
+        // Texty rozhrania
+        document.querySelectorAll('[data-lang]').forEach(el => {
+            const key = el.getAttribute('data-lang');
+            if (langData[key]) el.innerText = langData[key];
+        });
+
         const container = document.getElementById('ranks-container');
         container.innerHTML = '';
 
@@ -151,10 +180,8 @@
                 disabled = true;
             } else {
                 let rawPrice = rank.lifetimePrice * multipliers[currentDuration] * langData.rate;
-                
-                // Formátovanie: Ak je cena pod 10, ukážeme desatinné miesta (centy), ak nad 10, tak celé číslo
+                // Inteligentné centy: ak je suma pod 10, ukážeme centy
                 let formattedPrice = (rawPrice < 10) ? rawPrice.toFixed(2) : Math.round(rawPrice);
-                
                 priceDisplay = langId === 'en' ? langData.suffix + formattedPrice : formattedPrice + langData.suffix;
             }
 
@@ -172,6 +199,7 @@
             `;
         });
     }
+
     window.onload = renderStore;
 </script>
 </body>
