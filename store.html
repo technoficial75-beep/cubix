@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Tvoje pôvodné štýly */
         .store-section { padding: 60px 0; }
         .hero-title { font-size: 3.5rem; font-weight: 800; margin-bottom: 20px; color: #fff; text-align: center; }
         .hero-title span { color: #009dff; }
@@ -46,31 +45,31 @@
         <a href="index.html" class="logo"><img src="cubixtext.png" alt="Logo"></a>
         <div style="display: flex; align-items: center;">
             <ul class="nav-links">
-                <li><a href="index.html"><i class="fas fa-home"></i> <span>Domov</span></a></li>
-                <li><a href="pravidla.html"><i class="fas fa-book"></i> <span>Pravidlá</span></a></li>
-                <li><a href="team.html"><i class="fas fa-users"></i> <span>Tím</span></a></li>
-                <li><a href="nabory.html"><i class="fas fa-user-plus"></i> <span>Nábory</span></a></li>
-                <li><a href="hlasovanie.html"><i class="fas fa-check-square"></i> <span>Hlasovanie</span></a></li>
-                <li><a href="store.html" class="active" style="color: #ffca28;"><i class="fas fa-shopping-cart"></i> <span>Store</span></a></li>
+                <li><a href="index.html"><i class="fas fa-home"></i> <span data-lang="nav_home">Domov</span></a></li>
+                <li><a href="pravidla.html"><i class="fas fa-book"></i> <span data-lang="nav_rules">Pravidlá</span></a></li>
+                <li><a href="team.html"><i class="fas fa-users"></i> <span data-lang="nav_team">Tím</span></a></li>
+                <li><a href="nabory.html"><i class="fas fa-user-plus"></i> <span data-lang="nav_staff">Nábory</span></a></li>
+                <li><a href="hlasovanie.html"><i class="fas fa-check-square"></i> <span data-lang="nav_vote">Hlasovanie</span></a></li>
+                <li><a href="store.html" class="active" style="color: #ffca28;"><i class="fas fa-shopping-cart"></i> <span data-lang="nav_store">Store</span></a></li>
             </ul>
             <div class="lang-menu">
-                <img src="https://flagcdn.com/w80/sk.png" class="lang-flag" id="lang-sk" onclick="setLang('sk')">
-                <img src="https://flagcdn.com/w80/cz.png" class="lang-flag" id="lang-cz" onclick="setLang('cz')">
-                <img src="https://flagcdn.com/w80/gb.png" class="lang-flag" id="lang-en" onclick="setLang('en')">
+                <img src="https://flagcdn.com/w80/sk.png" class="lang-flag" id="lang-sk" onclick="setLang('sk')" title="Slovenčina">
+                <img src="https://flagcdn.com/w80/cz.png" class="lang-flag" id="lang-cz" onclick="setLang('cz')" title="Čeština">
+                <img src="https://flagcdn.com/w80/gb.png" class="lang-flag" id="lang-en" onclick="setLang('en')" title="English">
             </div>
         </div>
     </div>
 </header>
 
 <main class="container store-section">
-    <h1 class="hero-title">Oficiálny <span>Obchod</span></h1>
-    <p class="hero-subtitle">Vyberte si balíček výhod a podporte rozvoj nášho servera.</p>
+    <h1 class="hero-title"><span data-lang="store_title_1">Oficiálny</span> <span data-lang="store_title_2">Obchod</span></h1>
+    <p class="hero-subtitle" data-lang="store_subtitle">Vyberte si balíček výhod a podporte rozvoj nášho servera.</p>
     
     <div class="duration-selector" id="dur-box">
-        <button class="duration-btn" onclick="setDuration('week')" id="btn-week">Týždeň</button>
-        <button class="duration-btn" onclick="setDuration('month')" id="btn-month">Mesiac</button>
-        <button class="duration-btn" onclick="setDuration('year')" id="btn-year">Rok</button>
-        <button class="duration-btn active" onclick="setDuration('lifetime')" id="btn-lifetime">Navždy</button>
+        <button class="duration-btn" onclick="setDuration('week')" id="btn-week" data-lang="dur_week">Týždeň</button>
+        <button class="duration-btn" onclick="setDuration('month')" id="btn-month" data-lang="dur_month">Mesiac</button>
+        <button class="duration-btn" onclick="setDuration('year')" id="btn-year" data-lang="dur_year">Rok</button>
+        <button class="duration-btn active" onclick="setDuration('lifetime')" id="btn-lifetime" data-lang="dur_life">Navždy</button>
     </div>
 
     <div class="store-container">
@@ -79,7 +78,7 @@
             <div class="sidebar-item donate-link" id="side-donate" onclick="switchTab('donate')"><i class="fas fa-heart"></i> DONATE</div>
             <div class="sidebar-item" style="opacity: 0.5; cursor: not-allowed;"><i class="fas fa-box-open"></i> CRATES (SOON)</div>
             <div class="top-donator-card">
-                <span style="color: #ffca28; font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">Top Kupec Mesiaca</span><br><br>
+                <span style="color: #ffca28; font-size: 0.75rem; font-weight: 800; text-transform: uppercase;" data-lang="top_buyer">Top Kupec Mesiaca</span><br><br>
                 <img src="https://mc-heads.net/avatar/Steve" class="donator-avatar">
                 <div style="color: #fff; font-weight: 700;">Steve</div>
                 <div style="color: #2ed573; font-weight: 800;">150.00€</div>
@@ -90,30 +89,61 @@
 </main>
 
 <script>
+    // Úplne rovnaký slovník a kľúč 'selectedLanguage' ako na Home
+    const translations = {
+        sk: {
+            nav_home: "Domov", nav_rules: "Pravidlá", nav_team: "Tím", nav_staff: "Nábory", nav_vote: "Hlasovanie", nav_store: "Store",
+            store_title_1: "Oficiálny", store_title_2: "Obchod",
+            store_subtitle: "Vyberte si balíček výhod a podporte rozvoj nášho servera.",
+            dur_week: "Týždeň", dur_month: "Mesiac", dur_year: "Rok", dur_life: "Navždy",
+            top_buyer: "Top Kupec Mesiaca", buy_btn: "KÚPIŤ",
+            rank_desc_immortal: "Najvyššia moc s exkluzívnymi efektami.",
+            rank_desc_legend: "Staň sa legendou s unikátnym prefixom."
+        },
+        cz: {
+            nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování", nav_store: "Store",
+            store_title_1: "Oficiální", store_title_2: "Obchod",
+            store_subtitle: "Vyberte si balíček výhod a podpořte rozvoj našeho serveru.",
+            dur_week: "Týden", dur_month: "Měsíc", dur_year: "Rok", dur_life: "Navždy",
+            top_buyer: "Top Kupující Měsíce", buy_btn: "KOUPIT",
+            rank_desc_immortal: "Nejvyšší moc s exkluzivními efekty.",
+            rank_desc_legend: "Staň se legendou s unikátním prefixem."
+        },
+        en: {
+            nav_home: "Home", nav_rules: "Rules", nav_team: "Team", nav_staff: "Staff", nav_vote: "Vote", nav_store: "Store",
+            store_title_1: "Official", store_title_2: "Store",
+            store_subtitle: "Choose a package of benefits and support our server's development.",
+            dur_week: "Week", dur_month: "Month", dur_year: "Year", dur_life: "Lifetime",
+            top_buyer: "Top Buyer of the Month", buy_btn: "BUY",
+            rank_desc_immortal: "Supreme power with exclusive effects.",
+            rank_desc_legend: "Become a legend with a unique prefix."
+        }
+    };
+
     const multipliers = { week: 0.12, month: 0.25, year: 0.6, lifetime: 1 };
     const rankList = [
-        { name: "Immortal", color: "#ff4757", price: 35, hasLife: false, desc: { sk: "Najvyššia moc.", cz: "Nejvyšší moc.", en: "Supreme power." } },
-        { name: "Legend", color: "#2ed573", price: 18, hasLife: true, desc: { sk: "Staň sa legendou.", cz: "Staň se legendou.", en: "Become a legend." } },
-        { name: "Ultra", color: "#1e90ff", price: 12, hasLife: true, desc: { sk: "Pokročilé výhody.", cz: "Pokročilé výhody.", en: "Advanced benefits." } },
-        { name: "Elite", color: "#a29bfe", price: 8, hasLife: true, desc: { sk: "Získaj elitný status.", cz: "Získej elitní status.", en: "Get elite status." } },
-        { name: "VIP+", color: "#55efc4", price: 5, hasLife: true, desc: { sk: "Vylepšené VIP.", cz: "Vylepšené VIP.", en: "Improved VIP." } },
-        { name: "VIP", color: "#ffeaa7", price: 3, hasLife: true, desc: { sk: "Základná podpora.", cz: "Základní podpora.", en: "Basic support." } }
+        { name: "Immortal", color: "#ff4757", price: 35, hasLife: false, langKey: "rank_desc_immortal" },
+        { name: "Legend", color: "#2ed573", price: 18, hasLife: true, langKey: "rank_desc_legend" }
     ];
 
-    let activeLang = localStorage.getItem('selectedLang') || 'sk';
-    let activeDuration = 'lifetime';
-    let activeTab = 'ranks';
-
-    function setLang(lang) {
-        activeLang = lang;
-        localStorage.setItem('selectedLang', lang);
-        updateFlags();
-        renderStore();
+    function setLang(langId) {
+        localStorage.setItem('selectedLanguage', langId); // KĽÚČ ZHODNÝ S HOME
+        updateUI(langId);
     }
 
-    function updateFlags() {
+    function updateUI(langId) {
+        // Označenie vlajky
         document.querySelectorAll('.lang-flag').forEach(f => f.classList.remove('active'));
-        document.getElementById('lang-' + activeLang).classList.add('active');
+        const activeFlag = document.getElementById('lang-' + langId);
+        if (activeFlag) activeFlag.classList.add('active');
+
+        // Preklad statických elementov
+        document.querySelectorAll('[data-lang]').forEach(el => {
+            const key = el.getAttribute('data-lang');
+            if (translations[langId][key]) el.innerText = translations[langId][key];
+        });
+
+        renderStore();
     }
 
     function setDuration(d) {
@@ -122,6 +152,9 @@
         document.getElementById('btn-'+d).classList.add('active');
         renderStore();
     }
+
+    let activeDuration = 'lifetime';
+    let activeTab = 'ranks';
 
     function switchTab(t) {
         activeTab = t;
@@ -133,8 +166,10 @@
 
     function renderStore() {
         const grid = document.getElementById('main-grid');
+        if(!grid) return;
         grid.innerHTML = '';
-        const btnText = { sk: "KÚPIŤ", cz: "KOUPIT", en: "BUY" }[activeLang];
+        const lang = localStorage.getItem('selectedLanguage') || 'sk';
+        const buyTxt = translations[lang].buy_btn;
 
         if (activeTab === 'ranks') {
             rankList.forEach(rank => {
@@ -144,26 +179,21 @@
                     <div class="rank-card ${isUnavailable ? 'disabled' : ''}">
                         <div>
                             <div class="rank-name" style="color:${rank.color}">${rank.name}</div>
-                            <div style="color:#8b949e; font-size:0.9rem;">${rank.desc[activeLang]}</div>
+                            <div style="color:#8b949e; font-size:0.9rem;">${translations[lang][rank.langKey]}</div>
                         </div>
                         <div>
                             <div class="price-tag">${price}</div>
-                            <button class="btn-buy" ${isUnavailable ? 'disabled' : ''}>${btnText}</button>
+                            <button class="btn-buy" ${isUnavailable ? 'disabled' : ''}>${buyTxt}</button>
                         </div>
-                    </div>`;
-            });
-        } else {
-            [5, 10, 20, 50, 100].forEach(amt => {
-                grid.innerHTML += `
-                    <div class="rank-card">
-                        <div><div class="rank-name" style="color:#ffca28">DONATE</div></div>
-                        <div><div class="price-tag">${amt}.00€</div><button class="btn-buy btn-donate">DONATE</button></div>
                     </div>`;
             });
         }
     }
 
-    window.onload = () => { updateFlags(); renderStore(); };
+    window.onload = () => {
+        const savedLang = localStorage.getItem('selectedLanguage') || 'sk';
+        updateUI(savedLang);
+    };
 </script>
 </body>
 </html>
