@@ -214,19 +214,19 @@
             nav_home: "Domov", nav_rules: "Pravidlá", nav_team: "Tím", nav_staff: "Nábory", nav_vote: "Hlasovanie", nav_store: "Store",
             store_title_1: "Oficiálny", store_title_2: "Obchod",
             store_subtitle: "Vyberte si balíček výhod a podporte rozvoj nášho servera.",
-            store_duration: "Trvanie", store_days: "dní", btn_buy: "Kúpiť", currency: "€", rate: 1, suffix: "€"
+            store_duration: "Trvanie", store_days: "dní", btn_buy: "Kúpiť", currency: "€", rate: 1, suffix: "€", isRound: false
         },
         cz: {
             nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování", nav_store: "Obchod",
             store_title_1: "Oficiální", store_title_2: "Obchod",
             store_subtitle: "Vyberte si balíček výhod a podpořte rozvoj našeho serveru.",
-            store_duration: "Trvání", store_days: "dní", btn_buy: "Koupit", currency: "Kč", rate: 25.20, suffix: " Kč"
+            store_duration: "Trvání", store_days: "dní", btn_buy: "Koupit", currency: "Kč", rate: 25.2, suffix: " Kč", isRound: true
         },
         en: {
             nav_home: "Home", nav_rules: "Rules", nav_team: "Team", nav_staff: "Staff", nav_vote: "Vote", nav_store: "Store",
             store_title_1: "Official", store_title_2: "Store",
             store_subtitle: "Choose a reward package and support the development of our server.",
-            store_duration: "Duration", store_days: "days", btn_buy: "Buy Now", currency: "$", rate: 1.08, suffix: "$"
+            store_duration: "Duration", store_days: "days", btn_buy: "Buy Now", currency: "$", rate: 1.08, suffix: "$", isRound: true
         }
     };
 
@@ -242,7 +242,6 @@
 
         const langData = translations[langId];
 
-        // Update Text
         document.querySelectorAll('[data-lang]').forEach(element => {
             const key = element.getAttribute('data-lang');
             if (langData[key]) {
@@ -250,16 +249,23 @@
             }
         });
 
-        // Update Prices
         document.querySelectorAll('.rank-card').forEach(card => {
             const basePrice = parseFloat(card.getAttribute('data-base-price'));
-            const convertedPrice = (basePrice * langData.rate).toFixed(2);
-            const priceTag = card.querySelector('.price-tag');
+            let finalPrice;
             
-            if (langId === 'en') {
-                priceTag.innerText = langData.currency + convertedPrice;
+            if (langData.isRound) {
+                // Zaokrúhlenie na celé čísla pre CZK a USD
+                finalPrice = Math.round(basePrice * langData.rate);
             } else {
-                priceTag.innerText = convertedPrice + langData.suffix;
+                // EUR ponecháme s desatinnými miestami pre presnosť
+                finalPrice = (basePrice * langData.rate).toFixed(2);
+            }
+
+            const priceTag = card.querySelector('.price-tag');
+            if (langId === 'en') {
+                priceTag.innerText = langData.currency + finalPrice;
+            } else {
+                priceTag.innerText = finalPrice + langData.suffix;
             }
         });
     }
