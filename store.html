@@ -12,7 +12,6 @@
         .hero-title { font-size: 3.5rem; font-weight: 800; margin-bottom: 20px; color: #fff; text-align: center; }
         .hero-subtitle { color: #8b949e; font-size: 1.1rem; margin-bottom: 50px; max-width: 700px; margin-left: auto; margin-right: auto; text-align: center; }
 
-        /* Prepínač kategórií */
         .duration-selector {
             display: flex;
             justify-content: center;
@@ -138,9 +137,15 @@
             cursor: pointer;
         }
 
-        .btn-buy:hover {
+        .btn-buy:hover:not(:disabled) {
             background: #007ccb;
             box-shadow: 0 0 15px rgba(0, 157, 255, 0.4);
+        }
+
+        .btn-buy:disabled {
+            background: #30363d;
+            cursor: not-allowed;
+            opacity: 0.6;
         }
 
         .lang-menu { display: flex; gap: 10px; margin-left: 15px; align-items: center; border-left: 1px solid #30363d; padding-left: 15px; }
@@ -201,32 +206,38 @@
 
 <script>
     const rankData = [
-        { id: "immortal", name: "Immortal", color: "#ff4757", baseMonthly: 15 },
-        { id: "overlord", name: "Overlord", color: "#ffa502", baseMonthly: 12 },
-        { id: "legend", name: "Legend", color: "#2ed573", baseMonthly: 9 },
-        { id: "ultra", name: "Ultra", color: "#1e90ff", baseMonthly: 7 },
-        { id: "elite", name: "Elite", color: "#a29bfe", baseMonthly: 5 },
-        { id: "vip_plus", name: "VIP+", color: "#55efc4", baseMonthly: 3 },
-        { id: "vip", name: "VIP", color: "#ffeaa7", baseMonthly: 1.5 }
+        { id: "immortal", name: "Immortal", color: "#ff4757", baseMonthly: 15, allowLifetime: false },
+        { id: "overlord", name: "Overlord", color: "#ffa502", baseMonthly: 12, allowLifetime: true },
+        { id: "legend", name: "Legend", color: "#2ed573", baseMonthly: 9, allowLifetime: true },
+        { id: "ultra", name: "Ultra", color: "#1e90ff", baseMonthly: 7, allowLifetime: true },
+        { id: "elite", name: "Elite", color: "#a29bfe", baseMonthly: 5, allowLifetime: true },
+        { id: "vip_plus", name: "VIP+", color: "#55efc4", baseMonthly: 3, allowLifetime: true },
+        { id: "vip", name: "VIP", color: "#ffeaa7", baseMonthly: 1.5, allowLifetime: true }
     ];
 
-    const multipliers = { week: 0.4, month: 1, year: 8, lifetime: 15 };
+    // Multiplikátory (Upravené tak, aby Overlord Navždy stál 20 EUR pri mesačnej cene 12)
+    const multipliers = { 
+        week: 0.4, 
+        month: 1, 
+        year: 8, 
+        lifetime: 1.67 // 12 * 1.67 = cca 20
+    };
 
     const translations = {
         sk: {
             nav_home: "Domov", nav_rules: "Pravidlá", nav_team: "Tím", nav_staff: "Nábory", nav_vote: "Hlasovanie", nav_store: "Store",
             store_title_1: "Oficiálny", store_title_2: "Obchod", store_subtitle: "Vyberte si balíček výhod a podporte rozvoj nášho servera.",
-            dur_week: "Týždeň", dur_month: "Mesiac", dur_year: "Rok", dur_life: "Navždy", btn_buy: "Kúpiť", rate: 1, suffix: "€"
+            dur_week: "Týždeň", dur_month: "Mesiac", dur_year: "Rok", dur_life: "Navždy", btn_buy: "Kúpiť", rate: 1, suffix: "€", na: "N/A"
         },
         cz: {
             nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování", nav_store: "Obchod",
             store_title_1: "Oficiální", store_title_2: "Obchod", store_subtitle: "Vyberte si balíček výhod a podpořte rozvoj našeho serveru.",
-            dur_week: "Týden", dur_month: "Měsíc", dur_year: "Rok", dur_life: "Navždy", btn_buy: "Koupit", rate: 25.2, suffix: " Kč"
+            dur_week: "Týden", dur_month: "Měsíc", dur_year: "Rok", dur_life: "Navždy", btn_buy: "Koupit", rate: 25.2, suffix: " Kč", na: "Nedostupné"
         },
         en: {
             nav_home: "Home", nav_rules: "Rules", nav_team: "Team", nav_staff: "Staff", nav_vote: "Vote", nav_store: "Store",
             store_title_1: "Official", store_title_2: "Store", store_subtitle: "Choose a reward package and support the development of our server.",
-            dur_week: "Week", dur_month: "Month", dur_year: "Year", dur_life: "Lifetime", btn_buy: "Buy Now", rate: 1.08, suffix: "$"
+            dur_week: "Week", dur_month: "Month", dur_year: "Year", dur_life: "Lifetime", btn_buy: "Buy Now", rate: 1.08, suffix: "$", na: "N/A"
         }
     };
 
@@ -248,9 +259,10 @@
         const langId = localStorage.getItem('selectedLanguage') || 'sk';
         const langData = translations[langId];
 
-        // Update vlajok a textov v navigácii
         document.querySelectorAll('.lang-flag').forEach(f => f.classList.remove('active'));
-        document.getElementById('lang-' + langId).classList.add('active');
+        const activeFlag = document.getElementById('lang-' + langId);
+        if(activeFlag) activeFlag.classList.add('active');
+        
         document.querySelectorAll('[data-lang]').forEach(el => {
             const key = el.getAttribute('data-lang');
             if (langData[key]) el.innerText = langData[key];
@@ -260,15 +272,23 @@
         container.innerHTML = '';
 
         rankData.forEach(rank => {
-            const rawPrice = rank.baseMonthly * multipliers[currentDuration] * langData.rate;
-            const finalPrice = Math.round(rawPrice);
-            const priceTag = langId === 'en' ? langData.suffix + finalPrice : finalPrice + langData.suffix;
+            let priceTagText = "";
+            let isDisabled = false;
+
+            if (currentDuration === 'lifetime' && !rank.allowLifetime) {
+                priceTagText = langData.na;
+                isDisabled = true;
+            } else {
+                const rawPrice = rank.baseMonthly * multipliers[currentDuration] * langData.rate;
+                const finalPrice = Math.round(rawPrice);
+                priceTagText = langId === 'en' ? langData.suffix + finalPrice : finalPrice + langData.suffix;
+            }
 
             container.innerHTML += `
                 <div class="rank-card">
                     <span class="rank-name" style="color: ${rank.color}">${rank.name}</span>
-                    <span class="price-tag">${priceTag}</span>
-                    <button class="btn-buy">${langData.btn_buy}</button>
+                    <span class="price-tag">${priceTagText}</span>
+                    <button class="btn-buy" ${isDisabled ? 'disabled' : ''}>${langData.btn_buy}</button>
                 </div>
             `;
         });
