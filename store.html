@@ -1,93 +1,3 @@
-<!DOCTYPE html>
-<html lang="sk">
-<head>
-    <link rel="icon" type="image/x-icon" href="favicon.ico?v=2">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cubix | Store</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        .store-section { padding: 60px 0; }
-        .hero-title { font-size: 3.5rem; font-weight: 800; margin-bottom: 20px; color: #fff; text-align: center; }
-        .hero-title span { color: #009dff; }
-        .hero-subtitle { color: #8b949e; font-size: 1.1rem; margin-bottom: 50px; text-align: center; }
-        .duration-selector { display: flex; justify-content: center; gap: 10px; margin-bottom: 40px; background: #161b22; padding: 8px; border-radius: 12px; border: 1px solid #30363d; max-width: fit-content; margin: 0 auto 40px auto; }
-        .duration-btn { padding: 10px 20px; border-radius: 8px; border: none; background: transparent; color: #8b949e; cursor: pointer; font-weight: 700; transition: 0.3s; text-transform: uppercase; font-size: 0.8rem; }
-        .duration-btn.active { background: #009dff; color: white; }
-        .store-container { display: flex; gap: 30px; margin-top: 40px; align-items: flex-start; }
-        .sidebar { width: 250px; flex-shrink: 0; position: sticky; top: 100px; }
-        .sidebar-item { background: #161b22; border: 1px solid #30363d; padding: 15px 20px; margin-bottom: 10px; border-radius: 10px; cursor: pointer; font-weight: 700; color: #fff; transition: 0.3s; display: flex; align-items: center; gap: 12px; text-transform: uppercase; font-size: 0.9rem; }
-        .sidebar-item.active { border-color: #009dff; background: #1c2128; }
-        .sidebar-item.donate-link { color: #ffca28; border-color: rgba(255, 202, 40, 0.3); }
-        .sidebar-item.donate-link.active { border-color: #ffca28; background: rgba(255, 202, 40, 0.05); }
-        .top-donator-card { background: #161b22; border: 1px solid #ffca28; border-radius: 12px; padding: 20px; text-align: center; margin-top: 25px; }
-        .donator-avatar { width: 64px; height: 64px; border-radius: 8px; border: 2px solid #30363d; margin-bottom: 10px; image-rendering: pixelated; }
-        .ranks-grid { flex-grow: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-        .rank-card { background: #161b22; border: 1px solid #30363d; border-radius: 15px; padding: 30px; text-align: center; transition: 0.3s; display: flex; flex-direction: column; justify-content: space-between; }
-        .rank-card.disabled { opacity: 0.4; filter: grayscale(1); background: #0d1117; border-color: #21262d; cursor: not-allowed; }
-        .rank-card.disabled .rank-name, .rank-card.disabled .price-tag { color: #484f58 !important; }
-        .rank-name { font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; text-transform: uppercase; }
-        .price-tag { font-size: 2.2rem; font-weight: 800; margin: 15px 0; display: block; }
-        .btn-buy { width: 100%; padding: 12px; background: #009dff; color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; }
-        .btn-buy:disabled { background: #21262d; color: #484f58; cursor: not-allowed; }
-        .btn-donate { background: #ffca28; color: #000; }
-        .lang-menu { display: flex; gap: 12px; margin-left: 15px; align-items: center; border-left: 1px solid #30363d; padding-left: 15px; }
-        .lang-flag { width: 28px; height: 18px; border-radius: 4px; cursor: pointer; opacity: 0.3; transition: 0.3s; border: 2px solid transparent; }
-        .lang-flag.active { opacity: 1; border-color: #009dff; box-shadow: 0 0 12px rgba(0, 157, 255, 0.8); }
-        @media (max-width: 768px) { .store-container { flex-direction: column; } .sidebar { width: 100%; } }
-    </style>
-</head>
-<body>
-
-<header>
-    <div class="container header-wrap">
-        <a href="index.html" class="logo"><img src="cubixtext.png" alt="Logo"></a>
-        <div style="display: flex; align-items: center;">
-            <ul class="nav-links">
-                <li><a href="index.html"><i class="fas fa-home"></i> <span data-lang="nav_home">Domov</span></a></li>
-                <li><a href="pravidla.html"><i class="fas fa-book"></i> <span data-lang="nav_rules">Pravidlá</span></a></li>
-                <li><a href="team.html"><i class="fas fa-users"></i> <span data-lang="nav_team">Tím</span></a></li>
-                <li><a href="nabory.html"><i class="fas fa-user-plus"></i> <span data-lang="nav_staff">Nábory</span></a></li>
-                <li><a href="hlasovanie.html"><i class="fas fa-check-square"></i> <span data-lang="nav_vote">Hlasovanie</span></a></li>
-                <li><a href="store.html" class="active" style="color: #ffca28;"><i class="fas fa-shopping-cart"></i> <span data-lang="nav_store">Store</span></a></li>
-            </ul>
-            <div class="lang-menu">
-                <img src="https://flagcdn.com/w80/sk.png" class="lang-flag" id="lang-sk" onclick="setLang('sk')" title="Slovenčina">
-                <img src="https://flagcdn.com/w80/cz.png" class="lang-flag" id="lang-cz" onclick="setLang('cz')" title="Čeština">
-                <img src="https://flagcdn.com/w80/gb.png" class="lang-flag" id="lang-en" onclick="setLang('en')" title="English">
-            </div>
-        </div>
-    </div>
-</header>
-
-<main class="container store-section">
-    <h1 class="hero-title"><span data-lang="store_title_1">Oficiálny</span> <span data-lang="store_title_2">Obchod</span></h1>
-    <p class="hero-subtitle" data-lang="store_subtitle">Vyberte si balíček výhod a podporte rozvoj nášho servera.</p>
-    
-    <div class="duration-selector" id="dur-box">
-        <button class="duration-btn" onclick="setDuration('week')" id="btn-week" data-lang="dur_week">Týždeň</button>
-        <button class="duration-btn" onclick="setDuration('month')" id="btn-month" data-lang="dur_month">Mesiac</button>
-        <button class="duration-btn" onclick="setDuration('year')" id="btn-year" data-lang="dur_year">Rok</button>
-        <button class="duration-btn active" onclick="setDuration('lifetime')" id="btn-lifetime" data-lang="dur_life">Navždy</button>
-    </div>
-
-    <div class="store-container">
-        <aside class="sidebar">
-            <div class="sidebar-item active" id="side-ranks" onclick="switchTab('ranks')"><i class="fas fa-crown"></i> RANKS</div>
-            <div class="sidebar-item donate-link" id="side-donate" onclick="switchTab('donate')"><i class="fas fa-heart"></i> DONATE</div>
-            <div class="sidebar-item" style="opacity: 0.5; cursor: not-allowed;"><i class="fas fa-box-open"></i> CRATES (SOON)</div>
-            <div class="top-donator-card">
-                <span style="color: #ffca28; font-size: 0.75rem; font-weight: 800; text-transform: uppercase;" data-lang="top_buyer">Top Kupec Mesiaca</span><br><br>
-                <img src="https://mc-heads.net/avatar/Steve" class="donator-avatar">
-                <div style="color: #fff; font-weight: 700;">Steve</div>
-                <div style="color: #2ed573; font-weight: 800;">150.00€</div>
-            </div>
-        </aside>
-        <section class="ranks-grid" id="main-grid"></section>
-    </div>
-</main>
-
 <script>
     const translations = {
         sk: {
@@ -135,6 +45,14 @@
     };
 
     const multipliers = { week: 0.12, month: 0.25, year: 0.6, lifetime: 1 };
+    
+    // KONFIGURÁCIA MIEN
+    const currencyConfig = {
+        sk: { symbol: "€", rate: 1, decimals: 2 },
+        cz: { symbol: "Kč", rate: 25, decimals: 0 },
+        en: { symbol: "$", rate: 1.05, decimals: 2 }
+    };
+
     const rankList = [
         { name: "Immortal", color: "#ff4757", price: 35, hasLife: false, langKey: "rank_desc_immortal" },
         { name: "Legend", color: "#2ed573", price: 18, hasLife: true, langKey: "rank_desc_legend" },
@@ -179,6 +97,14 @@
         renderStore();
     }
 
+    // FUNKCIA NA FORMÁTOVANIE CENY
+    function formatPrice(euroAmount, lang) {
+        const conf = currencyConfig[lang];
+        const converted = euroAmount * conf.rate;
+        const formatted = converted.toFixed(conf.decimals);
+        return conf.symbol === "Kč" ? `${formatted} ${conf.symbol}` : `${conf.symbol}${formatted}`;
+    }
+
     function renderStore() {
         const grid = document.getElementById('main-grid');
         if(!grid) return;
@@ -189,7 +115,8 @@
         if (activeTab === 'ranks') {
             rankList.forEach(rank => {
                 const isUnavailable = (activeDuration === 'lifetime' && !rank.hasLife);
-                const priceValue = isUnavailable ? "N/A" : (rank.price * multipliers[activeDuration]).toFixed(2) + "€";
+                const priceValue = isUnavailable ? "N/A" : formatPrice(rank.price * multipliers[activeDuration], lang);
+                
                 grid.innerHTML += `
                     <div class="rank-card ${isUnavailable ? 'disabled' : ''}">
                         <div>
@@ -211,7 +138,7 @@
                             <div style="color:#8b949e; font-size:0.9rem;">${t.donate_desc}</div>
                         </div>
                         <div>
-                            <div class="price-tag">${amt}.00€</div>
+                            <div class="price-tag">${formatPrice(amt, lang)}</div>
                             <button class="btn-buy btn-donate">${t.donate_btn}</button>
                         </div>
                     </div>`;
@@ -224,5 +151,3 @@
         updateUI(savedLang);
     };
 </script>
-</body>
-</html>
