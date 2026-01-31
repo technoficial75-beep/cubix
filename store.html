@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Zjednotenie so štýlom ostatných stránok */
         .store-section { padding: 60px 0; }
         .hero-title { font-size: 3.5rem; font-weight: 800; margin-bottom: 20px; color: #fff; text-align: center; }
         .hero-subtitle { color: #8b949e; font-size: 1.1rem; margin-bottom: 50px; max-width: 700px; margin-left: auto; margin-right: auto; text-align: center; }
@@ -20,7 +19,6 @@
             align-items: flex-start;
         }
 
-        /* Sidebar */
         .sidebar {
             width: 250px;
             flex-shrink: 0;
@@ -51,12 +49,8 @@
             transform: translateX(5px);
         }
 
-        .sidebar-item.inactive {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
+        .sidebar-item.inactive { opacity: 0.5; cursor: not-allowed; }
 
-        /* Grid pre Ranky */
         .ranks-grid {
             flex-grow: 1;
             display: grid;
@@ -82,7 +76,6 @@
         .rank-name {
             font-size: 1.8rem;
             font-weight: 800;
-            color: #009dff;
             margin-bottom: 5px;
             display: block;
             text-transform: uppercase;
@@ -124,7 +117,6 @@
             box-shadow: 0 0 15px rgba(0, 157, 255, 0.4);
         }
 
-        /* VLAJKY */
         .lang-menu { display: flex; gap: 10px; margin-left: 15px; align-items: center; border-left: 1px solid #30363d; padding-left: 15px; }
         .lang-flag { width: 28px; height: 18px; object-fit: cover; border-radius: 4px; cursor: pointer; opacity: 0.4; transition: 0.3s; border: 2px solid transparent; }
         .lang-flag:hover { opacity: 0.8; }
@@ -165,58 +157,48 @@
 
     <div class="store-container">
         <aside class="sidebar">
-            <div class="sidebar-item active">
-                <i class="fas fa-crown"></i> RANKS
-            </div>
-            <div class="sidebar-item inactive">
-                <i class="fas fa-box-open"></i> CRATES (Soon)
-            </div>
+            <div class="sidebar-item active"><i class="fas fa-crown"></i> RANKS</div>
+            <div class="sidebar-item inactive"><i class="fas fa-box-open"></i> CRATES (Soon)</div>
         </aside>
 
         <section class="ranks-grid">
-            <div class="rank-card">
+            <div class="rank-card" data-base-price="15">
                 <span class="rank-name" style="color: #ff4757;">Immortal</span>
                 <span class="rank-duration"><span data-lang="store_duration">Trvanie</span>: 30 <span data-lang="store_days">dní</span></span>
                 <span class="price-tag">15.00€</span>
                 <button class="btn-buy" data-lang="btn_buy">Kúpiť</button>
             </div>
-
-            <div class="rank-card">
+            <div class="rank-card" data-base-price="12">
                 <span class="rank-name" style="color: #ffa502;">Overlord</span>
                 <span class="rank-duration"><span data-lang="store_duration">Trvanie</span>: 30 <span data-lang="store_days">dní</span></span>
                 <span class="price-tag">12.00€</span>
                 <button class="btn-buy" data-lang="btn_buy">Kúpiť</button>
             </div>
-
-            <div class="rank-card">
+            <div class="rank-card" data-base-price="10">
                 <span class="rank-name" style="color: #2ed573;">Legend</span>
                 <span class="rank-duration"><span data-lang="store_duration">Trvanie</span>: 30 <span data-lang="store_days">dní</span></span>
                 <span class="price-tag">10.00€</span>
                 <button class="btn-buy" data-lang="btn_buy">Kúpiť</button>
             </div>
-
-            <div class="rank-card">
+            <div class="rank-card" data-base-price="8">
                 <span class="rank-name" style="color: #1e90ff;">Ultra</span>
                 <span class="rank-duration"><span data-lang="store_duration">Trvanie</span>: 30 <span data-lang="store_days">dní</span></span>
                 <span class="price-tag">8.00€</span>
                 <button class="btn-buy" data-lang="btn_buy">Kúpiť</button>
             </div>
-
-            <div class="rank-card">
+            <div class="rank-card" data-base-price="6">
                 <span class="rank-name" style="color: #a29bfe;">Elite</span>
                 <span class="rank-duration"><span data-lang="store_duration">Trvanie</span>: 30 <span data-lang="store_days">dní</span></span>
                 <span class="price-tag">6.00€</span>
                 <button class="btn-buy" data-lang="btn_buy">Kúpiť</button>
             </div>
-
-            <div class="rank-card">
+            <div class="rank-card" data-base-price="4">
                 <span class="rank-name" style="color: #55efc4;">VIP+</span>
                 <span class="rank-duration"><span data-lang="store_duration">Trvanie</span>: 30 <span data-lang="store_days">dní</span></span>
                 <span class="price-tag">4.00€</span>
                 <button class="btn-buy" data-lang="btn_buy">Kúpiť</button>
             </div>
-
-            <div class="rank-card">
+            <div class="rank-card" data-base-price="2">
                 <span class="rank-name" style="color: #ffeaa7;">VIP</span>
                 <span class="rank-duration"><span data-lang="store_duration">Trvanie</span>: 30 <span data-lang="store_days">dní</span></span>
                 <span class="price-tag">2.00€</span>
@@ -232,19 +214,19 @@
             nav_home: "Domov", nav_rules: "Pravidlá", nav_team: "Tím", nav_staff: "Nábory", nav_vote: "Hlasovanie", nav_store: "Store",
             store_title_1: "Oficiálny", store_title_2: "Obchod",
             store_subtitle: "Vyberte si balíček výhod a podporte rozvoj nášho servera.",
-            store_duration: "Trvanie", store_days: "dní", btn_buy: "Kúpiť"
+            store_duration: "Trvanie", store_days: "dní", btn_buy: "Kúpiť", currency: "€", rate: 1, suffix: "€"
         },
         cz: {
             nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování", nav_store: "Obchod",
             store_title_1: "Oficiální", store_title_2: "Obchod",
             store_subtitle: "Vyberte si balíček výhod a podpořte rozvoj našeho serveru.",
-            store_duration: "Trvání", store_days: "dní", btn_buy: "Koupit"
+            store_duration: "Trvání", store_days: "dní", btn_buy: "Koupit", currency: "Kč", rate: 25.20, suffix: " Kč"
         },
         en: {
             nav_home: "Home", nav_rules: "Rules", nav_team: "Team", nav_staff: "Staff", nav_vote: "Vote", nav_store: "Store",
             store_title_1: "Official", store_title_2: "Store",
             store_subtitle: "Choose a reward package and support the development of our server.",
-            store_duration: "Duration", store_days: "days", btn_buy: "Buy Now"
+            store_duration: "Duration", store_days: "days", btn_buy: "Buy Now", currency: "$", rate: 1.08, suffix: "$"
         }
     };
 
@@ -258,10 +240,26 @@
         const selected = document.getElementById('lang-' + langId);
         if (selected) selected.classList.add('active');
 
+        const langData = translations[langId];
+
+        // Update Text
         document.querySelectorAll('[data-lang]').forEach(element => {
             const key = element.getAttribute('data-lang');
-            if (translations[langId] && translations[langId][key]) {
-                element.innerText = translations[langId][key];
+            if (langData[key]) {
+                element.innerText = langData[key];
+            }
+        });
+
+        // Update Prices
+        document.querySelectorAll('.rank-card').forEach(card => {
+            const basePrice = parseFloat(card.getAttribute('data-base-price'));
+            const convertedPrice = (basePrice * langData.rate).toFixed(2);
+            const priceTag = card.querySelector('.price-tag');
+            
+            if (langId === 'en') {
+                priceTag.innerText = langData.currency + convertedPrice;
+            } else {
+                priceTag.innerText = convertedPrice + langData.suffix;
             }
         });
     }
