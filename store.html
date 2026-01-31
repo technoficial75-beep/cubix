@@ -7,9 +7,9 @@
     <style>
         /* Celkový reset a pozadie */
         body {
-            background-color: #140d0a; /* Tmavé hnedé pozadie podľa obrázka */
+            background-color: #0b0f14; /* Veľmi tmavá modro-čierna */
             color: #ffffff;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 0;
         }
@@ -20,16 +20,16 @@
             justify-content: space-between;
             align-items: center;
             padding: 15px 60px;
-            background: rgba(0, 0, 0, 0.4);
-            border-bottom: 1px solid #332118;
+            background: rgba(0, 0, 0, 0.6);
+            border-bottom: 2px solid #007bff;
         }
 
         .logo img {
-            height: 55px; /* Uprav podľa veľkosti tvojho loga */
+            height: 55px;
         }
 
         .nav-links a {
-            color: #f39c12;
+            color: #00a2ff;
             text-decoration: none;
             margin-left: 25px;
             font-weight: bold;
@@ -39,7 +39,8 @@
         }
 
         .nav-links a:hover {
-            color: #ffcc00;
+            color: #00d9ff;
+            text-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
         }
 
         /* Hlavný layout */
@@ -58,12 +59,12 @@
         }
 
         .sidebar-item {
-            background: #231711;
+            background: #161d26;
             padding: 18px;
             margin-bottom: 12px;
             border-radius: 10px;
             cursor: pointer;
-            border-left: 6px solid #f39c12;
+            border-left: 6px solid #007bff;
             font-weight: bold;
             display: flex;
             align-items: center;
@@ -71,12 +72,13 @@
         }
 
         .sidebar-item:hover {
-            background: #2d1e16;
+            background: #1c2631;
+            transform: translateX(5px);
         }
 
         .sidebar-item.inactive {
-            border-left: 6px solid transparent;
-            opacity: 0.8;
+            border-left: 6px solid #34495e;
+            opacity: 0.6;
         }
 
         /* Hlavný obsah obchodu */
@@ -85,18 +87,16 @@
         }
 
         .alert-box {
-            background: #231711;
+            background: #161d26;
             padding: 20px;
             border-radius: 10px;
-            border: 1px solid #3d281a;
+            border: 1px solid #2c3e50;
             margin-bottom: 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            border-left: 4px solid #00a2ff;
         }
 
         .alert-text strong {
-            color: #f39c12;
+            color: #00a2ff;
         }
 
         /* Mriežka s rankami */
@@ -107,43 +107,48 @@
         }
 
         .rank-card {
-            background: #231711;
-            border: 1px solid #3d281a;
+            background: #161d26;
+            border: 1px solid #2c3e50;
             border-radius: 12px;
             padding: 25px;
             text-align: center;
-            transition: transform 0.2s;
+            transition: all 0.3s ease;
         }
 
         .rank-card:hover {
-            transform: translateY(-5px);
-            border-color: #f39c12;
+            transform: translateY(-8px);
+            border-color: #00a2ff;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
         }
 
         .rank-name {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: bold;
-            color: #f39c12;
+            color: #00a2ff;
             margin-bottom: 5px;
             display: block;
+            text-transform: uppercase;
         }
 
         .rank-duration {
             font-size: 13px;
-            color: #999;
+            color: #8da2b5;
             margin-bottom: 15px;
-        }
-
-        .price-tag {
-            font-size: 24px;
-            font-weight: bold;
-            margin: 20px 0;
             display: block;
         }
 
+        .price-tag {
+            font-size: 26px;
+            font-weight: bold;
+            margin: 20px 0;
+            display: block;
+            color: #fff;
+        }
+
+        /* Tlačidlo */
         .btn-buy {
-            background: #f39c12;
-            color: #000;
+            background: linear-gradient(135deg, #007bff 0%, #00a2ff 100%);
+            color: #fff;
             border: none;
             padding: 12px 0;
             width: 100%;
@@ -152,10 +157,12 @@
             cursor: pointer;
             text-transform: uppercase;
             transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
         }
 
         .btn-buy:hover {
-            background: #ffcc00;
+            background: linear-gradient(135deg, #00a2ff 0%, #00d9ff 100%);
+            box-shadow: 0 4px 20px rgba(0, 162, 255, 0.5);
         }
 
     </style>
@@ -184,7 +191,7 @@
         <main class="shop-area">
             <div class="alert-box">
                 <div class="alert-text">
-                    Vitajte v oficiálnom obchode <strong>CUBIX</strong>. Vyberte si kategóriu rankov.
+                    Vitajte v oficiálnom obchode <strong>CUBIX</strong>. Vyberte si svoj balíček výhod.
                 </div>
             </div>
 
