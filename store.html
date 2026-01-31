@@ -89,60 +89,78 @@
 </main>
 
 <script>
-    // Úplne rovnaký slovník a kľúč 'selectedLanguage' ako na Home
     const translations = {
         sk: {
             nav_home: "Domov", nav_rules: "Pravidlá", nav_team: "Tím", nav_staff: "Nábory", nav_vote: "Hlasovanie", nav_store: "Store",
             store_title_1: "Oficiálny", store_title_2: "Obchod",
             store_subtitle: "Vyberte si balíček výhod a podporte rozvoj nášho servera.",
             dur_week: "Týždeň", dur_month: "Mesiac", dur_year: "Rok", dur_life: "Navždy",
-            top_buyer: "Top Kupec Mesiaca", buy_btn: "KÚPIŤ",
+            top_buyer: "Top Kupec Mesiaca", buy_btn: "KÚPIŤ", donate_btn: "DAROVAŤ",
             rank_desc_immortal: "Najvyššia moc s exkluzívnymi efektami.",
-            rank_desc_legend: "Staň sa legendou s unikátnym prefixom."
+            rank_desc_legend: "Staň sa legendou s unikátnym prefixom.",
+            rank_desc_ultra: "Pokročilé výhody pre náročných.",
+            rank_desc_elite: "Elitný status v našej komunite.",
+            rank_desc_vipp: "Vylepšené VIP s bonusmi.",
+            rank_desc_vip: "Základná podpora servera.",
+            donate_desc: "Dobrovoľný príspevok na server."
         },
         cz: {
             nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování", nav_store: "Store",
             store_title_1: "Oficiální", store_title_2: "Obchod",
             store_subtitle: "Vyberte si balíček výhod a podpořte rozvoj našeho serveru.",
             dur_week: "Týden", dur_month: "Měsíc", dur_year: "Rok", dur_life: "Navždy",
-            top_buyer: "Top Kupující Měsíce", buy_btn: "KOUPIT",
+            top_buyer: "Top Kupující Měsíce", buy_btn: "KOUPIT", donate_btn: "DAROVAT",
             rank_desc_immortal: "Nejvyšší moc s exkluzivními efekty.",
-            rank_desc_legend: "Staň se legendou s unikátním prefixem."
+            rank_desc_legend: "Staň se legendou s unikátním prefixem.",
+            rank_desc_ultra: "Pokročilé výhody pro náročné.",
+            rank_desc_elite: "Elitní status v naší komunitě.",
+            rank_desc_vipp: "Vylepšené VIP s bonusy.",
+            rank_desc_vip: "Základní podpora serveru.",
+            donate_desc: "Dobrovolný příspěvek na server."
         },
         en: {
             nav_home: "Home", nav_rules: "Rules", nav_team: "Team", nav_staff: "Staff", nav_vote: "Vote", nav_store: "Store",
             store_title_1: "Official", store_title_2: "Store",
             store_subtitle: "Choose a package of benefits and support our server's development.",
             dur_week: "Week", dur_month: "Month", dur_year: "Year", dur_life: "Lifetime",
-            top_buyer: "Top Buyer of the Month", buy_btn: "BUY",
+            top_buyer: "Top Buyer of the Month", buy_btn: "BUY", donate_btn: "DONATE",
             rank_desc_immortal: "Supreme power with exclusive effects.",
-            rank_desc_legend: "Become a legend with a unique prefix."
+            rank_desc_legend: "Become a legend with a unique prefix.",
+            rank_desc_ultra: "Advanced benefits for demanding players.",
+            rank_desc_elite: "Elite status in our community.",
+            rank_desc_vipp: "Improved VIP with bonuses.",
+            rank_desc_vip: "Basic server support.",
+            donate_desc: "Voluntary contribution to the server."
         }
     };
 
     const multipliers = { week: 0.12, month: 0.25, year: 0.6, lifetime: 1 };
     const rankList = [
         { name: "Immortal", color: "#ff4757", price: 35, hasLife: false, langKey: "rank_desc_immortal" },
-        { name: "Legend", color: "#2ed573", price: 18, hasLife: true, langKey: "rank_desc_legend" }
+        { name: "Legend", color: "#2ed573", price: 18, hasLife: true, langKey: "rank_desc_legend" },
+        { name: "Ultra", color: "#1e90ff", price: 12, hasLife: true, langKey: "rank_desc_ultra" },
+        { name: "Elite", color: "#a29bfe", price: 8, hasLife: true, langKey: "rank_desc_elite" },
+        { name: "VIP+", color: "#55efc4", price: 5, hasLife: true, langKey: "rank_desc_vipp" },
+        { name: "VIP", color: "#ffeaa7", price: 3, hasLife: true, langKey: "rank_desc_vip" }
     ];
 
+    let activeDuration = 'lifetime';
+    let activeTab = 'ranks';
+
     function setLang(langId) {
-        localStorage.setItem('selectedLanguage', langId); // KĽÚČ ZHODNÝ S HOME
+        localStorage.setItem('selectedLanguage', langId);
         updateUI(langId);
     }
 
     function updateUI(langId) {
-        // Označenie vlajky
         document.querySelectorAll('.lang-flag').forEach(f => f.classList.remove('active'));
         const activeFlag = document.getElementById('lang-' + langId);
         if (activeFlag) activeFlag.classList.add('active');
 
-        // Preklad statických elementov
         document.querySelectorAll('[data-lang]').forEach(el => {
             const key = el.getAttribute('data-lang');
-            if (translations[langId][key]) el.innerText = translations[langId][key];
+            if (translations[langId] && translations[langId][key]) el.innerText = translations[langId][key];
         });
-
         renderStore();
     }
 
@@ -152,9 +170,6 @@
         document.getElementById('btn-'+d).classList.add('active');
         renderStore();
     }
-
-    let activeDuration = 'lifetime';
-    let activeTab = 'ranks';
 
     function switchTab(t) {
         activeTab = t;
@@ -169,21 +184,35 @@
         if(!grid) return;
         grid.innerHTML = '';
         const lang = localStorage.getItem('selectedLanguage') || 'sk';
-        const buyTxt = translations[lang].buy_btn;
+        const t = translations[lang];
 
         if (activeTab === 'ranks') {
             rankList.forEach(rank => {
                 const isUnavailable = (activeDuration === 'lifetime' && !rank.hasLife);
-                const price = isUnavailable ? "N/A" : (rank.price * multipliers[activeDuration]).toFixed(2) + "€";
+                const priceValue = isUnavailable ? "N/A" : (rank.price * multipliers[activeDuration]).toFixed(2) + "€";
                 grid.innerHTML += `
                     <div class="rank-card ${isUnavailable ? 'disabled' : ''}">
                         <div>
                             <div class="rank-name" style="color:${rank.color}">${rank.name}</div>
-                            <div style="color:#8b949e; font-size:0.9rem;">${translations[lang][rank.langKey]}</div>
+                            <div style="color:#8b949e; font-size:0.9rem;">${t[rank.langKey]}</div>
                         </div>
                         <div>
-                            <div class="price-tag">${price}</div>
-                            <button class="btn-buy" ${isUnavailable ? 'disabled' : ''}>${buyTxt}</button>
+                            <div class="price-tag">${priceValue}</div>
+                            <button class="btn-buy" ${isUnavailable ? 'disabled' : ''}>${t.buy_btn}</button>
+                        </div>
+                    </div>`;
+            });
+        } else {
+            [5, 10, 20, 50, 100].forEach(amt => {
+                grid.innerHTML += `
+                    <div class="rank-card">
+                        <div>
+                            <div class="rank-name" style="color:#ffca28">DONATE</div>
+                            <div style="color:#8b949e; font-size:0.9rem;">${t.donate_desc}</div>
+                        </div>
+                        <div>
+                            <div class="price-tag">${amt}.00€</div>
+                            <button class="btn-buy btn-donate">${t.donate_btn}</button>
                         </div>
                     </div>`;
             });
