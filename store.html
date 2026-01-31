@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        /* Tvoje pôvodné štýly sekcie */
         .store-section { padding: 60px 0; }
         .hero-title { font-size: 3.5rem; font-weight: 800; margin-bottom: 20px; color: #fff; text-align: center; }
         .hero-title span { color: #009dff; }
@@ -49,7 +50,7 @@
             text-align: center; transition: 0.3s; display: flex; flex-direction: column; justify-content: space-between;
         }
         
-        /* Vizuál pre N/A (Nedostupné) */
+        /* Štýl pre N/A - viditeľne zakázané */
         .rank-card.disabled {
             opacity: 0.4;
             filter: grayscale(1);
@@ -69,6 +70,7 @@
         .btn-buy:disabled { background: #21262d; color: #484f58; cursor: not-allowed; }
         .btn-donate { background: #ffca28; color: #000; }
 
+        /* Vlajky */
         .lang-menu { display: flex; gap: 12px; margin-left: 15px; align-items: center; border-left: 1px solid #30363d; padding-left: 15px; }
         .lang-flag { width: 28px; height: 18px; border-radius: 4px; cursor: pointer; opacity: 0.3; transition: 0.3s; border: 2px solid transparent; }
         .lang-flag.active { opacity: 1; border-color: #009dff; box-shadow: 0 0 12px rgba(0, 157, 255, 0.8); }
@@ -79,21 +81,21 @@
 <body>
 
 <header>
-    <div class="container header-wrap" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0;">
-        <a href="index.html" class="logo"><img src="cubixtext.png" alt="Logo" style="height: 40px;"></a>
+    <div class="container header-wrap">
+        <a href="index.html" class="logo"><img src="cubixtext.png" alt="Logo"></a>
         <div style="display: flex; align-items: center;">
-            <ul class="nav-links" style="display: flex; list-style: none; gap: 20px; margin: 0; padding: 0;">
-                <li><a href="index.html" style="color: #fff; text-decoration: none;"><i class="fas fa-home"></i> <span>Domov</span></a></li>
-                <li><a href="pravidla.html" style="color: #fff; text-decoration: none;"><i class="fas fa-book"></i> <span>Pravidlá</span></a></li>
-                <li><a href="team.html" style="color: #fff; text-decoration: none;"><i class="fas fa-users"></i> <span>Tím</span></a></li>
-                <li><a href="nabory.html" style="color: #fff; text-decoration: none;"><i class="fas fa-user-plus"></i> <span>Nábory</span></a></li>
-                <li><a href="hlasovanie.html" style="color: #fff; text-decoration: none;"><i class="fas fa-check-square"></i> <span>Hlasovanie</span></a></li>
-                <li><a href="store.html" style="color: #ffca28; text-decoration: none;"><i class="fas fa-shopping-cart"></i> <span>Store</span></a></li>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-home"></i> <span data-lang="nav_home">Domov</span></a></li>
+                <li><a href="pravidla.html"><i class="fas fa-book"></i> <span data-lang="nav_rules">Pravidlá</span></a></li>
+                <li><a href="team.html"><i class="fas fa-users"></i> <span data-lang="nav_team">Tím</span></a></li>
+                <li><a href="nabory.html"><i class="fas fa-user-plus"></i> <span data-lang="nav_staff">Nábory</span></a></li>
+                <li><a href="hlasovanie.html"><i class="fas fa-check-square"></i> <span data-lang="nav_vote">Hlasovanie</span></a></li>
+                <li><a href="store.html" class="active" style="color: #ffca28;"><i class="fas fa-shopping-cart"></i> <span data-lang="nav_store">Store</span></a></li>
             </ul>
             <div class="lang-menu">
-                <img src="https://flagcdn.com/w80/sk.png" class="lang-flag" id="lang-sk" onclick="setGlobalLang('sk')">
-                <img src="https://flagcdn.com/w80/cz.png" class="lang-flag" id="lang-cz" onclick="setGlobalLang('cz')">
-                <img src="https://flagcdn.com/w80/gb.png" class="lang-flag" id="lang-en" onclick="setGlobalLang('en')">
+                <img src="https://flagcdn.com/w80/sk.png" class="lang-flag" id="lang-sk" onclick="setLang('sk')">
+                <img src="https://flagcdn.com/w80/cz.png" class="lang-flag" id="lang-cz" onclick="setLang('cz')">
+                <img src="https://flagcdn.com/w80/gb.png" class="lang-flag" id="lang-en" onclick="setLang('en')">
             </div>
         </div>
     </div>
@@ -129,30 +131,28 @@
 </main>
 
 <script>
-    // LOGIKA PRE SYNCHRONIZÁCIU JAZYKA
-    function setGlobalLang(lang) {
-        localStorage.setItem('cubix_lang', lang);
-        updatePageLanguage(lang);
+    // --- JAZYKOVÁ SYNCHRONIZÁCIA ---
+    function setLang(lang) {
+        localStorage.setItem('selectedLang', lang); // Uloží výber pre všetky podstránky
+        applyLang(lang);
     }
 
-    function updatePageLanguage(lang) {
-        // Označenie aktívnej vlajky
+    function applyLang(lang) {
         document.querySelectorAll('.lang-flag').forEach(f => f.classList.remove('active'));
-        const flag = document.getElementById('lang-' + lang);
-        if(flag) flag.classList.add('active');
-
-        // Tu sa v budúcnosti dajú pridať preklady textov
-        console.log("Jazyk zmenený na: " + lang);
+        const activeFlag = document.getElementById('lang-' + lang);
+        if (activeFlag) activeFlag.classList.add('active');
+        
+        // Sem môžeš pridať logiku prekladu textov na Store
         renderStore();
     }
 
-    // Skontroluj uložený jazyk pri načítaní
-    window.onload = function() {
-        const savedLang = localStorage.getItem('cubix_lang') || 'sk';
-        updatePageLanguage(savedLang);
-    };
+    // Skontroluje jazyk pri každom načítaní Store
+    window.addEventListener('DOMContentLoaded', () => {
+        const savedLang = localStorage.getItem('selectedLang') || 'sk';
+        applyLang(savedLang);
+    });
 
-    // LOGIKA OBCHODU
+    // --- LOGIKA OBCHODU ---
     const rankList = [
         { name: "Immortal", color: "#ff4757", price: 35, hasLife: false, desc: "Najvyššia moc s exkluzívnymi efektami." },
         { name: "Legend", color: "#2ed573", price: 18, hasLife: true, desc: "Staň sa legendou s unikátnym prefixom." },
@@ -209,7 +209,7 @@
                     <div class="rank-card">
                         <div>
                             <div class="rank-name" style="color:#ffca28">DONATE</div>
-                            <div style="color:#8b949e; font-size:0.9rem;">Dobrovoľný príspevok na server.</div>
+                            <div style="color:#8b949e; font-size:0.9rem;">Dobrovoľný príspevok na rozvoj servera.</div>
                         </div>
                         <div>
                             <div class="price-tag">${amt}.00€</div>
