@@ -23,7 +23,7 @@
         .group-title {
             font-size: 1.6rem;
             font-weight: 800;
-            margin-bottom: 10px; /* Zmenšené kvôli popisu pod tým */
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -32,7 +32,6 @@
             letter-spacing: 2px;
         }
 
-        /* ŠTÝL PRE POPIS POD NADPISOM */
         .group-subtitle {
             color: #8b949e;
             font-size: 1rem;
@@ -50,7 +49,6 @@
             gap: 25px;
         }
 
-        /* --- KARTA ČLENA (PRUŽNÝ ŠTÝL) --- */
         .member-card {
             background: #161b22;
             border: 1px solid #30363d;
@@ -172,6 +170,7 @@
                 <li><a href="team.html" class="active"><i class="fas fa-users"></i> <span data-lang="nav_team">Tím</span></a></li>
                 <li><a href="nabory.html"><i class="fas fa-user-plus"></i> <span data-lang="nav_staff">Nábory</span></a></li>
                 <li><a href="hlasovanie.html"><i class="fas fa-check-square"></i> <span data-lang="nav_vote">Hlasovanie</span></a></li>
+                <li><a href="store.html" style="color: #ffca28;"><i class="fas fa-shopping-cart"></i> <span data-lang="nav_store">Store</span></a></li>
             </ul>
             <div class="lang-menu">
                 <img src="https://flagcdn.com/w80/sk.png" class="lang-flag" id="lang-sk" onclick="setLang('sk')" title="Slovenčina">
@@ -266,7 +265,7 @@
 <script>
     const translations = {
         sk: {
-            nav_home: "Domov", nav_rules: "Pravidlá", nav_team: "Tím", nav_staff: "Nábory", nav_vote: "Hlasovanie",
+            nav_home: "Domov", nav_rules: "Pravidlá", nav_team: "Tím", nav_staff: "Nábory", nav_vote: "Hlasovanie", nav_store: "Store",
             team_title: "Realizačný Tím", rank_owners: "Majitelia", rank_managers: "Manažéri", rank_builders: "Builderi",
             desc_owners: "Tvorcovia vízie a hlavné vedenie celého projektu.",
             desc_managers: "Dohliadajú na plynulý chod servera a koordináciu tímu.",
@@ -275,7 +274,7 @@
             join_title: "Chceš sa k nám pridať?", join_text: "Máš skúsenosti a chceš pomôcť nášmu projektu rásť?", join_btn: "Urobiť nábor"
         },
         cz: {
-            nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování",
+            nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování", nav_store: "Obchod",
             team_title: "Realizační Tým", rank_owners: "Majitelé", rank_managers: "Manažeři", rank_builders: "Buildeři",
             desc_owners: "Tvůrci vize a hlavní vedení celého projektu.",
             desc_managers: "Dohlížejí na plynulý chod serveru a koordinaci týmu.",
@@ -284,7 +283,7 @@
             join_title: "Chceš se k nám přidat?", join_text: "Máš zkušenosti a chceš pomoct našemu projektu růst?", join_btn: "Udělat nábor"
         },
         en: {
-            nav_home: "Home", nav_rules: "Rules", nav_team: "Team", nav_staff: "Staff", nav_vote: "Vote",
+            nav_home: "Home", nav_rules: "Rules", nav_team: "Team", nav_staff: "Staff", nav_vote: "Vote", nav_store: "Store",
             team_title: "Staff Team", rank_owners: "Owners", rank_managers: "Managers", rank_builders: "Builders",
             desc_owners: "Visionaries and the core leadership of the project.",
             desc_managers: "Overseeing the server operations and staff coordination.",
@@ -317,7 +316,5 @@
         updateContent(savedLang);
     };
 </script>
-
 </body>
-
 </html>
