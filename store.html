@@ -13,25 +13,37 @@
         .hero-title span { color: #009dff; }
         .hero-subtitle { color: #8b949e; font-size: 1.1rem; margin-bottom: 50px; text-align: center; }
         .duration-selector { display: flex; justify-content: center; gap: 10px; margin-bottom: 40px; background: #161b22; padding: 8px; border-radius: 12px; border: 1px solid #30363d; max-width: fit-content; margin: 0 auto 40px auto; }
-        .duration-btn { padding: 10px 20px; border-radius: 8px; border: none; background: transparent; color: #8b949e; cursor: pointer; font-weight: 700; transition: 0.3s; text-transform: uppercase; font-size: 0.8rem; }
+        .duration-btn { padding: 10px 20px; border-radius: 8px; border: none; background: transparent; color: #8b949e; cursor: pointer; font-weight: 700; transition: 0.3s ease; text-transform: uppercase; font-size: 0.8rem; }
         .duration-btn.active { background: #009dff; color: white; }
+        .duration-btn:hover:not(.active) { color: #fff; background: rgba(255, 255, 255, 0.05); }
+
         .store-container { display: flex; gap: 30px; margin-top: 40px; align-items: flex-start; }
         .sidebar { width: 250px; flex-shrink: 0; position: sticky; top: 100px; }
-        .sidebar-item { background: #161b22; border: 1px solid #30363d; padding: 15px 20px; margin-bottom: 10px; border-radius: 10px; cursor: pointer; font-weight: 700; color: #fff; transition: 0.3s; display: flex; align-items: center; gap: 12px; text-transform: uppercase; font-size: 0.9rem; }
+        .sidebar-item { background: #161b22; border: 1px solid #30363d; padding: 15px 20px; margin-bottom: 10px; border-radius: 10px; cursor: pointer; font-weight: 700; color: #fff; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; align-items: center; gap: 12px; text-transform: uppercase; font-size: 0.9rem; }
         .sidebar-item.active { border-color: #009dff; background: #1c2128; }
+        .sidebar-item:hover:not(.active) { transform: translateX(5px); background: #1c2128; border-color: #484f58; }
+        
         .sidebar-item.donate-link { color: #ffca28; border-color: rgba(255, 202, 40, 0.3); }
         .sidebar-item.donate-link.active { border-color: #ffca28; background: rgba(255, 202, 40, 0.05); }
-        .top-donator-card { background: #161b22; border: 1px solid #ffca28; border-radius: 12px; padding: 20px; text-align: center; margin-top: 25px; }
+
+        .top-donator-card { background: #161b22; border: 1px solid #ffca28; border-radius: 12px; padding: 20px; text-align: center; margin-top: 25px; transition: 0.3s; }
+        .top-donator-card:hover { transform: scale(1.02); box-shadow: 0 10px 20px rgba(255, 202, 40, 0.1); }
         .donator-avatar { width: 64px; height: 64px; border-radius: 8px; border: 2px solid #30363d; margin-bottom: 10px; image-rendering: pixelated; }
+
         .ranks-grid { flex-grow: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-        .rank-card { background: #161b22; border: 1px solid #30363d; border-radius: 15px; padding: 30px; text-align: center; transition: 0.3s; display: flex; flex-direction: column; justify-content: space-between; }
+        .rank-card { background: #161b22; border: 1px solid #30363d; border-radius: 15px; padding: 30px; text-align: center; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; justify-content: space-between; }
+        .rank-card:hover:not(.disabled) { transform: translateY(-10px) scale(1.02); border-color: #009dff; box-shadow: 0 15px 30px rgba(0, 157, 255, 0.15); }
+        
         .rank-card.disabled { opacity: 0.4; filter: grayscale(1); background: #0d1117; border-color: #21262d; cursor: not-allowed; }
-        .rank-card.disabled .rank-name, .rank-card.disabled .price-tag { color: #484f58 !important; }
         .rank-name { font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; text-transform: uppercase; }
         .price-tag { font-size: 2.2rem; font-weight: 800; margin: 15px 0; display: block; }
-        .btn-buy { width: 100%; padding: 12px; background: #009dff; color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; }
+        
+        .btn-buy { width: 100%; padding: 12px; background: #009dff; color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; transition: all 0.3s ease; }
+        .btn-buy:hover:not(:disabled) { filter: brightness(1.1); letter-spacing: 1px; box-shadow: 0 5px 15px rgba(0, 157, 255, 0.4); }
         .btn-buy:disabled { background: #21262d; color: #484f58; cursor: not-allowed; }
         .btn-donate { background: #ffca28; color: #000; }
+        .btn-donate:hover:not(:disabled) { background: #ffd54f; box-shadow: 0 5px 15px rgba(255, 202, 40, 0.4); }
+
         .lang-menu { display: flex; gap: 12px; margin-left: 15px; align-items: center; border-left: 1px solid #30363d; padding-left: 15px; }
         .lang-flag { width: 28px; height: 18px; border-radius: 4px; cursor: pointer; opacity: 0.3; transition: 0.3s; border: 2px solid transparent; }
         .lang-flag.active { opacity: 1; border-color: #009dff; box-shadow: 0 0 12px rgba(0, 157, 255, 0.8); }
