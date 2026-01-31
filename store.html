@@ -34,7 +34,6 @@
         .rank-card { background: #161b22; border: 1px solid #30363d; border-radius: 15px; padding: 30px; text-align: center; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; justify-content: space-between; position: relative; }
         .rank-card:hover:not(.disabled) { transform: translateY(-10px) scale(1.02); border-color: #009dff; box-shadow: 0 15px 30px rgba(0, 157, 255, 0.15); }
         
-        /* Ikonka info v rohu */
         .info-icon { position: absolute; top: 15px; right: 15px; color: #484f58; cursor: pointer; transition: 0.3s; font-size: 1.1rem; }
         .info-icon:hover { color: #fff; transform: rotate(15deg); }
 
@@ -125,7 +124,7 @@
             nav_home: "Domov", nav_rules: "Pravidlá", nav_team: "Tím", nav_staff: "Nábory", nav_vote: "Hlasovanie", nav_store: "Store",
             store_title_1: "Oficiálny", store_title_2: "Obchod", store_subtitle: "Vyberte si balíček výhod a podporte rozvoj nášho servera.",
             dur_week: "Týždeň", dur_month: "Mesiac", dur_year: "Rok", dur_life: "Navždy",
-            top_buyer: "Top Kupec Mesiaca", buy_btn: "KÚPIŤ", donate_btn: "DAROVAŤ",
+            top_buyer: "Top Kupec Mesiaca", buy_btn: "KÚPIŤ", donate_btn: "DAROVAŤ", perks_btn: "VÝHODY",
             rank_desc_immortal: "Najvyššia moc s exkluzívnymi efektami.",
             rank_desc_legend: "Staň sa legendou s unikátnym prefixom.",
             rank_desc_ultra: "Pokročilé výhody pre náročných.",
@@ -138,7 +137,7 @@
             nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování", nav_store: "Store",
             store_title_1: "Oficiální", store_title_2: "Obchod", store_subtitle: "Vyberte si balíček výhod a podpořte rozvoj našeho serveru.",
             dur_week: "Týden", dur_month: "Měsíc", dur_year: "Rok", dur_life: "Navždy",
-            top_buyer: "Top Kupující Měsíce", buy_btn: "KOUPIT", donate_btn: "DAROVAT",
+            top_buyer: "Top Kupující Měsíce", buy_btn: "KOUPIT", donate_btn: "DAROVAT", perks_btn: "VÝHODY",
             rank_desc_immortal: "Nejvyšší moc s exkluzivními efekty.",
             rank_desc_legend: "Staň se legendou s unikátním prefixom.",
             rank_desc_ultra: "Pokročilé výhody pro náročné.",
@@ -151,7 +150,7 @@
             nav_home: "Home", nav_rules: "Rules", nav_team: "Team", nav_staff: "Staff", nav_vote: "Vote", nav_store: "Store",
             store_title_1: "Official", store_title_2: "Store", store_subtitle: "Choose a package of benefits and support our server's development.",
             dur_week: "Week", dur_month: "Month", dur_year: "Year", dur_life: "Lifetime",
-            top_buyer: "Top Buyer of the Month", buy_btn: "BUY", donate_btn: "DONATE",
+            top_buyer: "Top Buyer of the Month", buy_btn: "BUY", donate_btn: "DONATE", perks_btn: "PERKS",
             rank_desc_immortal: "Supreme power with exclusive effects.",
             rank_desc_legend: "Become a legend with a unique prefix.",
             rank_desc_ultra: "Advanced benefits for demanding players.",
@@ -244,7 +243,7 @@
                 const priceValue = isUnavailable ? "N/A" : formatPrice(rank.price * multipliers[activeDuration], lang);
                 grid.innerHTML += `
                     <div class="rank-card ${isUnavailable ? 'disabled' : ''}">
-                        <i class="fas fa-info-circle info-icon" onclick="openModal('${rank.name}')" title="Info"></i>
+                        <i class="fas fa-info-circle info-icon" onclick="openModal('${rank.name}')" title="${t.perks_btn}"></i>
                         <div>
                             <div class="rank-name" style="color:${rank.color}">${rank.name}</div>
                             <div style="color:#8b949e; font-size:0.9rem;">${t[rank.langKey]}</div>
