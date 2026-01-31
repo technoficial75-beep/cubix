@@ -8,37 +8,38 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Štýly zostávajú rovnaké ako predtým */
         .store-section { padding: 60px 0; }
         .hero-title { font-size: 3.5rem; font-weight: 800; margin-bottom: 20px; color: #fff; text-align: center; }
         .hero-title span { color: #009dff; }
-        .hero-subtitle { color: #8b949e; font-size: 1.1rem; margin-bottom: 50px; text-align: center; }
+        .hero-subtitle { color: #8b949e; font-size: 1.1rem; margin-bottom: 50px; max-width: 700px; margin-left: auto; margin-right: auto; text-align: center; }
 
         .duration-selector {
-            display: flex; justify-content: center; gap: 10px; background: #161b22; 
-            padding: 8px; border-radius: 12px; border: 1px solid #30363d;
+            display: flex; justify-content: center; gap: 10px; margin-bottom: 40px;
+            background: #161b22; padding: 8px; border-radius: 12px; border: 1px solid #30363d;
             max-width: fit-content; margin: 0 auto 40px auto;
         }
         .duration-btn {
             padding: 10px 20px; border-radius: 8px; border: none; background: transparent;
-            color: #8b949e; cursor: pointer; font-weight: 700; transition: 0.3s; text-transform: uppercase; font-size: 0.8rem;
+            color: #8b949e; cursor: pointer; font-weight: 700; transition: 0.3s;
+            text-transform: uppercase; font-size: 0.8rem;
         }
         .duration-btn.active { background: #009dff; color: white; }
 
         .store-container { display: flex; gap: 30px; margin-top: 40px; align-items: flex-start; }
+
         .sidebar { width: 250px; flex-shrink: 0; position: sticky; top: 100px; }
         .sidebar-item {
             background: #161b22; border: 1px solid #30363d; padding: 15px 20px; margin-bottom: 10px;
             border-radius: 10px; cursor: pointer; font-weight: 700; color: #fff; transition: 0.3s;
             display: flex; align-items: center; gap: 12px; text-transform: uppercase; font-size: 0.9rem;
         }
-        .sidebar-item.active { border-color: #009dff; background: #1c2128; }
+        .sidebar-item.active { border-color: #009dff; background: #1c2128; box-shadow: inset 0 0 10px rgba(0, 157, 255, 0.2); }
         .sidebar-item.donate-link { color: #ffca28; border-color: rgba(255, 202, 40, 0.3); }
         .sidebar-item.donate-link.active { border-color: #ffca28; background: rgba(255, 202, 40, 0.05); }
 
         .top-donator-card {
             background: #161b22; border: 1px solid #ffca28; border-radius: 12px; padding: 20px;
-            text-align: center; margin-top: 25px;
+            text-align: center; margin-top: 25px; box-shadow: 0 4px 15px rgba(255, 202, 40, 0.1);
         }
         .donator-avatar { width: 64px; height: 64px; border-radius: 8px; border: 2px solid #30363d; margin-bottom: 10px; image-rendering: pixelated; }
 
@@ -48,7 +49,7 @@
             text-align: center; transition: 0.3s; display: flex; flex-direction: column; justify-content: space-between;
         }
         
-        /* Nedostupné položky */
+        /* Vizuál pre N/A (Nedostupné) */
         .rank-card.disabled {
             opacity: 0.4;
             filter: grayscale(1);
@@ -82,13 +83,17 @@
         <a href="index.html" class="logo"><img src="cubixtext.png" alt="Logo" style="height: 40px;"></a>
         <div style="display: flex; align-items: center;">
             <ul class="nav-links" style="display: flex; list-style: none; gap: 20px; margin: 0; padding: 0;">
-                <li><a href="index.html" style="color: #fff; text-decoration: none;"><i class="fas fa-home"></i> Domov</a></li>
-                <li><a href="store.html" style="color: #ffca28; text-decoration: none;"><i class="fas fa-shopping-cart"></i> Store</a></li>
+                <li><a href="index.html" style="color: #fff; text-decoration: none;"><i class="fas fa-home"></i> <span>Domov</span></a></li>
+                <li><a href="pravidla.html" style="color: #fff; text-decoration: none;"><i class="fas fa-book"></i> <span>Pravidlá</span></a></li>
+                <li><a href="team.html" style="color: #fff; text-decoration: none;"><i class="fas fa-users"></i> <span>Tím</span></a></li>
+                <li><a href="nabory.html" style="color: #fff; text-decoration: none;"><i class="fas fa-user-plus"></i> <span>Nábory</span></a></li>
+                <li><a href="hlasovanie.html" style="color: #fff; text-decoration: none;"><i class="fas fa-check-square"></i> <span>Hlasovanie</span></a></li>
+                <li><a href="store.html" style="color: #ffca28; text-decoration: none;"><i class="fas fa-shopping-cart"></i> <span>Store</span></a></li>
             </ul>
             <div class="lang-menu">
-                <img src="https://flagcdn.com/w80/sk.png" class="lang-flag" id="lang-sk" onclick="changeLang('sk')">
-                <img src="https://flagcdn.com/w80/cz.png" class="lang-flag" id="lang-cz" onclick="changeLang('cz')">
-                <img src="https://flagcdn.com/w80/gb.png" class="lang-flag" id="lang-en" onclick="changeLang('en')">
+                <img src="https://flagcdn.com/w80/sk.png" class="lang-flag" id="lang-sk" onclick="setGlobalLang('sk')">
+                <img src="https://flagcdn.com/w80/cz.png" class="lang-flag" id="lang-cz" onclick="setGlobalLang('cz')">
+                <img src="https://flagcdn.com/w80/gb.png" class="lang-flag" id="lang-en" onclick="setGlobalLang('en')">
             </div>
         </div>
     </div>
@@ -124,26 +129,27 @@
 </main>
 
 <script>
-    // SYNCHRONIZÁCIA JAZYKA
-    function changeLang(lang) {
-        localStorage.setItem('preferredLang', lang); // Uloží výber do pamäte prehliadača
-        applyLang(lang);
+    // LOGIKA PRE SYNCHRONIZÁCIU JAZYKA
+    function setGlobalLang(lang) {
+        localStorage.setItem('cubix_lang', lang);
+        updatePageLanguage(lang);
     }
 
-    function applyLang(lang) {
+    function updatePageLanguage(lang) {
+        // Označenie aktívnej vlajky
         document.querySelectorAll('.lang-flag').forEach(f => f.classList.remove('active'));
-        const activeFlag = document.getElementById('lang-' + lang);
-        if(activeFlag) activeFlag.classList.add('active');
-        
-        // Tu môžeš pridať prepínanie textov pre konkrétne jazyky, ak ich máš v objekte
-        console.log("Jazyk nastavený na: " + lang);
+        const flag = document.getElementById('lang-' + lang);
+        if(flag) flag.classList.add('active');
+
+        // Tu sa v budúcnosti dajú pridať preklady textov
+        console.log("Jazyk zmenený na: " + lang);
         renderStore();
     }
 
-    // Pri načítaní stránky skontroluj, či už je jazyk vybratý
+    // Skontroluj uložený jazyk pri načítaní
     window.onload = function() {
-        const savedLang = localStorage.getItem('preferredLang') || 'sk';
-        applyLang(savedLang);
+        const savedLang = localStorage.getItem('cubix_lang') || 'sk';
+        updatePageLanguage(savedLang);
     };
 
     // LOGIKA OBCHODU
