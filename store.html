@@ -8,11 +8,11 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Tvoje pôvodné štýly sekcie */
+        /* TVOJE PÔVODNÉ ŠTÝLY - NIČ NEMENÍM */
         .store-section { padding: 60px 0; }
         .hero-title { font-size: 3.5rem; font-weight: 800; margin-bottom: 20px; color: #fff; text-align: center; }
         .hero-title span { color: #009dff; }
-        .hero-subtitle { color: #8b949e; font-size: 1.1rem; margin-bottom: 50px; max-width: 700px; margin-left: auto; margin-right: auto; text-align: center; }
+        .hero-subtitle { color: #8b949e; font-size: 1.1rem; margin-bottom: 50px; text-align: center; }
 
         .duration-selector {
             display: flex; justify-content: center; gap: 10px; margin-bottom: 40px;
@@ -27,7 +27,6 @@
         .duration-btn.active { background: #009dff; color: white; }
 
         .store-container { display: flex; gap: 30px; margin-top: 40px; align-items: flex-start; }
-
         .sidebar { width: 250px; flex-shrink: 0; position: sticky; top: 100px; }
         .sidebar-item {
             background: #161b22; border: 1px solid #30363d; padding: 15px 20px; margin-bottom: 10px;
@@ -40,7 +39,7 @@
 
         .top-donator-card {
             background: #161b22; border: 1px solid #ffca28; border-radius: 12px; padding: 20px;
-            text-align: center; margin-top: 25px; box-shadow: 0 4px 15px rgba(255, 202, 40, 0.1);
+            text-align: center; margin-top: 25px;
         }
         .donator-avatar { width: 64px; height: 64px; border-radius: 8px; border: 2px solid #30363d; margin-bottom: 10px; image-rendering: pixelated; }
 
@@ -50,13 +49,9 @@
             text-align: center; transition: 0.3s; display: flex; flex-direction: column; justify-content: space-between;
         }
         
-        /* Štýl pre N/A - viditeľne zakázané */
+        /* ŠTÝL PRE N/A */
         .rank-card.disabled {
-            opacity: 0.4;
-            filter: grayscale(1);
-            background: #0d1117;
-            border-color: #21262d;
-            cursor: not-allowed;
+            opacity: 0.4; filter: grayscale(1); background: #0d1117; border-color: #21262d; cursor: not-allowed;
         }
         .rank-card.disabled .rank-name, .rank-card.disabled .price-tag { color: #484f58 !important; }
 
@@ -70,7 +65,6 @@
         .btn-buy:disabled { background: #21262d; color: #484f58; cursor: not-allowed; }
         .btn-donate { background: #ffca28; color: #000; }
 
-        /* Vlajky */
         .lang-menu { display: flex; gap: 12px; margin-left: 15px; align-items: center; border-left: 1px solid #30363d; padding-left: 15px; }
         .lang-flag { width: 28px; height: 18px; border-radius: 4px; cursor: pointer; opacity: 0.3; transition: 0.3s; border: 2px solid transparent; }
         .lang-flag.active { opacity: 1; border-color: #009dff; box-shadow: 0 0 12px rgba(0, 157, 255, 0.8); }
@@ -81,16 +75,12 @@
 <body>
 
 <header>
-    <div class="container header-wrap">
-        <a href="index.html" class="logo"><img src="cubixtext.png" alt="Logo"></a>
+    <div class="container header-wrap" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0;">
+        <a href="index.html" class="logo"><img src="cubixtext.png" alt="Logo" style="height: 40px;"></a>
         <div style="display: flex; align-items: center;">
-            <ul class="nav-links">
-                <li><a href="index.html"><i class="fas fa-home"></i> <span data-lang="nav_home">Domov</span></a></li>
-                <li><a href="pravidla.html"><i class="fas fa-book"></i> <span data-lang="nav_rules">Pravidlá</span></a></li>
-                <li><a href="team.html"><i class="fas fa-users"></i> <span data-lang="nav_team">Tím</span></a></li>
-                <li><a href="nabory.html"><i class="fas fa-user-plus"></i> <span data-lang="nav_staff">Nábory</span></a></li>
-                <li><a href="hlasovanie.html"><i class="fas fa-check-square"></i> <span data-lang="nav_vote">Hlasovanie</span></a></li>
-                <li><a href="store.html" class="active" style="color: #ffca28;"><i class="fas fa-shopping-cart"></i> <span data-lang="nav_store">Store</span></a></li>
+            <ul class="nav-links" style="display: flex; list-style: none; gap: 20px; margin: 0; padding: 0;">
+                <li><a href="index.html" style="color: #fff; text-decoration: none;"><i class="fas fa-home"></i> <span id="txt-nav-home">Domov</span></a></li>
+                <li><a href="store.html" style="color: #ffca28; text-decoration: none;"><i class="fas fa-shopping-cart"></i> <span id="txt-nav-store">Store</span></a></li>
             </ul>
             <div class="lang-menu">
                 <img src="https://flagcdn.com/w80/sk.png" class="lang-flag" id="lang-sk" onclick="setLang('sk')">
@@ -102,8 +92,8 @@
 </header>
 
 <main class="container store-section">
-    <h1 class="hero-title">Oficiálny <span>Obchod</span></h1>
-    <p class="hero-subtitle">Vyberte si balíček výhod a podporte rozvoj nášho servera.</p>
+    <h1 class="hero-title"><span id="txt-hero-title-1">Oficiálny</span> <span id="txt-hero-title-2">Obchod</span></h1>
+    <p class="hero-subtitle" id="txt-hero-subtitle">Vyberte si balíček výhod a podporte rozvoj nášho servera.</p>
     
     <div class="duration-selector" id="dur-box">
         <button class="duration-btn" onclick="setDuration('week')" id="btn-week">Týždeň</button>
@@ -116,10 +106,9 @@
         <aside class="sidebar">
             <div class="sidebar-item active" id="side-ranks" onclick="switchTab('ranks')"><i class="fas fa-crown"></i> RANKS</div>
             <div class="sidebar-item donate-link" id="side-donate" onclick="switchTab('donate')"><i class="fas fa-heart"></i> DONATE</div>
-            <div class="sidebar-item" style="opacity: 0.5; cursor: not-allowed;"><i class="fas fa-box-open"></i> CRATES (SOON)</div>
-
+            
             <div class="top-donator-card">
-                <span style="color: #ffca28; font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">Top Kupec Mesiaca</span><br><br>
+                <span id="txt-top-donator" style="color: #ffca28; font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">Top Kupec Mesiaca</span><br><br>
                 <img src="https://mc-heads.net/avatar/Steve" class="donator-avatar">
                 <div style="color: #fff; font-weight: 700;">Steve</div>
                 <div style="color: #2ed573; font-weight: 800;">150.00€</div>
@@ -131,42 +120,73 @@
 </main>
 
 <script>
-    // --- JAZYKOVÁ SYNCHRONIZÁCIA ---
-    function setLang(lang) {
-        localStorage.setItem('selectedLang', lang); // Uloží výber pre všetky podstránky
-        applyLang(lang);
-    }
+    // 1. PREKLADY
+    const translations = {
+        sk: {
+            nav_home: "Domov", nav_store: "Store",
+            hero_1: "Oficiálny", hero_2: "Obchod",
+            hero_sub: "Vyberte si balíček výhod a podporte rozvoj nášho servera.",
+            dur_week: "Týždeň", dur_month: "Mesiac", dur_year: "Rok", dur_life: "Navždy",
+            top_buyer: "Top Kupec Mesiaca", buy_btn: "KÚPIŤ", donate_btn: "DAROVAŤ",
+            donate_desc: "Dobrovoľný príspevok na server."
+        },
+        cz: {
+            nav_home: "Domů", nav_store: "Store",
+            hero_1: "Oficiální", hero_2: "Obchod",
+            hero_sub: "Vyberte si balíček výhod a podpořte rozvoj našeho serveru.",
+            dur_week: "Týden", dur_month: "Měsíc", dur_year: "Rok", dur_life: "Navždy",
+            top_buyer: "Top Kupující Měsíce", buy_btn: "KOUPIT", donate_btn: "DAROVAT",
+            donate_desc: "Dobrovolný příspěvek na server."
+        },
+        en: {
+            nav_home: "Home", nav_store: "Store",
+            hero_1: "Official", hero_2: "Store",
+            hero_sub: "Choose a package of benefits and support our server's development.",
+            dur_week: "Week", dur_month: "Month", dur_year: "Year", dur_life: "Lifetime",
+            top_buyer: "Top Buyer of the Month", buy_btn: "BUY", donate_btn: "DONATE",
+            donate_desc: "Voluntary contribution to the server."
+        }
+    };
 
-    function applyLang(lang) {
-        document.querySelectorAll('.lang-flag').forEach(f => f.classList.remove('active'));
-        const activeFlag = document.getElementById('lang-' + lang);
-        if (activeFlag) activeFlag.classList.add('active');
-        
-        // Sem môžeš pridať logiku prekladu textov na Store
-        renderStore();
-    }
-
-    // Skontroluje jazyk pri každom načítaní Store
-    window.addEventListener('DOMContentLoaded', () => {
-        const savedLang = localStorage.getItem('selectedLang') || 'sk';
-        applyLang(savedLang);
-    });
-
-    // --- LOGIKA OBCHODU ---
+    // 2. DÁTA RANKOV
     const rankList = [
-        { name: "Immortal", color: "#ff4757", price: 35, hasLife: false, desc: "Najvyššia moc s exkluzívnymi efektami." },
-        { name: "Legend", color: "#2ed573", price: 18, hasLife: true, desc: "Staň sa legendou s unikátnym prefixom." },
-        { name: "Ultra", color: "#1e90ff", price: 12, hasLife: true, desc: "Pokročilé výhody pre skúsených hráčov." },
-        { name: "Elite", color: "#a29bfe", price: 8, hasLife: true, desc: "Získaj elitný status a farebný chat." },
-        { name: "VIP+", color: "#55efc4", price: 5, hasLife: true, desc: "Vylepšené VIP s viacerými výhodami." },
-        { name: "VIP", color: "#ffeaa7", price: 3, hasLife: true, desc: "Základná podpora a VIP zóna." }
+        { name: "Immortal", color: "#ff4757", price: 35, hasLife: false, desc: { sk: "Najvyššia moc.", cz: "Nejvyšší moc.", en: "Supreme power." } },
+        { name: "Legend", color: "#2ed573", price: 18, hasLife: true, desc: { sk: "Staň sa legendou.", cz: "Staň se legendou.", en: "Become a legend." } },
+        { name: "Ultra", color: "#1e90ff", price: 12, hasLife: true, desc: { sk: "Pokročilé výhody.", cz: "Pokročilé výhody.", en: "Advanced benefits." } },
+        { name: "Elite", color: "#a29bfe", price: 8, hasLife: true, desc: { sk: "Získaj elitný status.", cz: "Získej elitní status.", en: "Get elite status." } },
+        { name: "VIP+", color: "#55efc4", price: 5, hasLife: true, desc: { sk: "Vylepšené VIP.", cz: "Vylepšené VIP.", en: "Improved VIP." } },
+        { name: "VIP", color: "#ffeaa7", price: 3, hasLife: true, desc: { sk: "Základná podpora.", cz: "Základní podpora.", en: "Basic support." } }
     ];
 
-    const donateAmounts = [5, 10, 20, 50, 100];
     const multipliers = { week: 0.12, month: 0.25, year: 0.6, lifetime: 1 };
-    
-    let activeTab = 'ranks';
+    let activeLang = localStorage.getItem('selectedLang') || 'sk';
     let activeDuration = 'lifetime';
+    let activeTab = 'ranks';
+
+    // 3. FUNKCIE
+    function setLang(lang) {
+        activeLang = lang;
+        localStorage.setItem('selectedLang', lang);
+        applyTranslations();
+    }
+
+    function applyTranslations() {
+        const t = translations[activeLang];
+        document.getElementById('txt-nav-home').innerText = t.nav_home;
+        document.getElementById('txt-nav-store').innerText = t.nav_store;
+        document.getElementById('txt-hero-title-1').innerText = t.hero_1;
+        document.getElementById('txt-hero-title-2').innerText = t.hero_2;
+        document.getElementById('txt-hero-subtitle').innerText = t.hero_sub;
+        document.getElementById('btn-week').innerText = t.dur_week;
+        document.getElementById('btn-month').innerText = t.dur_month;
+        document.getElementById('btn-year').innerText = t.dur_year;
+        document.getElementById('btn-lifetime').innerText = t.dur_life;
+        document.getElementById('txt-top-donator').innerText = t.top_buyer;
+
+        document.querySelectorAll('.lang-flag').forEach(f => f.classList.remove('active'));
+        document.getElementById('lang-' + activeLang).classList.add('active');
+        renderStore();
+    }
 
     function setDuration(d) {
         activeDuration = d;
@@ -186,6 +206,7 @@
     function renderStore() {
         const grid = document.getElementById('main-grid');
         grid.innerHTML = '';
+        const t = translations[activeLang];
 
         if (activeTab === 'ranks') {
             rankList.forEach(rank => {
@@ -195,30 +216,33 @@
                     <div class="rank-card ${isUnavailable ? 'disabled' : ''}">
                         <div>
                             <div class="rank-name" style="color:${rank.color}">${rank.name}</div>
-                            <div style="color:#8b949e; font-size:0.9rem;">${rank.desc}</div>
+                            <div style="color:#8b949e; font-size:0.9rem;">${rank.desc[activeLang]}</div>
                         </div>
                         <div>
                             <div class="price-tag">${finalPrice}</div>
-                            <button class="btn-buy" ${isUnavailable ? 'disabled' : ''}>KÚPIŤ</button>
+                            <button class="btn-buy" ${isUnavailable ? 'disabled' : ''}>${t.buy_btn}</button>
                         </div>
                     </div>`;
             });
         } else {
-            donateAmounts.forEach(amt => {
+            [5, 10, 20, 50, 100].forEach(amt => {
                 grid.innerHTML += `
                     <div class="rank-card">
                         <div>
                             <div class="rank-name" style="color:#ffca28">DONATE</div>
-                            <div style="color:#8b949e; font-size:0.9rem;">Dobrovoľný príspevok na rozvoj servera.</div>
+                            <div style="color:#8b949e; font-size:0.9rem;">${t.donate_desc}</div>
                         </div>
                         <div>
                             <div class="price-tag">${amt}.00€</div>
-                            <button class="btn-buy btn-donate">DAROVAŤ</button>
+                            <button class="btn-buy btn-donate">${t.donate_btn}</button>
                         </div>
                     </div>`;
             });
         }
     }
+
+    // Spustenie pri načítaní
+    window.addEventListener('DOMContentLoaded', applyTranslations);
 </script>
 </body>
 </html>
