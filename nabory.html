@@ -151,6 +151,7 @@
                 <li><a href="team.html"><i class="fas fa-users"></i> <span data-lang="nav_team">Tím</span></a></li>
                 <li><a href="nabory.html" class="active"><i class="fas fa-user-plus"></i> <span data-lang="nav_staff">Nábory</span></a></li>
                 <li><a href="hlasovanie.html"><i class="fas fa-check-square"></i> <span data-lang="nav_vote">Hlasovanie</span></a></li>
+                <li><a href="store.html" style="color: #ffca28;"><i class="fas fa-shopping-cart"></i> <span data-lang="nav_store">Store</span></a></li>
             </ul>
             <div class="lang-menu">
                 <img src="https://flagcdn.com/w80/sk.png" class="lang-flag" id="lang-sk" onclick="setLang('sk')" title="Slovenčina">
@@ -240,7 +241,7 @@
 <script>
     const translations = {
         sk: {
-            nav_home: "Domov", nav_rules: "Pravidlá", nav_team: "Tím", nav_staff: "Nábory", nav_vote: "Hlasovanie",
+            nav_home: "Domov", nav_rules: "Pravidlá", nav_team: "Tím", nav_staff: "Nábory", nav_vote: "Hlasovanie", nav_store: "Store",
             apply_title_1: "Aktuálne", apply_title_2: "Nábory", apply_subtitle: "Vyber si pozíciu a vyplň formulár.",
             status_open: "Otvorené", status_closed: "Zatvorené", btn_apply: "Poslať prihlášku", btn_closed: "Pozastavené",
             desc_dev: "Technická správa servera.", desc_mod: "Dohľad nad poriadkom.", desc_build: "Stavba máp.",
@@ -249,7 +250,7 @@
             toast_success: "Prihláška bola úspešne odoslaná!"
         },
         cz: {
-            nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování",
+            nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování", nav_store: "Obchod",
             apply_title_1: "Aktuální", apply_title_2: "Nábory", apply_subtitle: "Vyber si pozici a vyplň formulář.",
             status_open: "Otevřeno", status_closed: "Zavřeno", btn_apply: "Poslat přihlášku", btn_closed: "Pozastaveno",
             desc_dev: "Technická správa serveru.", desc_mod: "Dohled nad pořádkem.", desc_build: "Stavba map.",
@@ -258,7 +259,7 @@
             toast_success: "Přihláška byla úspěšně odeslána!"
         },
         en: {
-            nav_home: "Home", nav_rules: "Rules", nav_team: "Team", nav_staff: "Apply", nav_vote: "Vote",
+            nav_home: "Home", nav_rules: "Rules", nav_team: "Team", nav_staff: "Apply", nav_vote: "Vote", nav_store: "Store",
             apply_title_1: "Current", apply_title_2: "Recruitment", apply_subtitle: "Pick a position and fill out the form.",
             status_open: "Open", status_closed: "Closed", btn_apply: "Apply Now", btn_closed: "Suspended",
             desc_dev: "Server tech management.", desc_mod: "Server moderation.", desc_build: "Building maps.",
@@ -318,12 +319,10 @@
     }
 
     function updateUI(langId) {
-        // Aktualizácia vlajok (aktívny štýl)
         document.querySelectorAll('.lang-flag').forEach(flag => flag.classList.remove('active'));
         const selected = document.getElementById('lang-' + langId);
         if (selected) selected.classList.add('active');
 
-        // Aktualizácia textov
         document.querySelectorAll('[data-lang]').forEach(element => {
             const key = element.getAttribute('data-lang');
             if (translations[langId] && translations[langId][key]) {
@@ -338,5 +337,4 @@
     };
 </script>
 </body>
-
 </html>
