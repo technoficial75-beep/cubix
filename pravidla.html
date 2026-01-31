@@ -105,7 +105,6 @@
         .rule-header:hover { background: rgba(255, 255, 255, 0.05); border-color: #009dff; }
         .rule-info { display: flex; align-items: center; gap: 12px; }
         
-        /* NOVÝ ŠTÝL PRE ČÍSLA (IKONKY) */
         .rule-number {
             background: linear-gradient(135deg, #009dff, #0056b3);
             color: #fff;
@@ -114,11 +113,11 @@
             display: flex; 
             align-items: center; 
             justify-content: center;
-            border-radius: 50%; /* Kruhový tvar */
+            border-radius: 50%;
             font-weight: 800; 
             flex-shrink: 0;
             font-size: 0.85rem;
-            box-shadow: 0 0 10px rgba(0, 157, 255, 0.5); /* Glow efekt */
+            box-shadow: 0 0 10px rgba(0, 157, 255, 0.5);
             border: 2px solid rgba(255, 255, 255, 0.2);
             text-shadow: 0 0 5px rgba(0,0,0,0.5);
         }
@@ -175,6 +174,7 @@
                 <li><a href="team.html"><i class="fas fa-users"></i> <span data-lang="nav_team">Tím</span></a></li>
                 <li><a href="nabory.html"><i class="fas fa-user-plus"></i> <span data-lang="nav_staff">Nábory</span></a></li>
                 <li><a href="hlasovanie.html"><i class="fas fa-check-square"></i> <span data-lang="nav_vote">Hlasovanie</span></a></li>
+                <li><a href="store.html" style="color: #ffca28;"><i class="fas fa-shopping-cart"></i> <span data-lang="nav_store">Store</span></a></li>
             </ul>
             <div class="lang-menu">
                 <img src="https://flagcdn.com/w80/sk.png" class="lang-flag" id="lang-sk" onclick="setLang('sk')" title="Slovenčina">
@@ -214,7 +214,7 @@
 <script>
     const ruleData = {
         sk: {
-            nav_home: "Domov", nav_rules: "Pravidlá", nav_team: "Tím", nav_staff: "Nábory", nav_vote: "Hlasovanie",
+            nav_home: "Domov", nav_rules: "Pravidlá", nav_team: "Tím", nav_staff: "Nábory", nav_vote: "Hlasovanie", nav_store: "Store",
             rules_main_title: "Pravidlá projektu",
             ban_title: "Dostal si ban neprávom?",
             ban_desc: "Ak si myslíš, že tvoj trest je nespravodlivý, neváhaj sa odvolať na našom Discord serveri.",
@@ -254,7 +254,7 @@
             ]
         },
         cz: {
-            nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování",
+            nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování", nav_store: "Obchod",
             rules_main_title: "Pravidla projektu",
             ban_title: "Dostal jsi ban neprávem?",
             ban_desc: "Pokud si myslíš, že tvůj trest je nespravedlivý, neváhej se odvolat na našem Discord serveru.",
@@ -294,7 +294,7 @@
             ]
         },
         en: {
-            nav_home: "Home", nav_rules: "Rules", nav_team: "Team", nav_staff: "Staff", nav_vote: "Vote",
+            nav_home: "Home", nav_rules: "Rules", nav_team: "Team", nav_staff: "Staff", nav_vote: "Vote", nav_store: "Store",
             rules_main_title: "Project Rules",
             ban_title: "Banned unfairly?",
             ban_desc: "If you think your punishment is unfair, feel free to appeal on our Discord server.",
@@ -324,7 +324,7 @@
                 { t: "Inappropriate Identity", d: "Keep skin/nick appropriate.", c: "NSFW skins or offensive nicknames are not allowed." },
                 { t: "Teaming (Solo)", d: "No teaming in solo modes.", c: "Cooperation between players in solo Boxfights is forbidden." },
                 { t: "Lying to A-Team", d: "Be honest with admins.", c: "Providing false information to the AT is punished." },
-                { t: "Report Abuse", d: "Report real offenses only.", c: "Spamování /report with fake claims is prohibited." },
+                { t: "Report Abuse", d: "Report real offenses only.", c: "Spamming /report with fake claims is prohibited." },
                 { t: "Scamming", d: "No stealing during trades.", c: "Scams during agreed trades result in a ban." },
                 { t: "Server Lagging", d: "Don't cause server lag.", c: "Building lag-machines or entity overloading is prohibited." },
                 { t: "AT Provocation", d: "Respect administrators.", c: "Constantly questioning or provoking AT in chat is forbidden." },
@@ -386,5 +386,4 @@
     };
 </script>
 </body>
-
 </html>
