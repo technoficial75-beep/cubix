@@ -1,252 +1,275 @@
 <!DOCTYPE html>
 <html lang="sk">
 <head>
+    <link rel="icon" type="image/x-icon" href="favicon.ico?v=2">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cubix Store | Ranks</title>
+    <title>Cubix | Store</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Celkový reset a pozadie */
-        body {
-            background-color: #0b0f14; /* Veľmi tmavá modro-čierna */
-            color: #ffffff;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+        /* Zjednotenie so štýlom ostatných stránok */
+        .store-section { padding: 60px 0; }
+        .hero-title { font-size: 3.5rem; font-weight: 800; margin-bottom: 20px; color: #fff; text-align: center; }
+        .hero-subtitle { color: #8b949e; font-size: 1.1rem; margin-bottom: 50px; max-width: 700px; margin-left: auto; margin-right: auto; text-align: center; }
 
-        /* Horná navigácia */
-        header.navbar {
+        .store-container {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 60px;
-            background: rgba(0, 0, 0, 0.6);
-            border-bottom: 2px solid #007bff;
+            gap: 30px;
+            margin-top: 40px;
+            align-items: flex-start;
         }
 
-        .logo img {
-            height: 55px;
-        }
-
-        .nav-links a {
-            color: #00a2ff;
-            text-decoration: none;
-            margin-left: 25px;
-            font-weight: bold;
-            font-size: 14px;
-            text-transform: uppercase;
-            transition: 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #00d9ff;
-            text-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
-        }
-
-        /* Hlavný layout */
-        .container {
-            display: flex;
-            max-width: 1200px;
-            margin: 40px auto;
-            gap: 25px;
-            padding: 0 20px;
-        }
-
-        /* Bočný panel (Sidebar) */
+        /* Sidebar */
         .sidebar {
-            width: 280px;
+            width: 250px;
             flex-shrink: 0;
+            position: sticky;
+            top: 100px;
         }
 
         .sidebar-item {
-            background: #161d26;
-            padding: 18px;
-            margin-bottom: 12px;
+            background: #161b22;
+            border: 1px solid #30363d;
+            padding: 15px 20px;
+            margin-bottom: 10px;
             border-radius: 10px;
             cursor: pointer;
-            border-left: 6px solid #007bff;
-            font-weight: bold;
+            font-weight: 700;
+            color: #fff;
+            transition: 0.3s;
             display: flex;
             align-items: center;
-            transition: 0.2s;
+            gap: 12px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
         }
 
-        .sidebar-item:hover {
-            background: #1c2631;
+        .sidebar-item:hover, .sidebar-item.active {
+            border-color: #009dff;
+            background: #1c2128;
             transform: translateX(5px);
         }
 
         .sidebar-item.inactive {
-            border-left: 6px solid #34495e;
-            opacity: 0.6;
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
-        /* Hlavný obsah obchodu */
-        .shop-area {
-            flex-grow: 1;
-        }
-
-        .alert-box {
-            background: #161d26;
-            padding: 20px;
-            border-radius: 10px;
-            border: 1px solid #2c3e50;
-            margin-bottom: 25px;
-            border-left: 4px solid #00a2ff;
-        }
-
-        .alert-text strong {
-            color: #00a2ff;
-        }
-
-        /* Mriežka s rankami */
+        /* Grid pre Ranky */
         .ranks-grid {
+            flex-grow: 1;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 20px;
         }
 
         .rank-card {
-            background: #161d26;
-            border: 1px solid #2c3e50;
-            border-radius: 12px;
-            padding: 25px;
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 15px;
+            padding: 30px;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .rank-card:hover {
-            transform: translateY(-8px);
-            border-color: #00a2ff;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            transform: translateY(-10px);
+            border-color: #009dff;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
 
         .rank-name {
-            font-size: 22px;
-            font-weight: bold;
-            color: #00a2ff;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #009dff;
             margin-bottom: 5px;
             display: block;
             text-transform: uppercase;
         }
 
         .rank-duration {
-            font-size: 13px;
-            color: #8da2b5;
-            margin-bottom: 15px;
+            font-size: 0.85rem;
+            color: #8b949e;
+            margin-bottom: 20px;
             display: block;
         }
 
         .price-tag {
-            font-size: 26px;
-            font-weight: bold;
+            font-size: 2rem;
+            font-weight: 800;
             margin: 20px 0;
             display: block;
             color: #fff;
         }
 
-        /* Tlačidlo */
         .btn-buy {
-            background: linear-gradient(135deg, #007bff 0%, #00a2ff 100%);
-            color: #fff;
-            border: none;
-            padding: 12px 0;
+            display: inline-block;
             width: 100%;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            text-transform: uppercase;
+            padding: 12px;
+            background: #009dff;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
             transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
         }
 
         .btn-buy:hover {
-            background: linear-gradient(135deg, #00a2ff 0%, #00d9ff 100%);
-            box-shadow: 0 4px 20px rgba(0, 162, 255, 0.5);
+            background: #007ccb;
+            box-shadow: 0 0 15px rgba(0, 157, 255, 0.4);
         }
 
+        /* VLAJKY */
+        .lang-menu { display: flex; gap: 10px; margin-left: 15px; align-items: center; border-left: 1px solid #30363d; padding-left: 15px; }
+        .lang-flag { width: 28px; height: 18px; object-fit: cover; border-radius: 4px; cursor: pointer; opacity: 0.4; transition: 0.3s; border: 2px solid transparent; }
+        .lang-flag:hover { opacity: 0.8; }
+        .lang-flag.active { opacity: 1; border-color: #009dff; box-shadow: 0 0 8px rgba(0, 157, 255, 0.4); }
+
+        @media (max-width: 768px) {
+            .store-container { flex-direction: column; }
+            .sidebar { width: 100%; position: static; }
+        }
     </style>
 </head>
 <body>
 
-    <header class="navbar">
-        <div class="logo">
-            <img src="cubixtext.png" alt="Cubix Logo">
+<header>
+    <div class="container header-wrap">
+        <a href="index.html" class="logo"><img src="cubixtext.png" alt="Logo"></a>
+        <div style="display: flex; align-items: center;">
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-home"></i> <span data-lang="nav_home">Domov</span></a></li>
+                <li><a href="pravidla.html"><i class="fas fa-book"></i> <span data-lang="nav_rules">Pravidlá</span></a></li>
+                <li><a href="team.html"><i class="fas fa-users"></i> <span data-lang="nav_team">Tím</span></a></li>
+                <li><a href="nabory.html"><i class="fas fa-user-plus"></i> <span data-lang="nav_staff">Nábory</span></a></li>
+                <li><a href="hlasovanie.html"><i class="fas fa-check-square"></i> <span data-lang="nav_vote">Hlasovanie</span></a></li>
+                <li><a href="store.html" class="active" style="color: #ffca28;"><i class="fas fa-shopping-cart"></i> <span data-lang="nav_store">Store</span></a></li>
+            </ul>
+            <div class="lang-menu">
+                <img src="https://flagcdn.com/w80/sk.png" class="lang-flag" id="lang-sk" onclick="setLang('sk')" title="Slovenčina">
+                <img src="https://flagcdn.com/w80/cz.png" class="lang-flag" id="lang-cz" onclick="setLang('cz')" title="Čeština">
+                <img src="https://flagcdn.com/w80/gb.png" class="lang-flag" id="lang-en" onclick="setLang('en')" title="English">
+            </div>
         </div>
-        <nav class="nav-links">
-            <a href="index.html">Domov</a>
-            <a href="pravidla.html">Pravidlá</a>
-            <a href="hlasovanie.html">Hlasovanie</a>
-            <a href="team.html">Tím</a>
-            <a href="nabory.html">Nábory</a>
-        </nav>
-    </header>
+    </div>
+</header>
 
-    <div class="container">
+<main class="container store-section">
+    <h1 class="hero-title"><span data-lang="store_title_1">Oficiálny</span> <span style="color: #009dff;" data-lang="store_title_2">Obchod</span></h1>
+    <p class="hero-subtitle" data-lang="store_subtitle">Vyberte si balíček výhod a podporte rozvoj nášho servera.</p>
+
+    <div class="store-container">
         <aside class="sidebar">
-            <div class="sidebar-item">RANKS</div>
-            <div class="sidebar-item inactive">CRATES</div>
+            <div class="sidebar-item active">
+                <i class="fas fa-crown"></i> RANKS
+            </div>
+            <div class="sidebar-item inactive">
+                <i class="fas fa-box-open"></i> CRATES (Soon)
+            </div>
         </aside>
 
-        <main class="shop-area">
-            <div class="alert-box">
-                <div class="alert-text">
-                    Vitajte v oficiálnom obchode <strong>CUBIX</strong>. Vyberte si svoj balíček výhod.
-                </div>
+        <section class="ranks-grid">
+            <div class="rank-card">
+                <span class="rank-name" style="color: #ff4757;">Immortal</span>
+                <span class="rank-duration"><span data-lang="store_duration">Trvanie</span>: 30 <span data-lang="store_days">dní</span></span>
+                <span class="price-tag">15.00€</span>
+                <button class="btn-buy" data-lang="btn_buy">Kúpiť</button>
             </div>
 
-            <div class="ranks-grid">
-                <div class="rank-card">
-                    <span class="rank-name">Immortal</span>
-                    <span class="rank-duration">Trvanie: 30 dní</span>
-                    <span class="price-tag">15.00€</span>
-                    <button class="btn-buy">Kúpiť</button>
-                </div>
-
-                <div class="rank-card">
-                    <span class="rank-name">Overlord</span>
-                    <span class="rank-duration">Trvanie: 30 dní</span>
-                    <span class="price-tag">12.00€</span>
-                    <button class="btn-buy">Kúpiť</button>
-                </div>
-
-                <div class="rank-card">
-                    <span class="rank-name">Legend</span>
-                    <span class="rank-duration">Trvanie: 30 dní</span>
-                    <span class="price-tag">10.00€</span>
-                    <button class="btn-buy">Kúpiť</button>
-                </div>
-
-                <div class="rank-card">
-                    <span class="rank-name">Ultra</span>
-                    <span class="rank-duration">Trvanie: 30 dní</span>
-                    <span class="price-tag">8.00€</span>
-                    <button class="btn-buy">Kúpiť</button>
-                </div>
-
-                <div class="rank-card">
-                    <span class="rank-name">Elite</span>
-                    <span class="rank-duration">Trvanie: 30 dní</span>
-                    <span class="price-tag">6.00€</span>
-                    <button class="btn-buy">Kúpiť</button>
-                </div>
-
-                <div class="rank-card">
-                    <span class="rank-name">VIP+</span>
-                    <span class="rank-duration">Trvanie: 30 dní</span>
-                    <span class="price-tag">4.00€</span>
-                    <button class="btn-buy">Kúpiť</button>
-                </div>
-
-                <div class="rank-card">
-                    <span class="rank-name">VIP</span>
-                    <span class="rank-duration">Trvanie: 30 dní</span>
-                    <span class="price-tag">2.00€</span>
-                    <button class="btn-buy">Kúpiť</button>
-                </div>
+            <div class="rank-card">
+                <span class="rank-name" style="color: #ffa502;">Overlord</span>
+                <span class="rank-duration"><span data-lang="store_duration">Trvanie</span>: 30 <span data-lang="store_days">dní</span></span>
+                <span class="price-tag">12.00€</span>
+                <button class="btn-buy" data-lang="btn_buy">Kúpiť</button>
             </div>
-        </main>
+
+            <div class="rank-card">
+                <span class="rank-name" style="color: #2ed573;">Legend</span>
+                <span class="rank-duration"><span data-lang="store_duration">Trvanie</span>: 30 <span data-lang="store_days">dní</span></span>
+                <span class="price-tag">10.00€</span>
+                <button class="btn-buy" data-lang="btn_buy">Kúpiť</button>
+            </div>
+
+            <div class="rank-card">
+                <span class="rank-name" style="color: #1e90ff;">Ultra</span>
+                <span class="rank-duration"><span data-lang="store_duration">Trvanie</span>: 30 <span data-lang="store_days">dní</span></span>
+                <span class="price-tag">8.00€</span>
+                <button class="btn-buy" data-lang="btn_buy">Kúpiť</button>
+            </div>
+
+            <div class="rank-card">
+                <span class="rank-name" style="color: #a29bfe;">Elite</span>
+                <span class="rank-duration"><span data-lang="store_duration">Trvanie</span>: 30 <span data-lang="store_days">dní</span></span>
+                <span class="price-tag">6.00€</span>
+                <button class="btn-buy" data-lang="btn_buy">Kúpiť</button>
+            </div>
+
+            <div class="rank-card">
+                <span class="rank-name" style="color: #55efc4;">VIP+</span>
+                <span class="rank-duration"><span data-lang="store_duration">Trvanie</span>: 30 <span data-lang="store_days">dní</span></span>
+                <span class="price-tag">4.00€</span>
+                <button class="btn-buy" data-lang="btn_buy">Kúpiť</button>
+            </div>
+
+            <div class="rank-card">
+                <span class="rank-name" style="color: #ffeaa7;">VIP</span>
+                <span class="rank-duration"><span data-lang="store_duration">Trvanie</span>: 30 <span data-lang="store_days">dní</span></span>
+                <span class="price-tag">2.00€</span>
+                <button class="btn-buy" data-lang="btn_buy">Kúpiť</button>
+            </div>
+        </section>
     </div>
+</main>
 
+<script>
+    const translations = {
+        sk: {
+            nav_home: "Domov", nav_rules: "Pravidlá", nav_team: "Tím", nav_staff: "Nábory", nav_vote: "Hlasovanie", nav_store: "Store",
+            store_title_1: "Oficiálny", store_title_2: "Obchod",
+            store_subtitle: "Vyberte si balíček výhod a podporte rozvoj nášho servera.",
+            store_duration: "Trvanie", store_days: "dní", btn_buy: "Kúpiť"
+        },
+        cz: {
+            nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování", nav_store: "Obchod",
+            store_title_1: "Oficiální", store_title_2: "Obchod",
+            store_subtitle: "Vyberte si balíček výhod a podpořte rozvoj našeho serveru.",
+            store_duration: "Trvání", store_days: "dní", btn_buy: "Koupit"
+        },
+        en: {
+            nav_home: "Home", nav_rules: "Rules", nav_team: "Team", nav_staff: "Staff", nav_vote: "Vote", nav_store: "Store",
+            store_title_1: "Official", store_title_2: "Store",
+            store_subtitle: "Choose a reward package and support the development of our server.",
+            store_duration: "Duration", store_days: "days", btn_buy: "Buy Now"
+        }
+    };
+
+    function setLang(langId) {
+        localStorage.setItem('selectedLanguage', langId);
+        updateUI(langId);
+    }
+
+    function updateUI(langId) {
+        document.querySelectorAll('.lang-flag').forEach(flag => flag.classList.remove('active'));
+        const selected = document.getElementById('lang-' + langId);
+        if (selected) selected.classList.add('active');
+
+        document.querySelectorAll('[data-lang]').forEach(element => {
+            const key = element.getAttribute('data-lang');
+            if (translations[langId] && translations[langId][key]) {
+                element.innerText = translations[langId][key];
+            }
+        });
+    }
+
+    window.onload = function() {
+        const savedLang = localStorage.getItem('selectedLanguage') || 'sk';
+        updateUI(savedLang);
+    };
+</script>
 </body>
 </html>
