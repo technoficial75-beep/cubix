@@ -154,6 +154,7 @@
                 <li><a href="team.html"><i class="fas fa-users"></i> <span data-lang="nav_team">Tím</span></a></li>
                 <li><a href="nabory.html"><i class="fas fa-user-plus"></i> <span data-lang="nav_staff">Nábory</span></a></li>
                 <li><a href="hlasovanie.html"><i class="fas fa-check-square"></i> <span data-lang="nav_vote">Hlasovanie</span></a></li>
+                <li><a href="store.html" style="color: #ffca28;"><i class="fas fa-shopping-cart"></i> <span data-lang="nav_store">Store</span></a></li>
             </ul>
             <div class="lang-menu">
                 <img src="https://flagcdn.com/w80/sk.png" class="lang-flag" id="lang-sk" onclick="setLang('sk')" title="Slovenčina">
@@ -221,7 +222,7 @@
     // --- PREKLADOVÝ SLOVNÍK ---
     const translations = {
         sk: {
-            nav_home: "Domov", nav_rules: "Pravidlá", nav_team: "Tím", nav_staff: "Nábory", nav_vote: "Hlasovanie",
+            nav_home: "Domov", nav_rules: "Pravidlá", nav_team: "Tím", nav_staff: "Nábory", nav_vote: "Hlasovanie", nav_store: "Store",
             hero_title: "Vitajte na", hero_desc: "Zaži novú dimenziu Minecraftu na poprednom československom Boxfight serveri. Pridaj sa k stovkám hráčov v svete plnom akcie.",
             players_online: "Hráčov online", modes_title: "Naše herné módy",
             box_desc: "Náš hlavný mód s unikátnymi mapami a bleskovým PvP. Ukáž svoje skilly a vybuduj si rešpekt v aréne!",
@@ -231,17 +232,17 @@
             about_p2: "Náš Admin Tím a moderný hardvér sú zárukou plynulého zážitku bez lagov. Pridaj sa k nám a tvor s nami najlepší server!"
         },
         cz: {
-            nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování",
+            nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování", nav_store: "Obchod",
             hero_title: "Vítejte na", hero_desc: "Zažij novou dimenzi Minecraftu na předním československém Boxfight serveru. Přidej se ke stovkám hráčů ve světě plném akce.",
             players_online: "Hráčů online", modes_title: "Naše herní módy",
-            box_desc: "Náš hlavní mód s unikátními mapami a bleskovým PvP. Ukaž své skilly a vybuduj si respekt v aréně!",
+            box_desc: "Hlavní mód s unikátními mapami a bleskovým PvP. Ukaž své skilly a vybuduj si respekt v aréně!",
             coming_soon: "Připravujeme", soon_desc: "Sleduj náš Discord pro informace o nových updatech a připravovaných módech, které brzy přibudou.",
             soon_badge: "Již brzy", about_title: "Více o našem projektu",
             about_p1: "Cubix vznikl s vizí přinést kvalitní Boxfight zázemí. Věříme v komunitu a technickou preciznost.",
-            about_p2: "Náš Admin Tým a moderní hardware jsou zárukou plynulého zážitku bez lagů. Přidej se k nám a tvoř s námi nejlepší server!"
+            about_p2: "Náš Admin Tím a moderní hardware jsou zárukou plynulého zážitku bez lagů. Přidej se k nám a tvoř s námi nejlepší server!"
         },
         en: {
-            nav_home: "Home", nav_rules: "Rules", nav_team: "Team", nav_staff: "Staff", nav_vote: "Vote",
+            nav_home: "Home", nav_rules: "Rules", nav_team: "Team", nav_staff: "Staff", nav_vote: "Vote", nav_store: "Store",
             hero_title: "Welcome to", hero_desc: "Experience a new dimension of Minecraft on the leading Czechoslovak Boxfight server. Join hundreds of players in a world full of action.",
             players_online: "Players online", modes_title: "Our game modes",
             box_desc: "Our main mode with unique maps and lightning-fast PvP. Show your skills and earn respect in the arena!",
@@ -265,12 +266,10 @@
     }
 
     function updateUI(langId) {
-        // Aktualizácia vlajok
         document.querySelectorAll('.lang-flag').forEach(flag => flag.classList.remove('active'));
         const selected = document.getElementById('lang-' + langId);
         if (selected) selected.classList.add('active');
 
-        // Aktualizácia textov
         document.querySelectorAll('[data-lang]').forEach(element => {
             const key = element.getAttribute('data-lang');
             if (translations[langId][key]) {
@@ -279,7 +278,6 @@
         });
     }
 
-    // Funkcia pre reálny počet hráčov
     function updateServerStatus() {
         const ip = 'play.cubix.cz'; 
         fetch(`https://mcapi.us/server/status?ip=${ip}`)
@@ -313,7 +311,4 @@
     };
 </script>
 </body>
-
 </html>
-
-
