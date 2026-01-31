@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        /* Hlavné štýly obchodu */
         .store-section { padding: 60px 0; }
         .hero-title { font-size: 3.5rem; font-weight: 800; margin-bottom: 20px; color: #fff; text-align: center; }
         .hero-subtitle { color: #8b949e; font-size: 1.1rem; margin-bottom: 50px; max-width: 700px; margin-left: auto; margin-right: auto; text-align: center; }
@@ -19,6 +20,7 @@
             align-items: flex-start;
         }
 
+        /* Sidebar */
         .sidebar {
             width: 250px;
             flex-shrink: 0;
@@ -51,6 +53,7 @@
 
         .sidebar-item.inactive { opacity: 0.5; cursor: not-allowed; }
 
+        /* Grid a Karty */
         .ranks-grid {
             flex-grow: 1;
             display: grid;
@@ -117,6 +120,7 @@
             box-shadow: 0 0 15px rgba(0, 157, 255, 0.4);
         }
 
+        /* Jazykové vlajky */
         .lang-menu { display: flex; gap: 10px; margin-left: 15px; align-items: center; border-left: 1px solid #30363d; padding-left: 15px; }
         .lang-flag { width: 28px; height: 18px; object-fit: cover; border-radius: 4px; cursor: pointer; opacity: 0.4; transition: 0.3s; border: 2px solid transparent; }
         .lang-flag:hover { opacity: 0.8; }
@@ -236,12 +240,14 @@
     }
 
     function updateUI(langId) {
+        // Označenie aktívnej vlajky
         document.querySelectorAll('.lang-flag').forEach(flag => flag.classList.remove('active'));
         const selected = document.getElementById('lang-' + langId);
         if (selected) selected.classList.add('active');
 
         const langData = translations[langId];
 
+        // Preklad textov
         document.querySelectorAll('[data-lang]').forEach(element => {
             const key = element.getAttribute('data-lang');
             if (langData[key]) {
@@ -249,15 +255,16 @@
             }
         });
 
+        // Prepočet cien
         document.querySelectorAll('.rank-card').forEach(card => {
             const basePrice = parseFloat(card.getAttribute('data-base-price'));
             let finalPrice;
             
             if (langData.isRound) {
-                // Zaokrúhlenie na celé čísla pre CZK a USD
+                // Pre CZ a EN zaokrúhlime na celé čísla
                 finalPrice = Math.round(basePrice * langData.rate);
             } else {
-                // EUR ponecháme s desatinnými miestami pre presnosť
+                // Pre SK (EUR) dáme vždy .00
                 finalPrice = (basePrice * langData.rate).toFixed(2);
             }
 
@@ -270,6 +277,7 @@
         });
     }
 
+    // Spustenie pri načítaní
     window.onload = function() {
         const savedLang = localStorage.getItem('selectedLanguage') || 'sk';
         updateUI(savedLang);
