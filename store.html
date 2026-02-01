@@ -3,11 +3,12 @@
 <head>
     <link rel="icon" type="image/x-icon" href="favicon.ico?v=2">
     <meta charset="UTF-8">
-    <title>Cubix | Domov</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cubix | Store</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* --- MODAL KOŠÍKA (IDENTICKÝ SO STORE/HLASOVANÍM) --- */
+        /* MODAL KOŠÍKA - IDENTICKÝ */
         .modal {
             display: none;
             position: fixed;
@@ -39,24 +40,7 @@
             cursor: pointer;
         }
 
-        .cart-icon-blue {
-            color: #009dff !important;
-            margin-right: 10px;
-        }
-
-        .checkout-btn {
-            background: white;
-            color: black;
-            border: none;
-            padding: 8px 24px;
-            font-weight: 900;
-            text-transform: uppercase;
-            cursor: pointer;
-            font-size: 0.85rem;
-            border-radius: 2px;
-        }
-
-        /* --- ŠTÝL STORE TLAČIDLA V NAVIGÁCII --- */
+        /* STORE NAV TLAČIDLO */
         .store-nav-item {
             display: flex;
             align-items: center;
@@ -65,55 +49,34 @@
             padding: 8px 15px;
             border-radius: 10px;
             background: rgba(11, 14, 17, 0.8);
-            transition: 0.3s;
         }
         
         .store-nav-item i { color: #ffca28; margin-right: 8px; }
         .store-nav-item span { color: #ffca28; font-weight: 800; }
 
-        .cart-wrapper {
-            position: relative;
-            cursor: pointer;
-            margin-left: 20px;
-            display: flex;
-            align-items: center;
-        }
-
+        .cart-wrapper { position: relative; cursor: pointer; margin-left: 20px; display: flex; align-items: center; }
         .cart-badge {
-            position: absolute;
-            top: -10px;
-            right: -12px;
-            background: #ff4757;
-            color: white;
-            font-size: 0.75rem;
-            font-weight: 800;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: none;
-            align-items: center;
-            justify-content: center;
+            position: absolute; top: -10px; right: -12px; background: #ff4757; color: white;
+            font-size: 0.75rem; font-weight: 800; width: 20px; height: 20px;
+            border-radius: 50%; display: none; align-items: center; justify-content: center;
             border: 2px solid #0b0e11;
         }
 
-        /* --- VNÚTORNÝ OBSAH DOMOVSKEJ STRÁNKY --- */
-        .hero-section { padding: 60px 0; text-align: left; }
-        .hero-container { display: flex; justify-content: space-between; align-items: center; gap: 40px; }
-        .hero-title { font-size: 3.5rem; font-weight: 800; margin-bottom: 25px; line-height: 1.1; }
-        .hero-description { max-width: 700px; color: #8b949e; line-height: 1.6; margin-bottom: 35px; font-size: 1.1rem; }
-        .hero-right-box { background: #161b22; border: 1px solid #30363d; border-radius: 20px; padding: 40px; text-align: center; min-width: 300px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: 0.4s; }
-        .hero-right-box:hover { transform: translateY(-10px); border-color: #009dff; }
-        .status-dot { height: 12px; width: 12px; background-color: #2ecc71; border-radius: 50%; display: inline-block; margin-right: 10px; box-shadow: 0 0 10px #2ecc71; }
-        .ip-container { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 12px 25px; display: inline-flex; align-items: center; cursor: pointer; margin-bottom: 45px; transition: 0.2s; }
-        .ip-container:hover { border-color: #009dff; }
-        .ip-version { margin-left: 15px; color: #009dff; font-weight: bold; border-left: 1px solid #30363d; padding-left: 15px; }
-        .separator { width: 100%; height: 1px; background: linear-gradient(90deg, #30363d 0%, transparent 100%); margin: 50px 0; }
-        .gamemodes-container { display: flex; gap: 25px; flex-wrap: wrap; margin-bottom: 60px; }
-        .gamemode-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 30px; width: 380px; transition: 0.4s; }
-        .gamemode-card:hover { transform: translateY(-10px); border-color: #009dff; }
-        .mode-footer { margin-top: 20px; padding: 12px; border-radius: 8px; font-weight: bold; text-align: center; }
-        .bg-blue { background: #009dff; color: white; }
-        .bg-gray { background: #21262d; color: #8b949e; }
+        /* OBSAH STORE */
+        .hero-title { font-size: 3.5rem; font-weight: 800; margin-bottom: 20px; color: #ffca28; text-align: center; }
+        .store-container { display: flex; gap: 30px; margin-top: 40px; }
+        .sidebar { width: 250px; flex-shrink: 0; }
+        .sidebar-item { background: #161b22; border: 1px solid #30363d; padding: 15px 20px; margin-bottom: 10px; border-radius: 10px; color: #fff; font-weight: 700; }
+        
+        .ranks-grid { flex-grow: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .rank-card { background: #161b22; border: 1px solid #30363d; border-radius: 15px; padding: 30px; text-align: center; transition: 0.3s; }
+        .rank-card:hover { border-color: #009dff; }
+        .price-tag { font-size: 2.2rem; font-weight: 800; margin: 15px 0; color: #fff; }
+        
+        .btn-buy { width: 100%; padding: 12px; background: #009dff; color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; }
+        
+        .lang-flag { width: 28px; height: 18px; cursor: pointer; opacity: 0.5; transition: 0.3s; margin-left: 10px; }
+        .lang-flag.active { opacity: 1; border: 1px solid #009dff; }
     </style>
 </head>
 <body>
@@ -122,14 +85,13 @@
     <div class="modal-content">
         <span class="close-modal" onclick="closeModal('cartModal')">&times;</span>
         <div style="display: flex; justify-content: space-between; align-items: center;">
-            <h2 style="margin: 0; font-size: 1.5rem; display: flex; align-items: center; color: white;">
-                <i class="fas fa-shopping-cart cart-icon-blue"></i> 
-                <span data-lang="cart_title">Košík</span>
+            <h2 style="margin: 0; font-size: 1.5rem; color: white;">
+                <i class="fas fa-shopping-cart" style="color: #009dff;"></i> <span data-lang="cart_title">Košík</span>
             </h2>
             <div id="cartTotalDisplay" style="font-weight: 800;">Total: 0.00 €</div>
         </div>
         <div id="cartItemsContainer" style="margin: 20px 0;"></div>
-        <button class="checkout-btn" onclick="location.href='store.html'" data-lang="btn_checkout">POKLADŇA</button>
+        <button style="background:white; color:black; border:none; padding:10px 20px; font-weight:900; cursor:pointer;" onclick="alert('Checkout!')" data-lang="btn_checkout">POKLADŇA</button>
     </div>
 </div>
 
@@ -138,7 +100,7 @@
         <a href="index.html" class="logo"><img src="cubixtext.png" alt="Logo"></a>
         <div style="display: flex; align-items: center;">
             <ul class="nav-links">
-                <li><a href="index.html" class="active"><i class="fas fa-home"></i> <span data-lang="nav_home">Domov</span></a></li>
+                <li><a href="index.html"><i class="fas fa-home"></i> <span data-lang="nav_home">Domov</span></a></li>
                 <li><a href="pravidla.html"><i class="fas fa-book"></i> <span data-lang="nav_rules">Pravidlá</span></a></li>
                 <li><a href="team.html"><i class="fas fa-users"></i> <span data-lang="nav_team">Tím</span></a></li>
                 <li><a href="nabory.html"><i class="fas fa-user-plus"></i> <span data-lang="nav_staff">Nábory</span></a></li>
@@ -158,7 +120,7 @@
                 <span class="cart-badge" id="cartBadge">0</span>
             </div>
 
-            <div class="lang-menu" style="margin-left: 20px;">
+            <div class="lang-menu" style="margin-left: 20px; display: flex;">
                 <img src="https://flagcdn.com/w80/sk.png" class="lang-flag" id="lang-sk" onclick="setLang('sk')">
                 <img src="https://flagcdn.com/w80/cz.png" class="lang-flag" id="lang-cz" onclick="setLang('cz')">
                 <img src="https://flagcdn.com/w80/gb.png" class="lang-flag" id="lang-en" onclick="setLang('en')">
@@ -168,36 +130,52 @@
 </header>
 
 <main class="container">
-    <section class="hero-section">
-        <div class="hero-container">
-            <div class="hero-left">
-                <h1 class="hero-title"><span data-lang="hero_title">Vitajte na</span><br><span style="color: #009dff;">Cubix.cz</span></h1>
-                <div class="hero-description">
-                    <p data-lang="hero_desc">Zaži novú dimenziu Minecraftu na poprednom československom <strong>Boxfight</strong> serveri. Pridaj sa k stovkám hráčov v svete plnom akcie.</p>
-                </div>
-                <div class="ip-container" onclick="copyIP()">
-                    <span id="serverIP" style="font-weight: 600;"><i class="fas fa-copy" style="margin-right: 10px;"></i>play.cubix.cz</span>
-                    <span class="ip-version">1.21.4+</span>
-                </div>
-            </div>
+    <h1 class="hero-title">CUBIX STORE</h1>
+    
+    <div class="store-container">
+        <aside class="sidebar">
+            <div class="sidebar-item" style="border-left: 3px solid #009dff;">RANKS</div>
+        </aside>
 
-            <div class="hero-right-box">
-                <div style="margin-bottom: 15px;">
-                    <span class="status-dot" id="server-dot"></span>
-                    <span id="server-status-text" style="font-size: 0.9rem; font-weight: 600; color: #2ecc71;">ONLINE</span>
-                </div>
-                <div id="player-count" style="font-size: 3rem; font-weight: 800; color: #fff;">0</div>
-                <div style="color: #8b949e; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;" data-lang="players_online">Hráčov online</div>
+        <section class="ranks-grid">
+            <div class="rank-card">
+                <div style="font-size: 1.8rem; font-weight: 800; color: #ff4757;">IMMORTAL</div>
+                <div class="price-tag" id="price-immortal">35.00 €</div>
+                <button class="btn-buy" onclick="addToCart('Immortal', 35)" data-lang="btn_buy">KÚPIŤ</button>
             </div>
-        </div>
-
-        <div class="separator"></div>
         </section>
+    </div>
 </main>
 
 <script>
-    // --- LOGIKA KOŠÍKA A UI ---
+    const translations = {
+        sk: {
+            nav_home: "Domov", nav_rules: "Pravidlá", nav_team: "Tím", nav_staff: "Nábory", nav_vote: "Hlasovanie", nav_store: "Store",
+            cart_title: "Košík", cart_empty: "Tvoj košík je prázdny.", btn_checkout: "POKLADŇA", btn_buy: "KÚPIŤ"
+        },
+        cz: {
+            nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování", nav_store: "Store",
+            cart_title: "Košík", cart_empty: "Tvůj košík je prázdný.", btn_checkout: "POKLADNA", btn_buy: "KOUPIT"
+        },
+        en: {
+            nav_home: "Home", nav_rules: "Rules", nav_team: "Staff", nav_staff: "Recruitment", nav_vote: "Vote", nav_store: "Store",
+            cart_title: "Cart", cart_empty: "Your cart is empty.", btn_checkout: "CHECKOUT", btn_buy: "BUY"
+        }
+    };
+
+    const currencyConfig = {
+        sk: { symbol: "€", rate: 1, decimals: 2, pos: 'after' },
+        cz: { symbol: "Kč", rate: 25, decimals: 0, pos: 'after' },
+        en: { symbol: "$", rate: 1.05, decimals: 2, pos: 'before' }
+    };
+
     let cart = JSON.parse(localStorage.getItem('cubix_cart')) || [];
+
+    function formatPrice(euroAmount, lang) {
+        const conf = currencyConfig[lang];
+        const converted = (euroAmount * conf.rate).toFixed(conf.decimals);
+        return conf.pos === 'before' ? `${conf.symbol}${converted}` : `${converted} ${conf.symbol}`;
+    }
 
     function updateCartBadge() {
         const badge = document.getElementById('cartBadge');
@@ -207,41 +185,54 @@
         }
     }
 
+    function addToCart(name, price) {
+        cart.push({name, price});
+        localStorage.setItem('cubix_cart', JSON.stringify(cart));
+        updateCartBadge();
+    }
+
     function openCart() {
         const container = document.getElementById('cartItemsContainer');
         const lang = localStorage.getItem('selectedLanguage') || 'sk';
         container.innerHTML = '';
         let total = 0;
+
         if (cart.length === 0) {
-            container.innerHTML = `<p style="text-align:center; color:#8b949e;">Košík je prázdny.</p>`;
+            container.innerHTML = `<p style="text-align:center; color:#8b949e;">${translations[lang].cart_empty}</p>`;
         } else {
-            cart.forEach((item) => {
+            cart.forEach(item => {
                 total += item.price;
-                container.innerHTML += `
-                    <div style="display:flex; justify-content:space-between; margin-bottom:10px; color:white;">
-                        <span>${item.name}</span>
-                        <strong style="color:#009dff">${item.price.toFixed(2)} €</strong>
-                    </div>`;
+                container.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:10px;"><span>${item.name}</span><strong>${formatPrice(item.price, lang)}</strong></div>`;
             });
         }
-        document.getElementById('cartTotalDisplay').innerText = "Total: " + total.toFixed(2) + " €";
+        document.getElementById('cartTotalDisplay').innerText = "Total: " + formatPrice(total, lang);
         document.getElementById('cartModal').style.display = 'block';
     }
 
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-    function setLang(id) { localStorage.setItem('selectedLanguage', id); location.reload(); }
 
-    function copyIP() {
-        navigator.clipboard.writeText("play.cubix.cz");
-        const el = document.getElementById('serverIP');
-        el.innerHTML = "IP skopírovaná!";
-        setTimeout(() => { el.innerHTML = '<i class="fas fa-copy" style="margin-right: 10px;"></i>play.cubix.cz'; }, 2000);
+    function setLang(langId) {
+        localStorage.setItem('selectedLanguage', langId);
+        updateUI(langId);
     }
 
-    // Server status fetch atď...
-    window.onload = function() {
+    function updateUI(langId) {
+        document.querySelectorAll('.lang-flag').forEach(f => f.classList.remove('active'));
+        document.getElementById('lang-' + langId).classList.add('active');
+
+        document.querySelectorAll('[data-lang]').forEach(el => {
+            const key = el.getAttribute('data-lang');
+            if (translations[langId][key]) el.innerText = translations[langId][key];
+        });
+
+        // Update cien v store
+        document.getElementById('price-immortal').innerText = formatPrice(35, langId);
+    }
+
+    window.onload = () => {
+        const lang = localStorage.getItem('selectedLanguage') || 'sk';
+        updateUI(lang);
         updateCartBadge();
-        // Pridať fetch statusu ako máš v pôvodnom kóde
     };
 </script>
 </body>
