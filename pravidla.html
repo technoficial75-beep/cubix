@@ -148,7 +148,7 @@
         .rule-item.active .fa-chevron-down { transform: rotate(180deg); color: #009dff; }
         .fa-chevron-down { color: #30363d; font-size: 0.7rem; transition: 0.3s; }
 
-        /* KOŠÍK ŠTÝLY */
+        /* KOŠÍK ŠTÝLY - OPRAVENÉ */
         .cart-wrapper { position: relative; margin-left: 15px; cursor: pointer; }
         .cart-badge { position: absolute; top: -8px; right: -8px; background: #ff4757; color: white; font-size: 0.7rem; font-weight: 800; padding: 2px 6px; border-radius: 50%; display: none; }
         
@@ -177,7 +177,6 @@
             box-shadow: 0 0 60px rgba(0,0,0,1);
         }
 
-        /* HEADER V KOŠÍKU */
         .cart-header-row {
             display: flex;
             justify-content: space-between;
@@ -186,19 +185,30 @@
             padding-bottom: 15px;
             border-bottom: 1px solid #30363d;
         }
-        
-        /* SELECT V KOŠÍKU */
-        .cart-lang-select {
+
+        /* OPRAVENÝ PREPÍNAČ VLAJOK V KOŠÍKU */
+        .cart-lang-flags {
+            display: flex;
+            gap: 8px;
             background: #0d1117;
-            color: #fff;
-            border: 1px solid #30363d;
             padding: 5px 10px;
-            border-radius: 5px;
+            border-radius: 8px;
+            border: 1px solid #30363d;
             margin-right: 15px;
-            cursor: pointer;
-            outline: none;
-            font-size: 0.9rem;
         }
+        .cart-flag-btn {
+            cursor: pointer;
+            opacity: 0.5;
+            transition: 0.2s;
+            font-size: 1.2rem;
+            border: none;
+            background: none;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+        .cart-flag-btn:hover { opacity: 1; transform: scale(1.1); }
+        .cart-flag-btn.active { opacity: 1; filter: drop-shadow(0 0 5px #2ed573); }
 
         .cart-item { 
             display: flex; 
@@ -226,6 +236,7 @@
         .close-cart { cursor: pointer; color: #8b949e; font-size: 1.5rem; transition: 0.3s; }
         .close-cart:hover { color: #fff; }
         
+        /* OPRAVENÉ CHECKOUT TLAČIDLO */
         .checkout-btn { 
             display: inline-block; 
             width: 100%; 
@@ -243,7 +254,15 @@
             cursor: pointer; 
             margin-top: 15px;
         }
-        .checkout-btn:hover { background: #26af5f; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(46, 213, 115, 0.3); }
+        .checkout-btn:hover:not(:disabled) { background: #26af5f; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(46, 213, 115, 0.3); }
+        
+        /* STAV PRE PRÁZDNY KOŠÍK */
+        .checkout-btn:disabled {
+            background: #2a2d37;
+            color: #5d6273;
+            cursor: not-allowed;
+            border: 1px solid #30363d;
+        }
 
         /* FORMULÁR ŠTÝLY */
         .checkout-form { display: none; text-align: left; }
@@ -292,11 +311,11 @@
         <div class="cart-header-row">
             <h2 style="margin:0;"><i class="fas fa-shopping-cart" style="color:#2ed573"></i> <span data-lang="cart_title">Košík</span></h2>
             <div style="display: flex; align-items: center;">
-                <select id="cartLangSelect" class="cart-lang-select" onchange="setLang(this.value)">
-                    <option value="sk">🇸🇰 EUR</option>
-                    <option value="cz">🇨🇿 CZK</option>
-                    <option value="en">🇺🇸 USD</option>
-                </select>
+                <div class="cart-lang-flags">
+                    <button class="cart-flag-btn" id="cart-flag-sk" onclick="setLang('sk')" title="Slovenský">🇸🇰</button>
+                    <button class="cart-flag-btn" id="cart-flag-cz" onclick="setLang('cz')" title="Český">🇨🇿</button>
+                    <button class="cart-flag-btn" id="cart-flag-en" onclick="setLang('en')" title="English">🇺🇸</button>
+                </div>
                 <span class="close-cart" onclick="closeCartModal()">&times;</span>
             </div>
         </div>
@@ -308,22 +327,18 @@
                 Total: 0.00 €
             </div>
             
-            <button class="checkout-btn" onclick="goToCheckout()" data-lang="btn_checkout">POKLADŇA</button>
+            <button id="mainCheckoutBtn" class="checkout-btn" onclick="goToCheckout()">POKLADŇA</button>
         </div>
 
         <div id="checkoutForm" class="checkout-form">
             <h3 style="margin-bottom: 15px; color: #fff;">Dokončenie objednávky</h3>
-            
             <label class="checkout-label">Minecraft Nickname</label>
             <input type="text" id="mcNick" class="checkout-input" placeholder="Tvoje meno v hre" required>
-            
             <label class="checkout-label">Email</label>
             <input type="email" id="email" class="checkout-input" placeholder="tvoj@email.com" required>
-
             <button class="checkout-btn" onclick="processOrder()">ZAPLATIŤ</button>
             <button class="back-btn" onclick="backToCart()">Späť do košíka</button>
         </div>
-
     </div>
 </div>
 
@@ -357,7 +372,6 @@
 <main class="container">
     <section class="rules-section">
         <h1 class="hero-title" data-lang="rules_main_title">Pravidlá projektu</h1>
-
         <div class="ban-appeal-box">
             <h2 data-lang="ban_title">Dostal si ban neprávom?</h2>
             <p data-lang="ban_desc">Ak si myslíš, že tvoj trest je nespravodlivý, neváhaj sa odvolať na našom Discord serveri.</p>
@@ -371,7 +385,6 @@
                 <h2 class="category-title"><i class="fab fa-discord"></i> Discord</h2>
                 <div id="discord-rules-container"></div>
             </div>
-
             <div class="rules-column column-minecraft">
                 <h2 class="category-title"><i class="fas fa-cube"></i> Minecraft</h2>
                 <div id="minecraft-rules-container"></div>
@@ -394,33 +407,11 @@
                 { t: "Žiadny toxický obsah", d: "Urážky a diskriminácia sú zakázané.", c: "Zakázané urážky, rasizmus, xenofóbia, diskriminácia alebo nenávistné prejavy." },
                 { t: "Žiadny NSFW obsah", d: "Žiadna pornografia ani gore.", c: "Žiadna pornografia, sexuálne náznaky, gore alebo šokujúce materiály." },
                 { t: "Zbytočne nepinguj A-Team", d: "Pinguj len v dôležitých prípadoch.", c: "Pokiaľ nemáš vážny dôvod na pingnutie AT, tak to nerob." },
-                { t: "Správne pulty", d: "Zákaz hromadných pingov.", c: "Nepoužívaj @everyone, @here alebo masívne pulty bez súhlasu vedenia." },
-                { t: "Rešpektuj štruktúru", d: "Používaj kanály správne.", c: "Používaj kanály podľa ich témy a účelu – žiadne off-topic príspevky." },
-                { t: "Žiadne reklamy", d: "Zákaz propagácie iných serverov.", c: "Neposielaj reklamy, pozvanie na iné servery alebo promo materiály." },
-                { t: "Neobťažuj hráčov", d: "Nepýtaj sa na súkromné údaje.", c: "Nepýtaj sa na súkromné info alebo osobné údaje iných hráčov." },
-                { t: "Žiadne drámy", d: "Nerieš spory verejne.", c: "Nerieš spory verejne – rieš ich v súkromí cez moderátorov alebo ignoruj." },
-                { t: "Rešpektuj moderátorov", d: "Dbaj na pokyny Admin Tímu.", c: "Neprekračuj ich pokyny a neignoruj varovania moderátorov." },
-                { t: "Žiadne scam/podvody", d: "Zákaz falošných ponúk.", c: "Neponúkaj falošné ponuky, phishing linky alebo podozrivé služby." },
-                { t: "Správny jazyk", d: "Slušná komunikácia.", c: "Komunikuj slušne – žiadne nadávky, provokácie alebo flame wars." },
-                { t: "Žiadne exploits", d: "Dodržiavaj Discord TOS.", c: "Neporušuj Discord TOS, nezdieľaj súkromné kanály ani neobchádzaj obmedzenia." },
-                { t: "Reportuj problémy", d: "Hlásenie chýb moderátorom.", c: "Problémy hlás privátne moderátorom – nie verejne v kanáloch." },
                 { t: "Aktualizácie pravidiel", d: "Sleduj zmeny v pravidlách.", c: "Pravidlá sa môžu meniť – pravidelne sleduj kanál #pravidlá." }
             ],
             mc: [
                 { t: "Zákaz Cheatovania", d: "Žiadne externé výhody.", c: "Killaura, Fly, X-ray alebo AutoClicker nad 15 CPS sú trestané perma banom." },
                 { t: "Zneužívanie chýb", d: "Nahlasuj bugy, nezneužívaj ich.", c: "Zneužívanie chýb hry, máp alebo pluginov je prísne zakázané." },
-                { t: "Vulgárnosť a toxicita", d: "Udržuj slušnú komunitu.", c: "Nadávky a urážky v chate budú trestané mutom alebo banom." },
-                { t: "Zákaz reklamy", d: "Nepropaguj iné servery.", c: "Propagácia iných projektov alebo IP adries v chate je zakázaná." },
-                { t: "Obchádzanie trestu", d: "Zákaz hrania počas banu.", c: "Vstup na server cez iný účet počas banu vedie k IP banu." },
-                { t: "Nevhodný skin / meno", d: "Slušná prezentácia hráča.", c: "NSFW skiny alebo urážlivé nicky nie sú povolené." },
-                { t: "Teaming (Solo)", d: "Zákaz tímovania v solo módoch.", c: "V solo Boxfightech je spolupráca viacerých hráčov zakázaná." },
-                { t: "Klamanie A-Týmu", d: "Buď úprimný k adminom.", c: "Uvádzanie nepravdivých informací AT je trestané." },
-                { t: "Zneužívanie reportov", d: "Nahlasuj len reálne priestupky.", c: "Spamovanie /report falošnými hláseniami je zakázané." },
-                { t: "Scamovanie hráčov", d: "Zákaz okrádania pri tradovaní.", c: "Podvody pri dohodnutých obchodoch sú trestané banom." },
-                { t: "Zhadzovanie TPS", d: "Nespôsobuj lagy servera.", c: "Stavanie lag-strojov alebo preťažovanie entitami je zakázané." },
-                { t: "Provokovanie A-Týmu", d: "Rešpektuj administrátorov.", c: "Neustále provokovanie alebo spochybňovanie AT v chate je zakázané." },
-                { t: "Griefovanie lobby", d: "Nenič spoločné priestory.", c: "Akýkoľvek pokus o poškodenie spawnu alebo lobby je zakázaný." },
-                { t: "Spamovanie príkazov", d: "Nepoužívaj príkazy opakovane.", c: "Zahlcovanie konzoly príkazmi (spam) je trestané." },
                 { t: "Zodpovednosť za účet", d: "Tvoj účet, tvoja zodpovednosť.", c: "Za činy na tvojom účte zodpovedáš ty, bez ohľadu na to, kto hral." }
             ]
         },
@@ -433,36 +424,10 @@
             total_text: "Celkem",
             dc: [
                 { t: "Žádný spam", d: "Nespamuj zprávy, emoji ani linky.", c: "Nespamuj zprávami, příkazy, emoji, obrázky nebo odkazy mimo příslušný kanál." },
-                { t: "Žádný toxický obsah", d: "Urážky a diskriminace jsou zakázány.", c: "Zakázané urážky, rasismus, xenofobie, diskriminace nebo nenávistné projevy." },
-                { t: "Žádný NSFW obsah", d: "Žádná pornografie ani gore.", c: "Žádná pornografie, sexuální náznaky, gore nebo šokující materiály." },
-                { t: "Zbytečně nepinguj A-Team", d: "Pinguj jen v důležitých případech.", c: "Pokud nemáš vážný důvod pro pingnutí AT, tak to nedělej." },
-                { t: "Správné pulty", d: "Zákaz hromadných pingů.", c: "Nepoužívej @everyone, @here nebo masivní pulty bez souhlasu vedení." },
-                { t: "Respektuj strukturu", d: "Používej kanály správně.", c: "Používej kanály podle jejich tématu a účelu – žádné off-topic příspěvky." },
-                { t: "Žádné reklamy", d: "Zákaz propagace jiných serverů.", c: "Neposílej reklamy, pozvání na jiné servery nebo promo materiály." },
-                { t: "Neobtěžuj hráče", d: "Neptej se na soukromé údaje.", c: "Neptej se na soukromé info nebo osobné údaje jiných hráčů." },
-                { t: "Žádná dramata", d: "Neřeš spory veřejně.", c: "Neřeš spory veřejně – řeš je v soukromí přes moderátory nebo ignoruj." },
-                { t: "Respektuj moderátory", d: "Dbej na pokyny Admin Tímu.", c: "Nepřekračuj jejich pokyny a neignoruj varování moderátorů." },
-                { t: "Žádné scam/podvody", d: "Zákaz falešných nabídek.", c: "Nepodváděj, nenabízej phishing linky nebo podezřelé služby." },
-                { t: "Správný jazyk", d: "Slušná komunikace.", c: "Komunikuj slušně – žádné nadávky, provace nebo flame wars." },
-                { t: "Žádné exploits", d: "Dodržuj Discord TOS.", c: "Neporušuj Discord TOS, nesdílej soukromé kanály ani neobcházej omezení." },
-                { t: "Reportuj problémy", d: "Hlášení chyb moderátorům.", c: "Problémy hlas privátně moderátorům – ne veřejně v kanálech." },
                 { t: "Aktualizace pravidel", d: "Sleduj změny v pravidlech.", c: "Pravidla se mohou měnit – pravidelně sleduj kanál #pravidla." }
             ],
             mc: [
                 { t: "Zákaz Cheatování", d: "Žádné externí výhody.", c: "Killaura, Fly, X-ray nebo AutoClicker nad 15 CPS jsou trestány perma banem." },
-                { t: "Zneužívání chyb", d: "Nahlašuj bugy, nezneužívej je.", c: "Zneužívání chyb hry, map nebo pluginů je přísně zakázáno." },
-                { t: "Vulgárnost a toxicita", d: "Udržujte slušnou komunitu.", c: "Nadávky a urážky v chatu budou trestány mutem nebo banem." },
-                { t: "Zákaz reklamy", d: "Nepropagujte jiné servery.", c: "Propagace jiných projektů nebo IP adres v chatu je zakázána." },
-                { t: "Obcházení trestu", d: "Zákaz hraní během banu.", c: "Vstup na server přes jiný účet během banu vede k IP banu." },
-                { t: "Nevhodný skin / jméno", d: "Slušná prezentace hráče.", c: "NSFW skiny nebo urážlivé nicky nejsou povoleny." },
-                { t: "Teaming (Solo)", d: "Zákaz teamování v solo módech.", c: "V solo Boxfightech je spolupráce více hráčů zakázána." },
-                { t: "Lhaní A-Týmu", d: "Buďte upřímní k adminům.", c: "Uvádění nepravdivých informací AT je trestáno." },
-                { t: "Zneužívání reportů", d: "Nahlašujte jen reálné přestupky.", c: "Spamování /report falešnými hlášeními je zakázáno." },
-                { t: "Scamování hráčů", d: "Zákaz okrádání při obchodování.", c: "Podvody při dohodnutých obchodech jsou trestány banem." },
-                { t: "Shazování TPS", d: "Nezpůsobujte lagy serveru.", c: "Stavění lag-strojů nebo přetěžování entitami je zakázáno." },
-                { t: "Provokování A-Týmu", d: "Respektujte administrátory.", c: "Neustálé provokování nebo zpochybňování AT v chatu je zakázáno." },
-                { t: "Griefování lobby", d: "Neničte společné prostory.", c: "Jakýkoliv pokus o poškození spawnu nebo lobby je zakázán." },
-                { t: "Spamování příkazů", d: "Nepoužívejte příkazy opakovaně.", c: "Zahlcování konzole příkazy (spam) je trestáno." },
                 { t: "Zodpovednost za účet", d: "Tvůj účet, tvá zodpovědnost.", c: "Za činy na tvém účtu zodpovídáš ty, bez ohledu na to, kdo hrál." }
             ]
         },
@@ -475,36 +440,10 @@
             total_text: "Total",
             dc: [
                 { t: "No spamming", d: "Do not spam messages, emojis or links.", c: "Do not spam messages, commands, emojis, or links outside the designated channels." },
-                { t: "No toxic content", d: "Insults and discrimination are banned.", c: "Banned insults, racism, xenophobia, discrimination or hate speech." },
-                { t: "No NSFW content", d: "No pornography or gore.", c: "No pornography, sexual suggestions, gore or shocking materials." },
-                { t: "Don't ping A-Team", d: "Ping only in serious cases.", c: "Do not ping AT unless you have a serious reason." },
-                { t: "Mass pings", d: "No unauthorized everyone/here.", c: "Do not use @everyone, @here or mass pings without leadership's consent." },
-                { t: "Respect structure", d: "Use channels correctly.", c: "Use channels according to their theme and purpose – no off-topic posts." },
-                { t: "No advertisements", d: "No promotion of other servers.", c: "Do not send advertisements, invites to other servers, or promo materials." },
-                { t: "Don't harass players", d: "Do not ask for private info.", c: "Do not ask for private info or personal data of other players." },
-                { t: "No drama", d: "Do not solve disputes publicly.", c: "Solve disputes privately through moderators or ignore them." },
-                { t: "Respect moderators", d: "Follow Admin Team's instructions.", c: "Do not ignore their instructions or warnings." },
-                { t: "No scams", d: "No fake offers or phishing.", c: "No phishing links, fake offers, or suspicious services." },
-                { t: "Proper language", d: "Respectful communication.", c: "Communicate politely – no insults, provocations or flame wars." },
-                { t: "No exploits", d: "Follow Discord TOS.", c: "Do not violate Discord TOS or bypass server restrictions." },
-                { t: "Report issues", d: "Report bugs to mods.", c: "Report problems privately to moderators – not publicly in channels." },
                 { t: "Rule updates", d: "Rules can change anytime.", c: "Rules may change – regularly check the #rules channel." }
             ],
             mc: [
                 { t: "No Cheating", d: "No external advantages.", c: "Killaura, Fly, X-ray or AutoClicker over 15 CPS result in a permanent ban." },
-                { t: "Bug Abuse", d: "Report bugs, don't use them.", c: "Abusing game, map or plugin bugs is strictly prohibited." },
-                { t: "Toxicity", d: "Keep the community clean.", c: "Excessive swearing or insults will be punished by mute or ban." },
-                { t: "No Advertising", d: "Don't promote other servers.", c: "Sharing IP addresses of other servers is prohibited." },
-                { t: "Ban Evading", d: "Don't play during a ban.", c: "Entering the server with an alt account during a ban results in an IP ban." },
-                { t: "Inappropriate Identity", d: "Keep skin/nick appropriate.", c: "NSFW skins or offensive nicknames are not allowed." },
-                { t: "Teaming (Solo)", d: "No teaming in solo modes.", c: "Cooperation between players in solo Boxfights is forbidden." },
-                { t: "Lying to A-Team", d: "Be honest with admins.", c: "Providing false information to the AT is punished." },
-                { t: "Report Abuse", d: "Report real offenses only.", c: "Spamming /report with fake claims is prohibited." },
-                { t: "Scamming", d: "No stealing during trades.", c: "Scams during agreed trades result in a ban." },
-                { t: "Server Lagging", d: "Don't cause server lag.", c: "Building lag-machines or entity overloading is prohibited." },
-                { t: "AT Provocation", d: "Respect administrators.", c: "Constantly questioning or provoking AT in chat is forbidden." },
-                { t: "Lobby Griefing", d: "Don't destroy common areas.", c: "Any attempt to damage the spawn or lobby is forbidden." },
-                { t: "Command Spamming", d: "Don't reuse commands fast.", c: "Flooding the console with commands is punished." },
                 { t: "Account Responsibility", d: "Your account, your responsibility.", c: "You are responsible for all actions on your account." }
             ]
         }
@@ -539,25 +478,94 @@
         openCart(); 
     }
 
+    function setLang(lang) {
+        localStorage.setItem('selectedLanguage', lang);
+        
+        // Update flags in main menu
+        document.querySelectorAll('.lang-flag').forEach(img => {
+            img.classList.remove('active');
+        });
+        const activeFlag = document.getElementById('lang-' + lang);
+        if(activeFlag) activeFlag.classList.add('active');
+
+        // Update flags in cart
+        document.querySelectorAll('.cart-flag-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        const activeCartFlag = document.getElementById('cart-flag-' + lang);
+        if(activeCartFlag) activeCartFlag.classList.add('active');
+
+        // Translate text
+        const t = ruleData[lang];
+        document.querySelectorAll('[data-lang]').forEach(el => {
+            const key = el.getAttribute('data-lang');
+            if(t[key]) el.innerText = t[key];
+        });
+
+        renderRules(lang);
+        if(document.getElementById('cartModal').style.display === 'block') openCart();
+    }
+
+    function renderRules(lang) {
+        const t = ruleData[lang];
+        const dContainer = document.getElementById('discord-rules-container');
+        const mContainer = document.getElementById('minecraft-rules-container');
+        
+        dContainer.innerHTML = '';
+        mContainer.innerHTML = '';
+
+        t.dc.forEach((rule, i) => dContainer.innerHTML += createRuleHTML(rule, i + 1));
+        t.mc.forEach((rule, i) => mContainer.innerHTML += createRuleHTML(rule, i + 1));
+
+        document.querySelectorAll('.rule-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+    }
+
+    function createRuleHTML(rule, num) {
+        return `
+            <div class="rule-item">
+                <div class="rule-header">
+                    <div class="rule-info">
+                        <div class="rule-number">${num}</div>
+                        <div class="rule-main">
+                            <h3>${rule.t}</h3>
+                            <p>${rule.d}</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="rule-content">${rule.c}</div>
+            </div>`;
+    }
+
     function openCart() {
         const modal = document.getElementById('cartModal');
         const container = document.getElementById('cartItemsContainer');
         const lang = localStorage.getItem('selectedLanguage') || 'sk';
         const t = ruleData[lang];
+        const checkoutBtn = document.getElementById('mainCheckoutBtn');
         
-        // Reset view: Show cart items, hide form
         document.getElementById('cartView').style.display = 'block';
         document.getElementById('checkoutForm').style.display = 'none';
 
-        // Sync dropdown v košíku s aktuálnym jazykom
-        document.getElementById('cartLangSelect').value = lang;
+        // Update active flag in cart
+        document.querySelectorAll('.cart-flag-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('cart-flag-' + lang).classList.add('active');
 
         container.innerHTML = '';
         let total = 0;
 
         if (cart.length === 0) {
             container.innerHTML = `<p style="text-align:center; color:#8b949e; padding: 20px;">${t.cart_empty}</p>`;
+            checkoutBtn.disabled = true;
+            checkoutBtn.innerText = "EMPTY";
         } else {
+            checkoutBtn.disabled = false;
+            checkoutBtn.innerText = t.btn_checkout;
             cart.forEach((item, index) => {
                 total += item.price;
                 container.innerHTML += `
@@ -574,104 +582,28 @@
         modal.style.display = 'block';
     }
 
-    function closeCartModal() {
-        document.getElementById('cartModal').style.display = 'none';
-    }
-
-    /* NOVÉ FUNKCIE PRE CHECKOUT FORMULÁR */
+    function closeCartModal() { document.getElementById('cartModal').style.display = 'none'; }
     function goToCheckout() {
-        if(cart.length === 0) return;
         document.getElementById('cartView').style.display = 'none';
         document.getElementById('checkoutForm').style.display = 'block';
     }
-
     function backToCart() {
-        document.getElementById('cartView').style.display = 'block';
         document.getElementById('checkoutForm').style.display = 'none';
+        document.getElementById('cartView').style.display = 'block';
     }
 
-    function processOrder() {
-        const nick = document.getElementById('mcNick').value;
-        const email = document.getElementById('email').value;
-        if(nick && email) {
-            alert(`Objednávka odoslaná pre hráča: ${nick}`);
-            cart = [];
-            localStorage.setItem('cubix_cart', JSON.stringify(cart));
-            updateCartBadge();
-            closeCartModal();
-        } else {
-            alert("Vyplň prosím všetky údaje.");
-        }
-    }
-
-    // JAZYK & PRAVIDLÁ
-    function renderAllRules(langId) {
-        const dcContainer = document.getElementById('discord-rules-container');
-        const mcContainer = document.getElementById('minecraft-rules-container');
-        if(!dcContainer || !mcContainer) return;
-        
-        dcContainer.innerHTML = "";
-        mcContainer.innerHTML = "";
-
-        ruleData[langId].dc.forEach((r, i) => {
-            dcContainer.innerHTML += `<div class="rule-item">
-                <div class="rule-header" onclick="toggleRule(this)">
-                    <div class="rule-info"><div class="rule-number">${i+1}</div><div class="rule-main"><h3>${r.t}</h3><p>${r.d}</p></div></div>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="rule-content">${r.c}</div>
-            </div>`;
-        });
-
-        ruleData[langId].mc.forEach((r, i) => {
-            mcContainer.innerHTML += `<div class="rule-item">
-                <div class="rule-header" onclick="toggleRule(this)">
-                    <div class="rule-info"><div class="rule-number">${i+1}</div><div class="rule-main"><h3>${r.t}</h3><p>${r.d}</p></div></div>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="rule-content">${r.c}</div>
-            </div>`;
-        });
-    }
-
-    function toggleRule(header) { header.parentElement.classList.toggle('active'); }
-
-    function setLang(langId) {
-        localStorage.setItem('selectedLanguage', langId);
-        updateUI(langId);
-    }
-
-    function updateUI(langId) {
-        document.querySelectorAll('.lang-flag').forEach(f => f.classList.remove('active'));
-        const activeFlag = document.getElementById('lang-' + langId);
-        if(activeFlag) activeFlag.classList.add('active');
-
-        document.querySelectorAll('[data-lang]').forEach(el => {
-            const key = el.getAttribute('data-lang');
-            if (ruleData[langId] && ruleData[langId][key]) el.innerText = ruleData[langId][key];
-        });
-        
-        renderAllRules(langId);
-        
-        // Aktualizácia selectu v košíku
-        const select = document.getElementById('cartLangSelect');
-        if(select) select.value = langId;
-        
-        // Ak je košík otvorený, prekresliť ceny
-        if (document.getElementById('cartModal').style.display === 'block') {
-            openCart();
-        }
-    }
-
+    // Inicializácia
     window.onload = () => {
-        const lang = localStorage.getItem('selectedLanguage') || 'sk';
-        updateUI(lang);
+        const savedLang = localStorage.getItem('selectedLanguage') || 'sk';
+        setLang(savedLang);
         updateCartBadge();
     };
 
     window.onclick = (event) => {
-        if (event.target == document.getElementById('cartModal')) closeCartModal();
+        const modal = document.getElementById('cartModal');
+        if (event.target == modal) closeCartModal();
     };
 </script>
+
 </body>
 </html>
