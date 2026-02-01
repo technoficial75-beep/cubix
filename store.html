@@ -8,121 +8,72 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* ZÁKLADNÉ ŠTÝLY */
+        /* ZÁKLADNÉ ŠTÝLY OBCHODU */
         .store-section { padding: 60px 0; }
         .hero-title { font-size: 3.5rem; font-weight: 800; margin-bottom: 20px; color: #fff; text-align: center; }
         .hero-title span { color: #009dff; }
-        .hero-subtitle { color: #8b949e; font-size: 1.1rem; margin-bottom: 50px; text-align: center; }
         
         .duration-selector { display: flex; justify-content: center; gap: 10px; margin-bottom: 40px; background: #161b22; padding: 8px; border-radius: 12px; border: 1px solid #30363d; max-width: fit-content; margin: 0 auto 40px auto; }
         .duration-btn { padding: 10px 20px; border-radius: 8px; border: none; background: transparent; color: #8b949e; cursor: pointer; font-weight: 700; transition: 0.3s ease; text-transform: uppercase; font-size: 0.8rem; }
         .duration-btn.active { background: #009dff; color: white; }
-        .duration-btn:hover:not(.active) { color: #fff; background: rgba(255, 255, 255, 0.05); }
 
         .store-container { display: flex; gap: 30px; margin-top: 40px; align-items: flex-start; }
         .sidebar { width: 250px; flex-shrink: 0; position: sticky; top: 100px; }
-        .sidebar-item { background: #161b22; border: 1px solid #30363d; padding: 15px 20px; margin-bottom: 10px; border-radius: 10px; cursor: pointer; font-weight: 700; color: #fff; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; align-items: center; gap: 12px; text-transform: uppercase; font-size: 0.9rem; }
+        .sidebar-item { background: #161b22; border: 1px solid #30363d; padding: 15px 20px; margin-bottom: 10px; border-radius: 10px; cursor: pointer; font-weight: 700; color: #fff; transition: 0.3s; display: flex; align-items: center; gap: 12px; text-transform: uppercase; font-size: 0.9rem; }
         .sidebar-item.active { border-color: #009dff; background: #1c2128; }
-        .sidebar-item:hover:not(.active) { transform: translateX(5px); background: #1c2128; border-color: #484f58; }
         
-        /* Sidebar donate farba */
-        #side-donate { color: #ffca28; }
-
-        .top-donator-card { background: #161b22; border: 1px solid #009dff; border-radius: 12px; padding: 20px; text-align: center; margin-top: 25px; transition: 0.3s; }
-        .donator-avatar { width: 64px; height: 64px; border-radius: 8px; border: 2px solid #30363d; margin-bottom: 10px; image-rendering: pixelated; }
-
+        /* Ranky a ich pôvodné farby */
         .ranks-grid { flex-grow: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-        .rank-card { background: #161b22; border: 1px solid #30363d; border-radius: 15px; padding: 30px; text-align: center; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; justify-content: space-between; position: relative; }
-        .rank-card:hover:not(.disabled) { transform: translateY(-10px) scale(1.02); border-color: #009dff; box-shadow: 0 15px 30px rgba(0, 157, 255, 0.15); }
-        .info-icon { position: absolute; top: 15px; right: 15px; color: #484f58; cursor: pointer; transition: 0.3s; font-size: 1.1rem; }
-        .info-icon:hover { color: #fff; transform: rotate(15deg); }
-        
-        .rank-card.disabled { opacity: 0.4; filter: grayscale(1); background: #0d1117; border-color: #21262d; cursor: not-allowed; }
-
+        .rank-card { background: #161b22; border: 1px solid #30363d; border-radius: 15px; padding: 30px; text-align: center; transition: 0.4s; position: relative; }
+        .rank-card:hover:not(.disabled) { transform: translateY(-10px); border-color: #009dff; }
         .rank-name { font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; text-transform: uppercase; }
-        /* Ceny v obchode biele ako pôvodne */
-        .price-tag { font-size: 2.2rem; font-weight: 800; margin: 15px 0; display: block; color: #fff; }
+        .price-tag { font-size: 2.2rem; font-weight: 800; margin: 15px 0; display: block; color: #fff; } /* Ceny zostávajú biele */
         
-        .btn-buy { width: 100%; padding: 12px; background: #009dff; color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; transition: all 0.3s ease; margin-top: 10px; }
-        .btn-buy:hover:not(:disabled) { filter: brightness(1.1); letter-spacing: 1px; box-shadow: 0 5px 15px rgba(0, 157, 255, 0.4); }
-        .btn-buy:disabled { background: #21262d; color: #484f58; cursor: not-allowed; }
+        .btn-buy { width: 100%; padding: 12px; background: #009dff; color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
 
-        /* MODALS */
+        /* MODALY - KOŠÍK (TU SÚ FARBY ZLADENÉ S PRAVIDLAMI) */
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
-        .modal-content { background: #161b22; margin: 5% auto; padding: 30px; border: 1px solid #30363d; border-radius: 15px; width: 90%; max-width: 500px; color: #fff; animation: modalAnim 0.3s ease; position: relative; }
-        @keyframes modalAnim { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        .close-modal { float: right; cursor: pointer; color: #8b949e; font-size: 1.5rem; transition: 0.2s; }
-        .close-modal:hover { color: #fff; }
+        .modal-content { background: #161b22; margin: 5% auto; padding: 30px; border: 1px solid #30363d; border-radius: 15px; width: 90%; max-width: 500px; color: #fff; position: relative; }
+        .close-modal { float: right; cursor: pointer; color: #8b949e; font-size: 1.5rem; }
 
-        /* KOŠÍK ŠTÝL (Zladený s pravidlami - Modrý) */
-        #cartItemsContainer { max-height: 350px; overflow-y: auto; margin: 20px 0; padding-right: 5px; }
-        #cartItemsContainer::-webkit-scrollbar { width: 4px; }
-        #cartItemsContainer::-webkit-scrollbar-thumb { background: #30363d; border-radius: 10px; }
-        
         .cart-item { display: flex; justify-content: space-between; align-items: center; background: #0d1117; padding: 15px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #30363d; }
-        .cart-item-details b { display: block; color: #fff; font-size: 0.95rem; }
-        .cart-item-details span { color: #009dff; font-weight: 700; font-size: 0.9rem; }
-        .cart-remove { background: rgba(255, 71, 87, 0.1); color: #ff4757; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; border-radius: 8px; cursor: pointer; }
-        .cart-total { font-size: 1.3rem; font-weight: 800; text-align: right; margin-top: 20px; border-top: 1px solid #30363d; padding-top: 15px; color: #fff; }
+        .cart-item b { color: #fff; }
+        .cart-item span { color: #009dff; font-weight: 700; } /* Modrá cena v košíku */
+        .cart-total { font-size: 1.3rem; font-weight: 800; text-align: right; margin-top: 20px; border-top: 1px solid #30363d; padding-top: 15px; }
 
-        /* NOTIFIKÁCIE (TOASTS - Zladené) */
+        /* NOTIFIKÁCIE (VLASTNÉ OZNÁMENIE) */
         .toast-container { position: fixed; bottom: 25px; right: 25px; z-index: 9999; }
-        .toast { background: #1c2128; color: #fff; padding: 16px 24px; border-radius: 12px; border-left: 4px solid #009dff; box-shadow: 0 10px 40px rgba(0,0,0,0.6); margin-top: 10px; display: flex; align-items: center; gap: 15px; animation: slideIn 0.3s ease; min-width: 280px; }
+        .toast { background: #1c2128; color: #fff; padding: 16px 24px; border-radius: 12px; border-left: 4px solid #009dff; box-shadow: 0 10px 40px rgba(0,0,0,0.6); margin-top: 10px; display: flex; align-items: center; gap: 15px; animation: slideIn 0.3s ease; }
         .toast.error { border-left-color: #ff4757; }
         @keyframes slideIn { from { transform: translateX(110%); } to { transform: translateX(0); } }
-        .fade-out { animation: fadeOut 0.5s forwards !important; }
-        @keyframes fadeOut { to { opacity: 0; transform: translateY(-10px); } }
+        .fade-out { opacity: 0; transition: 0.5s; transform: translateY(-10px); }
 
-        .checkout-form label { display: block; margin-bottom: 5px; color: #8b949e; font-size: 0.9rem; font-weight: 600; }
-        .checkout-form input, .checkout-form select { width: 100%; padding: 12px; background: #0d1117; border: 1px solid #30363d; border-radius: 8px; color: #fff; margin-bottom: 15px; font-family: inherit; }
-
-        .lang-menu { display: flex; gap: 12px; margin-left: 15px; align-items: center; border-left: 1px solid #30363d; padding-left: 15px; }
-        .lang-flag { width: 28px; height: 18px; border-radius: 4px; cursor: pointer; opacity: 0.3; transition: 0.3s; }
-        .lang-flag.active { opacity: 1; border: 1px solid #009dff; }
-
-        .cart-wrapper { position: relative; margin-left: 15px; cursor: pointer; }
-        .cart-icon { font-size: 1.2rem; color: #8b949e; }
-        .cart-badge { position: absolute; top: -8px; right: -8px; background: #009dff; color: white; font-size: 0.7rem; font-weight: 800; padding: 2px 6px; border-radius: 50%; display: none; }
+        .checkout-form input { width: 100%; padding: 12px; background: #0d1117; border: 1px solid #30363d; border-radius: 8px; color: #fff; margin-bottom: 15px; }
+        .cart-badge { position: absolute; top: -8px; right: -8px; background: #009dff; color: white; font-size: 0.7rem; padding: 2px 6px; border-radius: 50%; display: none; }
     </style>
 </head>
 <body>
 
 <div id="toast-container" class="toast-container"></div>
 
-<div id="perksModal" class="modal">
-    <div class="modal-content">
-        <span class="close-modal" onclick="closeModal('perksModal')">&times;</span>
-        <h2 id="modalTitle" style="color: #009dff; margin-bottom: 20px;"></h2>
-        <ul id="modalList" style="list-style: none; padding: 0; line-height: 2;"></ul>
-    </div>
-</div>
-
 <div id="cartModal" class="modal">
     <div class="modal-content">
         <span class="close-modal" onclick="closeModal('cartModal')">&times;</span>
-        <h2><i class="fas fa-shopping-cart" style="color:#009dff"></i> <span data-lang="cart_title">Košík</span></h2>
+        <h2 style="color: #009dff;"><i class="fas fa-shopping-cart"></i> Košík</h2>
         <div id="cartItemsContainer"></div>
         <div class="cart-total" id="cartTotalDisplay">Total: 0.00 €</div>
-        <button class="btn-buy" onclick="openCheckout()" id="btnCheckout" data-lang="btn_checkout">POKLADŇA</button>
+        <button class="btn-buy" style="margin-top:15px" onclick="openCheckout()">POKLADŇA</button>
     </div>
 </div>
 
 <div id="checkoutModal" class="modal">
     <div class="modal-content">
         <span class="close-modal" onclick="closeModal('checkoutModal')">&times;</span>
-        <h2 style="margin-bottom: 20px;"><i class="fas fa-credit-card" style="color:#009dff"></i> <span data-lang="checkout_title">Platba</span></h2>
+        <h2 style="margin-bottom: 20px; color: #009dff;">Platba</h2>
         <div class="checkout-form">
-            <label data-lang="form_mcname">Minecraft Meno (Nick)</label>
-            <input type="text" id="mcNick" placeholder="Steve">
-            <label>Email</label>
-            <input type="email" id="userEmail" placeholder="name@example.com">
-            <label data-lang="form_method">Spôsob platby</label>
-            <select id="payMethod">
-                <option value="card">Kreditná karta</option>
-                <option value="paypal">PayPal</option>
-                <option value="psc">Paysafecard</option>
-            </select>
-            <button class="btn-buy" onclick="processPayment()" data-lang="btn_pay">ZAPLATIŤ</button>
+            <label style="color: #8b949e; display:block; margin-bottom:5px;">Minecraft Meno (Nick)</label>
+            <input type="text" id="mcNick" placeholder="Zadaj svoje meno...">
+            <button class="btn-buy" onclick="processPayment()">ZAPLATIŤ</button>
         </div>
     </div>
 </div>
@@ -132,209 +83,122 @@
         <a href="index.html" class="logo"><img src="cubixtext.png" alt="Logo"></a>
         <div style="display: flex; align-items: center;">
             <ul class="nav-links">
-                <li><a href="index.html"><i class="fas fa-home"></i> <span data-lang="nav_home">Domov</span></a></li>
-                <li><a href="pravidla.html"><i class="fas fa-book"></i> <span data-lang="nav_rules">Pravidlá</span></a></li>
-                <li><a href="team.html"><i class="fas fa-users"></i> <span data-lang="nav_team">Tím</span></a></li>
-                <li><a href="nabory.html"><i class="fas fa-user-plus"></i> <span data-lang="nav_staff">Nábory</span></a></li>
-                <li><a href="hlasovanie.html"><i class="fas fa-check-square"></i> <span data-lang="nav_vote">Hlasovanie</span></a></li>
-                <li><a href="store.html" class="active" style="color: #009dff;"><i class="fas fa-shopping-cart"></i> <span data-lang="nav_store">Store</span></a></li>
+                <li><a href="index.html">Domov</a></li>
+                <li><a href="pravidla.html">Pravidlá</a></li>
+                <li><a href="store.html" class="active">Store</a></li>
             </ul>
-            <div class="cart-wrapper" onclick="openCart()">
-                <i class="fas fa-shopping-basket cart-icon"></i>
+            <div style="position:relative; cursor:pointer; margin-left:20px" onclick="openCart()">
+                <i class="fas fa-shopping-basket" style="color:#8b949e; font-size:1.2rem"></i>
                 <span class="cart-badge" id="cartBadge">0</span>
-            </div>
-            <div class="lang-menu">
-                <img src="https://flagcdn.com/w80/sk.png" class="lang-flag" id="lang-sk" onclick="setLang('sk')">
-                <img src="https://flagcdn.com/w80/cz.png" class="lang-flag" id="lang-cz" onclick="setLang('cz')">
-                <img src="https://flagcdn.com/w80/gb.png" class="lang-flag" id="lang-en" onclick="setLang('en')">
             </div>
         </div>
     </div>
 </header>
 
 <main class="container store-section">
-    <h1 class="hero-title"><span data-lang="store_title_1">Oficiálny</span> <span data-lang="store_title_2">Obchod</span></h1>
-    <div class="duration-selector" id="dur-box">
-        <button class="duration-btn" onclick="setDuration('week')" id="btn-week" data-lang="dur_week">Týždeň</button>
-        <button class="duration-btn" onclick="setDuration('month')" id="btn-month" data-lang="dur_month">Mesiac</button>
-        <button class="duration-btn" onclick="setDuration('year')" id="btn-year" data-lang="dur_year">Rok</button>
-        <button class="duration-btn active" onclick="setDuration('lifetime')" id="btn-lifetime" data-lang="dur_life">Navždy</button>
+    <h1 class="hero-title"><span>Oficiálny</span> Obchod</h1>
+    <div class="duration-selector">
+        <button class="duration-btn active" onclick="setDuration('lifetime')">Navždy</button>
     </div>
     <div class="store-container">
         <aside class="sidebar">
-            <div class="sidebar-item active" id="side-ranks" onclick="switchTab('ranks')"><i class="fas fa-crown"></i> RANKS</div>
-            <div class="sidebar-item" id="side-donate" onclick="switchTab('donate')"><i class="fas fa-heart"></i> DONATE</div>
-            <div class="top-donator-card">
-                <span style="color: #009dff; font-size: 0.75rem; font-weight: 800; text-transform: uppercase;" data-lang="top_buyer">Top Kupec Mesiaca</span><br><br>
-                <img src="https://mc-heads.net/avatar/Steve" class="donator-avatar">
-                <div style="color: #fff; font-weight: 700;">Steve</div>
-                <div style="color: #009dff; font-weight: 800;">150.00€</div>
-            </div>
+            <div class="sidebar-item active" id="side-ranks" onclick="switchTab('ranks')">RANKS</div>
+            <div class="sidebar-item" id="side-donate" style="color:#ffca28" onclick="switchTab('donate')">DONATE</div>
         </aside>
         <section class="ranks-grid" id="main-grid"></section>
     </div>
 </main>
 
 <script>
-    const translations = {
-        sk: {
-            nav_home: "Domov", nav_rules: "Pravidlá", nav_team: "Tím", nav_staff: "Nábory", nav_vote: "Hlasovanie", nav_store: "Store",
-            store_title_1: "Oficiálny", store_title_2: "Obchod",
-            dur_week: "Týždeň", dur_month: "Mesiac", dur_year: "Rok", dur_life: "Navždy",
-            top_buyer: "Top Kupec Mesiaca", buy_btn: "KÚPIŤ", donate_btn: "DAROVAŤ", perks_btn: "VÝHODY",
-            cart_title: "Košík", cart_empty: "Tvoj košík je prázdny.", btn_checkout: "POKLADŇA",
-            checkout_title: "Platba", form_mcname: "Minecraft Meno (Nick)", form_method: "Spôsob platby", btn_pay: "ZAPLATIŤ",
-            added_msg: "Pridané do košíka!", error_nick: "Prosím, zadaj svoje Minecraft meno!", success_pay: "Platba bola úspešne odoslaná!"
-        },
-        cz: {
-            nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování", nav_store: "Store",
-            store_title_1: "Oficiální", store_title_2: "Obchod",
-            dur_week: "Týden", dur_month: "Měsíc", dur_year: "Rok", dur_life: "Navždy",
-            top_buyer: "Top Kupující Měsíce", buy_btn: "KOUPIT", donate_btn: "DAROVAT", perks_btn: "VÝHODY",
-            cart_title: "Košík", cart_empty: "Tvůj košík je prázdný.", btn_checkout: "POKLADNA",
-            checkout_title: "Platba", form_mcname: "Minecraft Jméno (Nick)", form_method: "Způsob platby", btn_pay: "ZAPLATIT",
-            added_msg: "Přidáno do košíku!", error_nick: "Prosím, zadej své Minecraft jméno!", success_pay: "Platba byla úspěšně odeslána!"
-        },
-        en: {
-            nav_home: "Home", nav_rules: "Rules", nav_team: "Staff", nav_staff: "Recruitment", nav_vote: "Vote", nav_store: "Store",
-            store_title_1: "Official", store_title_2: "Store",
-            dur_week: "Week", dur_month: "Month", dur_year: "Year", dur_life: "Lifetime",
-            top_buyer: "Top Buyer of the Month", buy_btn: "BUY", donate_btn: "DONATE", perks_btn: "PERKS",
-            cart_title: "Cart", cart_empty: "Your cart is empty.", btn_checkout: "CHECKOUT",
-            checkout_title: "Checkout", form_mcname: "Minecraft Username", form_method: "Payment Method", btn_pay: "PAY NOW",
-            added_msg: "Added to cart!", error_nick: "Please enter your Minecraft name!", success_pay: "Payment sent successfully!"
-        }
-    };
-
-    const multipliers = { week: 0.12, month: 0.25, year: 0.6, lifetime: 1 };
     const rankList = [
-        { name: "Immortal", color: "#ff4757", price: 35, hasLife: false },
-        { name: "Legend", color: "#2ed573", price: 18, hasLife: true },
-        { name: "Ultra", color: "#1e90ff", price: 12, hasLife: true },
-        { name: "Elite", color: "#a29bfe", price: 8, hasLife: true },
-        { name: "VIP+", color: "#55efc4", price: 5, hasLife: true },
-        { name: "VIP", color: "#ffeaa7", price: 3, hasLife: true }
+        { name: "Immortal", color: "#ff4757", price: 35 },
+        { name: "Legend", color: "#2ed573", price: 18 },
+        { name: "VIP", color: "#ffeaa7", price: 3 }
     ];
 
-    let activeDuration = 'lifetime';
+    let cart = [];
     let activeTab = 'ranks';
-    let cart = JSON.parse(localStorage.getItem('cubix_cart')) || [];
 
     function showToast(message, type = "success") {
         const container = document.getElementById('toast-container');
         const toast = document.createElement('div');
         toast.className = `toast ${type === 'error' ? 'error' : ''}`;
-        const icon = type === 'error' ? 'exclamation-circle' : 'check-circle';
-        toast.innerHTML = `<i class="fas fa-${icon}"></i> <span>${message}</span>`;
+        toast.innerHTML = `<i class="fas fa-${type === 'error' ? 'exclamation-circle' : 'check-circle'}"></i> <span>${message}</span>`;
         container.appendChild(toast);
         setTimeout(() => { toast.classList.add('fade-out'); setTimeout(() => toast.remove(), 500); }, 3000);
-    }
-
-    function setLang(langId) {
-        localStorage.setItem('selectedLanguage', langId);
-        updateUI(langId);
-    }
-
-    function updateUI(langId) {
-        document.querySelectorAll('.lang-flag').forEach(f => f.classList.remove('active'));
-        if (document.getElementById('lang-' + langId)) document.getElementById('lang-' + langId).classList.add('active');
-        document.querySelectorAll('[data-lang]').forEach(el => {
-            const key = el.getAttribute('data-lang');
-            if (translations[langId][key]) el.innerText = translations[langId][key];
-        });
-        renderStore();
-        updateCartBadge();
-    }
-
-    function setDuration(d) {
-        activeDuration = d;
-        document.querySelectorAll('.duration-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById('btn-'+d).classList.add('active');
-        renderStore();
-    }
-
-    function switchTab(t) {
-        activeTab = t;
-        document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
-        document.getElementById('side-'+t).classList.add('active');
-        document.getElementById('dur-box').style.display = (t === 'donate') ? 'none' : 'flex';
-        renderStore();
-    }
-
-    function addToCart(name, basePrice) {
-        let finalPrice = basePrice;
-        let displayName = name;
-        if (activeTab === 'ranks') {
-            finalPrice = (basePrice * multipliers[activeDuration]).toFixed(2);
-            const dur = document.getElementById('btn-'+activeDuration).innerText;
-            displayName = `${name} (${dur})`;
-        }
-        cart.push({ name: displayName, price: parseFloat(finalPrice) });
-        updateCartBadge();
-        showToast(`${displayName} - ${translations[localStorage.getItem('selectedLanguage') || 'sk'].added_msg}`);
-    }
-
-    function updateCartBadge() {
-        const badge = document.getElementById('cartBadge');
-        badge.innerText = cart.length;
-        badge.style.display = cart.length > 0 ? 'block' : 'none';
-        localStorage.setItem('cubix_cart', JSON.stringify(cart));
-    }
-
-    function openCart() {
-        const container = document.getElementById('cartItemsContainer');
-        const lang = localStorage.getItem('selectedLanguage') || 'sk';
-        container.innerHTML = '';
-        let total = 0;
-        if (cart.length === 0) {
-            container.innerHTML = `<p style="text-align:center; color:#8b949e; padding:20px;">${translations[lang].cart_empty}</p>`;
-            document.getElementById('btnCheckout').style.display = 'none';
-        } else {
-            document.getElementById('btnCheckout').style.display = 'block';
-            cart.forEach((item, index) => {
-                total += item.price;
-                container.innerHTML += `<div class="cart-item"><div class="cart-item-details"><b>${item.name}</b><span>${item.price.toFixed(2)} €</span></div><div class="cart-remove" onclick="removeFromCart(${index})"><i class="fas fa-trash"></i></div></div>`;
-            });
-        }
-        document.getElementById('cartTotalDisplay').innerText = `Total: ${total.toFixed(2)} €`;
-        document.getElementById('cartModal').style.display = 'block';
-    }
-
-    function removeFromCart(index) { cart.splice(index, 1); updateCartBadge(); openCart(); }
-    function openCheckout() { closeModal('cartModal'); document.getElementById('checkoutModal').style.display = 'block'; }
-    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-
-    function processPayment() {
-        const nick = document.getElementById('mcNick').value;
-        const lang = localStorage.getItem('selectedLanguage') || 'sk';
-        if (!nick) {
-            showToast(translations[lang].error_nick, "error");
-            return;
-        }
-        showToast(translations[lang].success_pay);
-        cart = []; updateCartBadge(); closeModal('checkoutModal');
     }
 
     function renderStore() {
         const grid = document.getElementById('main-grid');
         grid.innerHTML = '';
-        const lang = localStorage.getItem('selectedLanguage') || 'sk';
         if (activeTab === 'ranks') {
             rankList.forEach(rank => {
-                const isUnavailable = (activeDuration === 'lifetime' && !rank.hasLife);
-                const p = (rank.price * multipliers[activeDuration]).toFixed(2);
-                grid.innerHTML += `<div class="rank-card ${isUnavailable ? 'disabled' : ''}"><i class="fas fa-info-circle info-icon"></i><div class="rank-name" style="color:${rank.color}">${rank.name}</div><div class="price-tag">${isUnavailable ? 'N/A' : p + ' €'}</div><button class="btn-buy" onclick="addToCart('${rank.name}', ${rank.price})" ${isUnavailable ? 'disabled' : ''}>${translations[lang].buy_btn}</button></div>`;
+                grid.innerHTML += `<div class="rank-card">
+                    <div class="rank-name" style="color:${rank.color}">${rank.name}</div>
+                    <div class="price-tag">${rank.price}.00 €</div>
+                    <button class="btn-buy" onclick="addToCart('${rank.name}', ${rank.price})">KÚPIŤ</button>
+                </div>`;
             });
         } else {
-            // Donate sekcia - farba zmenená na žltú/pôvodnú
-            [5, 10, 20, 50].forEach(amt => {
-                grid.innerHTML += `<div class="rank-card"><div class="rank-name" style="color:#ffca28">DONATE</div><div class="price-tag">${amt}.00 €</div><button class="btn-buy" style="background:#ffca28; color:#000;" onclick="addToCart('Donate', ${amt})">${translations[lang].donate_btn}</button></div>`;
+            [5, 10, 20].forEach(amt => {
+                grid.innerHTML += `<div class="rank-card">
+                    <div class="rank-name" style="color:#ffca28">DONATE</div>
+                    <div class="price-tag">${amt}.00 €</div>
+                    <button class="btn-buy" style="background:#ffca28; color:#000;" onclick="addToCart('Donate', ${amt})">DAROVAŤ</button>
+                </div>`;
             });
         }
     }
 
-    window.onclick = (e) => { if(e.target.className === 'modal') { closeModal('perksModal'); closeModal('cartModal'); closeModal('checkoutModal'); } }
-    window.onload = () => updateUI(localStorage.getItem('selectedLanguage') || 'sk');
+    function addToCart(name, price) {
+        cart.push({ name, price });
+        updateBadge();
+        showToast(`Pridané: ${name}`);
+    }
+
+    function updateBadge() {
+        const b = document.getElementById('cartBadge');
+        b.innerText = cart.length;
+        b.style.display = cart.length > 0 ? 'block' : 'none';
+    }
+
+    function openCart() {
+        const container = document.getElementById('cartItemsContainer');
+        container.innerHTML = '';
+        let total = 0;
+        cart.forEach((item, i) => {
+            total += item.price;
+            container.innerHTML += `<div class="cart-item">
+                <div><b>${item.name}</b><br><span>${item.price}.00 €</span></div>
+                <i class="fas fa-trash" style="color:#ff4757; cursor:pointer" onclick="removeFromCart(${i})"></i>
+            </div>`;
+        });
+        document.getElementById('cartTotalDisplay').innerText = `Total: ${total.toFixed(2)} €`;
+        document.getElementById('cartModal').style.display = 'block';
+    }
+
+    function removeFromCart(i) { cart.splice(i, 1); updateBadge(); openCart(); }
+    function openCheckout() { closeModal('cartModal'); document.getElementById('checkoutModal').style.display = 'block'; }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+    function processPayment() {
+        const nick = document.getElementById('mcNick').value;
+        if (!nick) {
+            showToast("Prosím, zadaj svoje meno!", "error"); // TOTO NAHRADILO GOOGLE ALERT
+            return;
+        }
+        showToast("Platba bola úspešne odoslaná!");
+        cart = []; updateBadge(); closeModal('checkoutModal');
+    }
+
+    function switchTab(t) {
+        activeTab = t;
+        document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+        event.target.classList.add('active');
+        renderStore();
+    }
+
+    window.onload = renderStore;
 </script>
 </body>
 </html>
