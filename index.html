@@ -115,7 +115,6 @@
         .about-text { color: #8b949e; line-height: 1.8; font-size: 1rem; }
         .about-text p { margin-bottom: 15px; }
 
-        /* VLAJKY */
         .lang-menu { 
             display: flex; 
             gap: 10px; 
@@ -140,50 +139,9 @@
             border-color: #009dff; 
             box-shadow: 0 0 8px rgba(0, 157, 255, 0.4);
         }
-
-        /* --- NOVÝ KOŠÍK ŠTÝLY (ZOSÚLADENÉ) --- */
-        .cart-wrapper { position: relative; margin-left: 15px; cursor: pointer; }
-        .cart-badge { position: absolute; top: -8px; right: -8px; background: #ff4757; color: white; font-size: 0.7rem; font-weight: 800; padding: 2px 6px; border-radius: 50%; display: none; }
-        
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(4px); }
-        .modal-content { 
-            background: #161b22; margin: 10% auto; padding: 25px; border-radius: 15px; width: 90%; max-width: 450px; color: #fff; position: relative; border: 1px solid #30363d; box-shadow: 0 10px 40px rgba(0,0,0,0.5); 
-        }
-        .cart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .cart-header h2 { margin: 0; font-size: 1.5rem; display: flex; align-items: center; gap: 10px; }
-        .cart-header h2 i { color: #ffca28; }
-        .close-x { cursor: pointer; color: #8b949e; font-size: 1.5rem; line-height: 1; }
-
-        .cart-item { 
-            background: #21262d; padding: 12px 18px; border-radius: 10px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;
-        }
-        .item-details { display: flex; flex-direction: column; text-align: left; }
-        .item-name { font-weight: 700; font-size: 1.05rem; color: #fff; }
-        .item-price { color: #2ed573; font-weight: 600; font-size: 0.9rem; margin-top: 2px; }
-
-        .trash-icon { color: #ff4d4d; cursor: pointer; transition: 0.2s; font-size: 1.1rem; }
-        .cart-footer { margin-top: 20px; border-top: 1px solid #30363d; padding-top: 20px; }
-        .total-row { text-align: right; font-size: 1.2rem; font-weight: 800; margin-bottom: 20px; }
-
-        .btn-zaplatit { width: 100%; padding: 16px; background: #2ecc71; color: #fff; border: none; border-radius: 10px; font-weight: 800; font-size: 1rem; text-transform: uppercase; cursor: pointer; transition: 0.3s; }
-        .btn-zaplatit:hover { background: #27ae60; transform: translateY(-2px); }
     </style>
 </head>
 <body>
-
-<div id="cartModal" class="modal">
-    <div class="modal-content">
-        <div class="cart-header">
-            <h2><i class="fas fa-shopping-cart"></i> <span data-lang="cart_title">Košík</span></h2>
-            <span class="close-x" onclick="closeModal('cartModal')">&times;</span>
-        </div>
-        <div id="cartItemsContainer"></div>
-        <div class="cart-footer">
-            <div class="total-row">Total: <span id="cartTotalDisplay">0.00 €</span></div>
-            <button class="btn-zaplatit" onclick="location.href='store.html'" data-lang="btn_checkout">POKLADŇA</button>
-        </div>
-    </div>
-</div>
 
 <header>
     <div class="container header-wrap">
@@ -197,11 +155,6 @@
                 <li><a href="hlasovanie.html"><i class="fas fa-check-square"></i> <span data-lang="nav_vote">Hlasovanie</span></a></li>
                 <li><a href="store.html" style="color: #ffca28;"><i class="fas fa-shopping-cart"></i> <span data-lang="nav_store">Store</span></a></li>
             </ul>
-
-            <div class="cart-wrapper" onclick="openCart()">
-                <i class="fas fa-shopping-basket" style="font-size: 1.2rem; color: #8b949e;"></i>
-                <span class="cart-badge" id="cartBadge">0</span>
-            </div>
 
             <div class="lang-menu">
                 <img src="https://flagcdn.com/w80/sk.png" class="lang-flag" id="lang-sk" onclick="setLang('sk')" title="Slovenčina">
@@ -275,8 +228,7 @@
             coming_soon: "Pripravujeme", soon_desc: "Sleduj náš Discord pre informácie o nových updatoch a pripravovaných módoch, ktoré čoskoro pribudnú.",
             soon_badge: "Čoskoro", about_title: "Viac o našom projekte",
             about_p1: "Cubix vznikol s víziou priniesť kvalitné Boxfight zázemie. Veríme v komunitu a technickú precíznosť.",
-            about_p2: "Náš Admin Tím a moderný hardvér sú zárukou plynulého zážitku bez lagov. Pridaj sa k nám a tvor s nami najlepší server!",
-            cart_title: "Košík", cart_empty: "Tvoj košík je prázdny.", btn_checkout: "POKLADŇA"
+            about_p2: "Náš Admin Tím a moderný hardvér sú zárukou plynulého zážitku bez lagov. Pridaj sa k nám a tvor s nami najlepší server!"
         },
         cz: {
             nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování", nav_store: "Store",
@@ -286,8 +238,7 @@
             coming_soon: "Připravujeme", soon_desc: "Sleduj náš Discord pro informace o nových updatech a připravovaných módech, které brzy přibudou.",
             soon_badge: "Již brzy", about_title: "Více o našem projektu",
             about_p1: "Cubix vznikl s vizí přinést kvalitní Boxfight zázemí. Věříme v komunitu a technickou preciznost.",
-            about_p2: "Náš Admin Tím a moderní hardware jsou zárukou plynulého zážitku bez lagů. Přidej se k nám a tvoř s námi nejlepší server!",
-            cart_title: "Košík", cart_empty: "Tvůj košík je prázdný.", btn_checkout: "POKLADNA"
+            about_p2: "Náš Admin Tím a moderní hardware jsou zárukou plynulého zážitku bez lagů. Přidej se k nám a tvoř s námi nejlepší server!"
         },
         en: {
             nav_home: "Home", nav_rules: "Rules", nav_team: "Staff", nav_staff: "Recruitment", nav_vote: "Vote", nav_store: "Store",
@@ -297,70 +248,9 @@
             coming_soon: "Coming Soon", soon_desc: "Follow our Discord for information about new updates and upcoming modes coming soon.",
             soon_badge: "Soon", about_title: "More about our project",
             about_p1: "Cubix was created with a vision to bring quality Boxfight background. We believe in community and technical precision.",
-            about_p2: "Our Admin Team and modern hardware guarantee a smooth experience without lags. Join us and create the best server with us!",
-            cart_title: "Cart", cart_empty: "Your cart is empty.", btn_checkout: "CHECKOUT"
+            about_p2: "Our Admin Team and modern hardware guarantee a smooth experience without lags. Join us and create the best server with us!"
         }
     };
-
-    const currencyConfig = {
-        sk: { symbol: "€", rate: 1, pos: 'after' },
-        cz: { symbol: "Kč", rate: 25, pos: 'after' },
-        en: { symbol: "$", rate: 1.05, pos: 'before' }
-    };
-
-    let cart = JSON.parse(localStorage.getItem('cubix_cart')) || [];
-
-    function updateCartBadge() {
-        const badge = document.getElementById('cartBadge');
-        if(badge) {
-            badge.innerText = cart.length;
-            badge.style.display = cart.length > 0 ? 'block' : 'none';
-        }
-    }
-
-    function formatPrice(euroAmount) {
-        const lang = localStorage.getItem('selectedLanguage') || 'sk';
-        const conf = currencyConfig[lang];
-        const converted = (euroAmount * conf.rate).toFixed(2);
-        return conf.pos === 'before' ? `${conf.symbol}${converted}` : `${converted} ${conf.symbol}`;
-    }
-
-    function openCart() {
-        const modal = document.getElementById('cartModal');
-        const container = document.getElementById('cartItemsContainer');
-        const lang = localStorage.getItem('selectedLanguage') || 'sk';
-        
-        container.innerHTML = '';
-        let totalEuro = 0;
-
-        if (cart.length === 0) {
-            container.innerHTML = `<p style="text-align:center; color:#8b949e; padding: 20px;">${translations[lang].cart_empty}</p>`;
-        } else {
-            cart.forEach((item, index) => {
-                const price = parseFloat(item.euroPrice) || 0;
-                totalEuro += price;
-                container.innerHTML += `
-                    <div class="cart-item">
-                        <div class="item-details">
-                            <span class="item-name">${item.name}</span>
-                            <span class="item-price">${formatPrice(price)}</span>
-                        </div>
-                        <i class="fas fa-trash trash-icon" style="color:#ff4d4d; cursor:pointer;" onclick="removeFromCart(${index})"></i>
-                    </div>`;
-            });
-        }
-        document.getElementById('cartTotalDisplay').innerText = formatPrice(totalEuro);
-        modal.style.display = 'block';
-    }
-
-    function removeFromCart(index) {
-        cart.splice(index, 1);
-        localStorage.setItem('cubix_cart', JSON.stringify(cart));
-        updateCartBadge();
-        openCart();
-    }
-
-    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
     function copyIP() {
         navigator.clipboard.writeText("play.cubix.net");
@@ -383,7 +273,6 @@
             const key = element.getAttribute('data-lang');
             if (translations[langId][key]) element.innerText = translations[langId][key];
         });
-        if (document.getElementById('cartModal').style.display === 'block') openCart();
     }
 
     function updateServerStatus() {
@@ -412,12 +301,7 @@
     window.onload = function() {
         updateUI(localStorage.getItem('selectedLanguage') || 'sk');
         updateServerStatus();
-        updateCartBadge();
         setInterval(updateServerStatus, 30000);
-    };
-
-    window.onclick = function(event) {
-        if (event.target.className === 'modal') closeModal('cartModal');
     };
 </script>
 </body>
