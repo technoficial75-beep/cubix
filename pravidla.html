@@ -87,15 +87,6 @@
         .rule-item.active .rule-content { max-height: 300px; padding: 12px 15px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
         .rule-item.active .fa-chevron-down { transform: rotate(180deg); color: #009dff; }
         .fa-chevron-down { color: #30363d; font-size: 0.7rem; transition: 0.3s; }
-
-        .cart-wrapper { position: relative; margin-left: 15px; cursor: pointer; }
-        .cart-badge { 
-            position: absolute; top: -8px; right: -8px; 
-            background: #ff4757; color: white; 
-            font-size: 0.7rem; font-weight: 800; 
-            padding: 2px 6px; border-radius: 50%; 
-            display: none; 
-        }
         
         .lang-menu { display: flex; gap: 10px; margin-left: 15px; align-items: center; border-left: 1px solid #30363d; padding-left: 15px; }
         .lang-flag { width: 28px; height: 18px; object-fit: cover; border-radius: 4px; cursor: pointer; opacity: 0.4; transition: 0.3s; }
@@ -118,11 +109,6 @@
                 <li><a href="hlasovanie.html"><i class="fas fa-check-square"></i> <span data-lang="nav_vote">Hlasovanie</span></a></li>
                 <li><a href="store.html" style="color: #ffca28;"><i class="fas fa-shopping-cart"></i> <span data-lang="nav_store">Store</span></a></li>
             </ul>
-
-            <div class="cart-wrapper" onclick="showCart()">
-                <i class="fas fa-shopping-basket" style="font-size: 1.2rem; color: #8b949e;"></i>
-                <span class="cart-badge" id="cartBadge">0</span>
-            </div>
 
             <div class="lang-menu">
                 <img src="https://flagcdn.com/w80/sk.png" class="lang-flag" id="lang-sk" onclick="setLang('sk')">
@@ -160,29 +146,6 @@
 </main>
 
 <script>
-    function updateCartBadge() {
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        const badge = document.getElementById('cartBadge');
-        if (badge) {
-            if (cart.length > 0) {
-                badge.innerText = cart.length;
-                badge.style.display = 'block';
-            } else {
-                badge.style.display = 'none';
-            }
-        }
-    }
-
-    function showCart() {
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        if (cart.length === 0) {
-            alert("Tvoj košík je prázdny.");
-        } else {
-            console.log("Obsah košíka:", cart);
-            alert("V košíku máš " + cart.length + " položiek. (Zoznam je v konzole F12)");
-        }
-    }
-
     const ruleData = {
         sk: {
             nav_home: "Domov", nav_rules: "Pravidlá", nav_team: "Tím", nav_staff: "Nábory", nav_vote: "Hlasovanie", nav_store: "Store",
@@ -214,7 +177,7 @@
                 { t: "Obchádzanie trestu", d: "Zákaz hrania počas banu.", c: "Vstup na server cez iný účet počas banu vedie k IP banu." },
                 { t: "Nevhodný skin / meno", d: "Slušná prezentácia hráča.", c: "NSFW skiny alebo urážlivé nicky nie sú povolené." },
                 { t: "Teaming (Solo)", d: "Zákaz tímovania v solo módoch.", c: "V solo Boxfightech je spolupráca viacerých hráčov zakázaná." },
-                { t: "Klamanie A-Týmu", d: "Buď úprimný k adminom.", c: "Uvádzanie nepravdivých informácií AT je trestané." },
+                { t: "Klamanie A-Týmu", d: "Buď úprimný k adminom.", c: "Uvádzanie nepravdivých informací AT je trestané." },
                 { t: "Zneužívanie reportov", d: "Nahlasuj len reálne priestupky.", c: "Spamovanie /report falošnými hláseniami je zakázané." },
                 { t: "Scamovanie hráčov", d: "Zákaz okrádania pri tradovaní.", c: "Podvody pri dohodnutých obchodoch sú trestané banom." },
                 { t: "Zhadzovanie TPS", d: "Nespôsobuj lagy servera.", c: "Stavanie lag-strojov alebo preťažovanie entitami je zakázané." },
@@ -260,7 +223,7 @@
                 { t: "Shazování TPS", d: "Nezpůsobujte lagy serveru.", c: "Stavění lag-strojů nebo přetěžování entitami je zakázáno." },
                 { t: "Provokování A-Týmu", d: "Respektujte administrátory.", c: "Neustálé provokování nebo zpochybňování AT v chatu je zakázáno." },
                 { t: "Griefování lobby", d: "Neničte společné prostory.", c: "Jakýkoliv pokus o poškodenie spawnu nebo lobby je zakázán." },
-                { t: "Spamování příkazov", d: "Nepoužívejte příkazy opakovaně.", c: "Zahlcování konzole příkazy (spam) je trestáno." },
+                { t: "Spamování příkazů", d: "Nepoužívejte příkazy opakovaně.", c: "Zahlcování konzole příkazy (spam) je trestáno." },
                 { t: "Zodpovědnost za účet", d: "Tvůj účet, tvá zodpovědnost.", c: "Za činy na tvém účtu zodpovídáš ty, bez ohledu na to, kdo hrál." }
             ]
         },
@@ -345,7 +308,6 @@
     window.onload = () => {
         const savedLang = localStorage.getItem('selectedLanguage') || 'sk';
         setLang(savedLang);
-        updateCartBadge();
     };
 </script>
 
