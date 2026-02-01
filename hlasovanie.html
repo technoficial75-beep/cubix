@@ -92,22 +92,86 @@
         .cart-wrapper { position: relative; margin-left: 15px; cursor: pointer; }
         .cart-badge { position: absolute; top: -8px; right: -8px; background: #ff4757; color: white; font-size: 0.7rem; font-weight: 800; padding: 2px 6px; border-radius: 50%; display: none; }
         
-        /* MODAL KOŠÍK - ZJEDNOTENÝ ŠTÝL */
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
-        .modal-content { background: #161b22; margin: 10% auto; padding: 30px; border: 1px solid #30363d; border-radius: 15px; width: 90%; max-width: 500px; color: #fff; position: relative; }
-        .cart-item { display: flex; justify-content: space-between; align-items: center; background: #0d1117; padding: 12px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #30363d; }
-        .close-modal { float: right; cursor: pointer; color: #8b949e; font-size: 1.5rem; }
+        /* NOVÝ DIZAJN KOŠÍKA (ZODPOVEDÁ STORE) */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); }
+        
+        .modal-content { 
+            background: #1c1f26; 
+            margin: 10% auto; 
+            padding: 25px; 
+            border: 1px solid #30363d; 
+            border-radius: 18px; 
+            width: 90%; 
+            max-width: 450px; 
+            color: #fff; 
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .modal-header h2 { font-size: 1.8rem; display: flex; align-items: center; gap: 15px; margin: 0; }
+
+        .cart-item { 
+            background: #11141a; 
+            padding: 15px 20px; 
+            border-radius: 12px; 
+            margin-bottom: 12px; 
+            border: 1px solid #2d333b;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-item-info { text-align: left; }
+        .cart-item-name { font-weight: 700; font-size: 1.1rem; margin-bottom: 4px; display: block; }
+        .cart-item-price { color: #2ed573; font-weight: 600; font-size: 0.95rem; }
+
+        .trash-btn { 
+            color: #ff4757; 
+            cursor: pointer; 
+            font-size: 1.2rem; 
+            transition: 0.2s; 
+            padding: 10px;
+        }
+        .trash-btn:hover { transform: scale(1.1); color: #ff6b81; }
+
+        .cart-footer { margin-top: 25px; border-top: 1px solid #30363d; padding-top: 20px; }
+        .cart-total { text-align: right; font-size: 1.2rem; font-weight: 800; margin-bottom: 20px; }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 16px;
+            background: #2ed573;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .checkout-btn:hover { background: #26b962; transform: translateY(-2px); }
+        
+        .close-modal { cursor: pointer; color: #8b949e; font-size: 1.5rem; transition: 0.3s; }
+        .close-modal:hover { color: #fff; }
     </style>
 </head>
 <body>
 
 <div id="cartModal" class="modal">
     <div class="modal-content">
-        <span class="close-modal" onclick="closeModal('cartModal')">&times;</span>
-        <h2 style="margin-bottom: 20px;"><i class="fas fa-shopping-cart" style="color:#ffca28"></i> <span data-lang="cart_title">Košík</span></h2>
+        <div class="modal-header">
+            <h2><i class="fas fa-shopping-cart" style="color:#ffca28"></i> <span data-lang="cart_title">Košík</span></h2>
+            <span class="close-modal" onclick="closeModal('cartModal')">&times;</span>
+        </div>
+        
         <div id="cartItemsContainer"></div>
-        <div id="cartTotalDisplay" style="text-align: right; font-weight: 800; margin-top: 20px; border-top: 1px solid #30363d; padding-top: 10px;">Total: 0.00 €</div>
-        <button class="vote-btn" style="margin-top: 20px; background: #2ed573;" onclick="location.href='store.html'" data-lang="btn_buy_now">ZAPLATIŤ</button>
+        
+        <div class="cart-footer">
+            <div id="cartTotalDisplay" class="cart-total">Total: 0.00 €</div>
+            <button class="checkout-btn" onclick="location.href='store.html'" data-lang="btn_buy_now">ZAPLATIT</button>
+        </div>
     </div>
 </div>
 
@@ -213,7 +277,7 @@
             reward_2nd: "2. Miesto", desc_2nd: "VIP na 14 dní + 2x VIP Key + [VIP] Tag na Discorde",
             reward_3rd: "3. Miesto", desc_3rd: "VIP na 7 dní + 1x VIP Key",
             reward_info: "* Odmeny sa vyhodnocujú a odovzdávajú automaticky na konci každého mesiaca.",
-            cart_title: "Košík", cart_empty: "Tvoj košík je prázdny.", btn_buy_now: "ZAPLATIŤ"
+            cart_title: "Košík", cart_empty: "Tvoj košík je prázdny.", btn_buy_now: "ZAPLATIT"
         },
         cz: {
             nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování", nav_store: "Store",
@@ -249,9 +313,7 @@
         en: { symbol: "$", rate: 1.05, pos: 'before' }
     };
 
-    // NAČÍTANIE KOŠÍKA
     let cart = JSON.parse(localStorage.getItem('cubix_cart')) || [];
-    // ČISTIČ POKAZENÝCH DÁT
     cart = cart.filter(item => item && typeof item.euroPrice === 'number' && !isNaN(item.euroPrice));
 
     function formatPrice(euroAmount) {
@@ -284,15 +346,17 @@
                 totalEuro += item.euroPrice;
                 container.innerHTML += `
                     <div class="cart-item">
-                        <div>
-                            <div style="font-weight:600;">${item.name}</div>
-                            <div style="color:#2ed573; font-size:0.9rem;">${formatPrice(item.euroPrice)}</div>
+                        <div class="cart-item-info">
+                            <span class="cart-item-name">${item.name}</span>
+                            <span class="cart-item-price">${formatPrice(item.euroPrice)}</span>
                         </div>
-                        <i class="fas fa-trash" onclick="removeFromCart(${index})" style="color:#ff4757; cursor:pointer; padding: 5px;"></i>
+                        <i class="fas fa-trash trash-btn" onclick="removeFromCart(${index})"></i>
                     </div>`;
             });
         }
-        document.getElementById('cartTotalDisplay').innerText = "Total: " + formatPrice(totalEuro);
+        
+        const totalFormatted = formatPrice(totalEuro);
+        document.getElementById('cartTotalDisplay').innerHTML = `Total: <span style="color:#fff">${totalFormatted}</span>`;
         modal.style.display = 'block';
     }
 
