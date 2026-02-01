@@ -4,6 +4,7 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico?v=2">
     <meta charset="UTF-8">
     <title>Cubix | Store</title>
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -16,54 +17,70 @@
             --cart-gray: #8b949e; 
         }
 
-        body { background-color: var(--dark-bg); color: white; font-family: sans-serif; margin: 0; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-
-        /* HEADER */
-        header { background: var(--card-bg); padding: 15px 0; border-bottom: 1px solid var(--border-color); }
-        .header-wrap { display: flex; justify-content: space-between; align-items: center; }
-        .logo img { height: 40px; }
-        .nav-links { list-style: none; display: flex; gap: 20px; margin: 0; padding: 0; }
-        .nav-links a { color: white; text-decoration: none; font-weight: 600; font-size: 0.9rem; }
-        .nav-links a.active { color: var(--gold); }
-
-        /* TOAST */
+        /* OZNÁMENIE (TOAST) */
         #toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; }
         .toast { background: var(--card-bg); border-left: 4px solid var(--primary-blue); color: white; padding: 15px 25px; border-radius: 8px; margin-bottom: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); display: flex; align-items: center; gap: 12px; animation: slideIn 0.3s ease-out forwards; }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
-        /* STORE UI */
-        .store-header { padding: 40px 0; text-align: center; }
-        .store-title { font-size: 3rem; font-weight: 800; color: var(--primary-blue); margin: 0; }
-        .store-controls-row { display: flex; justify-content: center; align-items: center; gap: 30px; margin: 30px 0; flex-wrap: wrap; }
-        
-        .category-nav { display: flex; gap: 10px; }
-        .category-btn { background: var(--card-bg); border: 1px solid var(--border-color); padding: 8px 20px; border-radius: 30px; color: #fff; cursor: pointer; font-weight: 600; }
-        .category-btn.active { border-color: var(--primary-blue); color: var(--primary-blue); }
+        /* NAVIGÁCIA A TOP ZÁKAZNÍK V JEDNOM RIADKU */
+        .store-controls-row { display: flex; justify-content: center; align-items: center; gap: 30px; margin-bottom: 30px; flex-wrap: wrap; }
 
         .top-customer { background: rgba(255, 202, 40, 0.05); border: 1px solid rgba(255, 202, 40, 0.2); padding: 8px 15px; border-radius: 12px; display: flex; align-items: center; gap: 12px; }
-        .top-customer i { color: var(--gold); }
+        .top-customer i { color: var(--gold); font-size: 1.2rem; }
+        .top-customer-info span { color: var(--text-gray); font-size: 0.7rem; text-transform: uppercase; font-weight: 700; display: block; line-height: 1; margin-bottom: 3px; }
+        .top-customer-info b { color: var(--gold); font-size: 0.95rem; display: block; line-height: 1; }
 
-        /* PRODUCTS */
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; padding-bottom: 50px; }
-        .product-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 15px; padding: 25px; text-align: center; position: relative; transition: 0.3s; }
-        .product-card:hover { transform: translateY(-5px); border-color: var(--primary-blue); }
+        .category-nav { display: flex; gap: 10px; }
+        .category-btn { background: var(--card-bg); border: 1px solid var(--border-color); padding: 8px 20px; border-radius: 30px; color: #fff; cursor: pointer; transition: 0.3s; font-weight: 600; font-size: 0.9rem; }
+        .category-btn:hover, .category-btn.active { border-color: var(--primary-blue); background: rgba(0, 157, 255, 0.1); color: var(--primary-blue); }
+        .category-btn.donate-cat-btn { border-color: rgba(255, 202, 40, 0.3); }
+        .category-btn.donate-cat-btn:hover, .category-btn.donate-cat-btn.active { border-color: var(--gold); background: rgba(255, 202, 40, 0.1); color: var(--gold); }
+
+        /* ZVYŠOK ŠTÝLOV */
+        .cart-wrapper { position: relative; margin-left: 15px; cursor: pointer; }
+        .cart-wrapper i { color: var(--cart-gray) !important; font-size: 1.3rem; }
+        .cart-badge { position: absolute; top: -8px; right: -8px; background: #ff5252; color: white; font-size: 0.7rem; font-weight: 800; padding: 2px 6px; border-radius: 50%; display: none; border: 1.5px solid var(--dark-bg); }
+
+        .nav-links li a.active { color: var(--gold) !important; display: flex; align-items: center; gap: 8px; }
+        .store-header { padding: 40px 0; text-align: center; }
+        .store-title { font-size: 3rem; font-weight: 800; margin-bottom: 5px; color: var(--primary-blue); }
+        .store-subtitle { color: var(--text-gray); font-size: 1.1rem; max-width: 800px; margin: 0 auto 30px; line-height: 1.6; }
+
+        .rank-duration-nav { display: none; justify-content: center; gap: 10px; margin-bottom: 40px; }
+        .duration-btn { background: transparent; border: 1px solid var(--border-color); padding: 5px 15px; border-radius: 15px; color: var(--text-gray); cursor: pointer; font-size: 0.9rem; transition: 0.3s; }
+        .duration-btn.active { background: var(--primary-blue); color: #fff; border-color: var(--primary-blue); }
+
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; margin-bottom: 60px; }
+        .product-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 15px; padding: 30px 25px; text-align: center; display: flex; flex-direction: column; position: relative; transition: transform 0.4s; }
+        .product-card:hover { transform: translateY(-10px); border-color: var(--primary-blue); }
         
-        .rank-name { font-size: 1.8rem; font-weight: 900; margin-bottom: 15px; }
-        .price-tag { font-size: 1.5rem; color: var(--primary-blue); font-weight: bold; margin-bottom: 20px; }
+        .product-card.donate-style { border-color: var(--gold); box-shadow: 0 0 15px rgba(255, 202, 40, 0.1); }
+        .product-card.donate-style .rank-big-name, .product-card.donate-style .product-price { color: var(--gold); }
+        .product-card.donate-style .buy-btn { background: var(--gold); color: #000; }
+        .product-card.donate-style .quantity-wrapper { border-color: var(--gold); }
 
-        .buy-btn { width: 100%; background: var(--primary-blue); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+        .product-tag { position: absolute; top: 15px; left: 15px; background: var(--border-color); color: var(--text-gray); font-size: 0.65rem; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; font-weight: 700; }
+        .info-trigger { position: absolute; top: 15px; right: 15px; color: var(--text-gray); cursor: pointer; transition: 0.3s; font-size: 1.1rem; }
 
-        /* MODAL & CART */
+        .rank-big-name { font-size: 2.2rem; font-weight: 900; text-transform: uppercase; margin-bottom: 20px; letter-spacing: -1px; line-height: 1; }
+        .rank-immortal { color: #ff4757; } .rank-legend { color: var(--gold); } .rank-ultra { color: #1e90ff; } .rank-elite { color: #2ed573; } .rank-vip { color: #eccc68; } .item-default { color: #fff; }
+        .product-price { font-size: 1.8rem; font-weight: 800; color: var(--primary-blue); margin: 15px 0; }
+
+        .buy-controls { display: flex; gap: 10px; margin-top: auto; }
+        .quantity-wrapper { display: flex; align-items: center; background: var(--dark-bg); border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; }
+        .qty-btn { background: transparent; border: none; color: var(--text-gray); padding: 0 10px; cursor: pointer; font-size: 1.2rem; }
+        .quantity-input { width: 35px; background: transparent; border: none; color: white; text-align: center; font-weight: bold; }
+        
+        .buy-btn { flex: 1; background: var(--primary-blue); color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 800; cursor: pointer; text-transform: uppercase; }
+
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
-        .modal-content { background: var(--card-bg); margin: 10% auto; padding: 30px; border-radius: 15px; width: 90%; max-width: 450px; position: relative; }
-        .cart-item { display: flex; justify-content: space-between; align-items: center; background: #0d1117; padding: 12px; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--border-color); }
+        .modal-content { background: var(--card-bg); margin: 10% auto; padding: 30px; border: 1px solid var(--border-color); border-radius: 15px; width: 90%; max-width: 500px; color: #fff; position: relative; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; background: var(--dark-bg); padding: 10px; border-radius: 8px; margin-bottom: 10px; }
+        .checkout-btn { width: 100%; padding: 12px; background: #2ed573; color: white; border-radius: 8px; font-weight: 700; border: none; cursor: pointer; margin-top: 20px; }
         
-        .cart-wrapper { position: relative; cursor: pointer; margin-left: 20px; }
-        .cart-badge { position: absolute; top: -10px; right: -10px; background: #ff4757; color: white; font-size: 0.7rem; padding: 2px 6px; border-radius: 50%; }
-
-        .lang-menu img { width: 25px; cursor: pointer; opacity: 0.5; margin-left: 8px; }
-        .lang-menu img.active { opacity: 1; border: 1px solid var(--primary-blue); }
+        .lang-menu { display: flex; gap: 10px; margin-left: 15px; border-left: 1px solid var(--border-color); padding-left: 15px; }
+        .lang-flag { width: 28px; height: 18px; object-fit: cover; opacity: 0.4; cursor: pointer; border-radius: 4px; }
+        .lang-flag.active { opacity: 1; border: 2px solid var(--primary-blue); }
     </style>
 </head>
 <body>
@@ -72,30 +89,43 @@
 
 <div id="cartModal" class="modal">
     <div class="modal-content">
-        <span onclick="closeModal('cartModal')" style="float:right; cursor:pointer; font-size: 1.5rem;">&times;</span>
-        <h2 style="color: var(--gold);"><i class="fas fa-shopping-cart"></i> <span data-lang="cart_title">Košík</span></h2>
+        <span onclick="closeModal('cartModal')" style="float:right; cursor:pointer;">&times;</span>
+        <h2 style="margin-bottom: 20px;"><i class="fas fa-shopping-cart" style="color:var(--gold)"></i> <span data-lang="cart_title">Košík</span></h2>
         <div id="cartItemsContainer"></div>
-        <div id="cartTotalDisplay" style="text-align: right; font-weight: 800; font-size: 1.2rem; margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 10px;"></div>
-        <button class="buy-btn" style="background: #2ed573; margin-top: 20px;" data-lang="btn_buy_now">ZAPLATIŤ</button>
+        <div id="cartTotalDisplay" style="text-align: right; font-weight: 800; margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 10px;">Total: 0.00 €</div>
+        <button class="checkout-btn" onclick="alert('System Cubix: Redirecting...')" data-lang="btn_buy_now">ZAPLATIŤ</button>
+    </div>
+</div>
+
+<div id="infoModal" class="modal">
+    <div class="modal-content">
+        <span onclick="closeModal('infoModal')" style="float:right; cursor:pointer;">&times;</span>
+        <h2 id="infoTitle" style="margin-bottom: 10px; color: var(--primary-blue);"></h2>
+        <p id="infoDesc" style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 20px;"></p>
+        <ul id="infoPerks" style="list-style:none; padding:0;"></ul>
     </div>
 </div>
 
 <header>
     <div class="container header-wrap">
-        <div class="logo"><img src="cubixtext.png" alt="Logo"></div>
+        <a href="index.html" class="logo"><img src="cubixtext.png" alt="Logo"></a>
         <div style="display: flex; align-items: center;">
             <ul class="nav-links">
-                <li><a href="#" data-lang="nav_home">Domov</a></li>
-                <li><a href="#" class="active">Store</a></li>
+                <li><a href="index.html"><i class="fas fa-home"></i> <span data-lang="nav_home">Domov</span></a></li>
+                <li><a href="pravidla.html"><i class="fas fa-book"></i> <span data-lang="nav_rules">Pravidlá</span></a></li>
+                <li><a href="team.html"><i class="fas fa-users"></i> <span data-lang="nav_team">Tím</span></a></li>
+                <li><a href="nabory.html"><i class="fas fa-user-plus"></i> <span data-lang="nav_staff">Nábory</span></a></li>
+                <li><a href="hlasovanie.html"><i class="fas fa-check-square"></i> <span data-lang="nav_vote">Hlasovanie</span></a></li>
+                <li><a href="store.html" class="active"><i class="fas fa-shopping-cart"></i> <span data-lang="nav_store">Store</span></a></li>
             </ul>
             <div class="cart-wrapper" onclick="openCart()">
-                <i class="fas fa-shopping-basket" style="font-size: 1.4rem;"></i>
+                <i class="fas fa-shopping-basket"></i>
                 <span class="cart-badge" id="cartBadge">0</span>
             </div>
-            <div class="lang-menu" style="margin-left: 20px;">
-                <img src="https://flagcdn.com/w80/sk.png" id="lang-sk" onclick="setLang('sk')">
-                <img src="https://flagcdn.com/w80/cz.png" id="lang-cz" onclick="setLang('cz')">
-                <img src="https://flagcdn.com/w80/gb.png" id="lang-en" onclick="setLang('en')">
+            <div class="lang-menu">
+                <img src="https://flagcdn.com/w80/sk.png" class="lang-flag" id="lang-sk" onclick="setLang('sk')">
+                <img src="https://flagcdn.com/w80/cz.png" class="lang-flag" id="lang-cz" onclick="setLang('cz')">
+                <img src="https://flagcdn.com/w80/gb.png" class="lang-flag" id="lang-en" onclick="setLang('en')">
             </div>
         </div>
     </div>
@@ -103,15 +133,31 @@
 
 <main class="container">
     <section class="store-header">
-        <h1 class="store-title">Cubix Store</h1>
+        <h1 class="store-title" data-lang="store_title">Cubix Store</h1>
+        <p class="store-subtitle" data-lang="store_description">Vitajte v oficiálnom obchode Cubix.</p>
+        
         <div class="store-controls-row">
             <div class="category-nav">
-                <button class="category-btn active" onclick="renderProducts()">Všetko</button>
+                <button class="category-btn active" onclick="filterCategory('All', this)" data-lang="cat_all">Všetko</button>
+                <button class="category-btn" onclick="filterCategory('Ranks', this)">Ranks</button>
+                <button class="category-btn" onclick="filterCategory('Boxfight', this)">Boxfight</button>
+                <button class="category-btn donate-cat-btn" onclick="filterCategory('Donate', this)">Donate</button>
             </div>
+
             <div class="top-customer">
                 <i class="fas fa-crown"></i>
-                <b>Herač - 152.00 €</b>
+                <div class="top-customer-info">
+                    <span>TOP ZÁKAZNÍK</span>
+                    <b>Herač - 152.00 €</b>
+                </div>
             </div>
+        </div>
+
+        <div class="rank-duration-nav" id="rankDurationNav">
+            <button class="duration-btn" onclick="setDuration('week', this)" data-lang="dur_week">Týždeň</button>
+            <button class="duration-btn active" onclick="setDuration('month', this)" data-lang="dur_month">Mesiac</button>
+            <button class="duration-btn" onclick="setDuration('year', this)" data-lang="dur_year">Rok</button>
+            <button class="duration-btn" onclick="setDuration('forever', this)" data-lang="dur_forever">Navždy</button>
         </div>
     </section>
 
@@ -120,123 +166,145 @@
 
 <script>
     const translations = {
-        sk: { cart_title: "Košík", cart_empty: "Košík je prázdny", btn_add: "Pridať", btn_buy_now: "ZAPLATIŤ", toast_added: "Pridané do košíka!", nav_home: "Domov" },
-        cz: { cart_title: "Košík", cart_empty: "Košík je prázdný", btn_add: "Přidat", btn_buy_now: "ZAPLATIT", toast_added: "Přidáno do košíku!", nav_home: "Domů" },
-        en: { cart_title: "Cart", cart_empty: "Cart is empty", btn_add: "Add", btn_buy_now: "PAY NOW", toast_added: "Added to cart!", nav_home: "Home" }
+        sk: { nav_home: "Domov", nav_store: "Store", store_title: "Cubix Store", store_description: "Vitajte v oficiálnom obchode Cubix.", cat_all: "Všetko", cart_title: "Košík", btn_add: "Pridať", btn_buy_now: "ZAPLATIŤ", cart_empty: "Košík je prázdny.", dur_week: "Týždeň", dur_month: "Mesiac", dur_year: "Rok", dur_forever: "Navždy", forbidden: "Nemožné", toast_added: "Bolo pridané do košíka!" },
+        cz: { nav_home: "Domů", nav_store: "Store", store_title: "Cubix Store", store_description: "Vítejte v oficiálním obchodě Cubix.", cat_all: "Vše", cart_title: "Košík", btn_add: "Přidat", btn_buy_now: "ZAPLATIT", cart_empty: "Košík je prázdny.", dur_week: "Týden", dur_month: "Měsíc", dur_year: "Rok", dur_forever: "Navždy", forbidden: "Nemožné", toast_added: "Bylo přidáno do košíku!" },
+        en: { nav_home: "Home", nav_store: "Store", store_title: "Cubix Store", store_description: "Welcome to the official Cubix store.", cat_all: "All", cart_title: "Cart", btn_add: "Add", btn_buy_now: "PAY NOW", cart_empty: "Cart is empty.", dur_week: "Week", dur_month: "Month", dur_year: "Year", dur_forever: "Forever", forbidden: "Impossible", toast_added: "Added to cart!" }
     };
 
-    const currencyConfig = { 
-        sk: { symbol: "€", rate: 1, pos: 'after' }, 
-        cz: { symbol: "Kč", rate: 25, pos: 'after' }, 
-        en: { symbol: "$", rate: 1.05, pos: 'before' } 
-    };
+    const currencyConfig = { sk: { symbol: "€", rate: 1, pos: 'after' }, cz: { symbol: "Kč", rate: 25, pos: 'after' }, en: { symbol: "$", rate: 1.05, pos: 'before' } };
 
     const products = [
-        { id: 1, name: "IMMORTAL", price: 40.00 },
-        { id: 2, name: "LEGEND", price: 25.00 },
-        { id: 3, name: "ULTRA", price: 20.00 },
-        { id: 4, name: "DONATE 5€", price: 5.00 }
+        { id: 1, name: "Immortal", foreverPrice: 40.00, class: "rank-immortal", cat: "Ranks", allowForever: false, desc: "Najvyšší rank.", perks: ["Prefix [Immortal]"] },
+        { id: 2, name: "Legend", foreverPrice: 25.00, class: "rank-legend", cat: "Ranks", allowForever: true, desc: "Legenda.", perks: ["Prefix [Legend]"] },
+        { id: 3, name: "Ultra", foreverPrice: 20.00, class: "rank-ultra", cat: "Ranks", allowForever: true, desc: "Ultra rank.", perks: ["Prefix [Ultra]"] },
+        { id: 4, name: "Elite", foreverPrice: 15.00, class: "rank-elite", cat: "Ranks", allowForever: true, desc: "Elite rank.", perks: ["Prefix [Elite]"] },
+        { id: 5, name: "VIP", foreverPrice: 10.00, class: "rank-vip", cat: "Ranks", allowForever: true, desc: "VIP rank.", perks: ["Prefix [VIP]"] },
+        { id: 6, name: "VIP Key", price: 5.00, class: "item-default", cat: "Boxfight", desc: "Kľúč k VIP boxu.", perks: ["Exkluzívny loot"] },
+        { id: 7, name: "Donate 5€", price: 5.00, class: "", cat: "Donate", desc: "Príspevok.", perks: ["Podpora"] },
+        { id: 8, name: "Donate 10€", price: 10.00, class: "", cat: "Donate", desc: "Príspevok.", perks: ["Podpora"] },
+        { id: 9, name: "Donate 20€", price: 20.00, class: "", cat: "Donate", desc: "Príspevok.", perks: ["Podpora"] },
+        { id: 10, name: "Donate 50€", price: 50.00, class: "", cat: "Donate", desc: "Príspevok.", perks: ["Podpora"] },
+        { id: 11, name: "Donate 100€", price: 100.00, class: "", cat: "Donate", desc: "Príspevok.", perks: ["Podpora"] }
     ];
 
+    let currentCategory = 'All';
+    let currentDuration = 'month';
     let currentLang = localStorage.getItem('selectedLanguage') || 'sk';
-    let cart = JSON.parse(localStorage.getItem('cubix_cart')) || [];
+    let rawCart = JSON.parse(localStorage.getItem('cubix_cart')) || [];
 
-    // --- ČISTIČ POKAZENÝCH DÁT ---
-    // Ak košík obsahuje staré formáty (napr. text "$NaN"), vymaže ho, aby to nezhadzovalo web
-    cart = cart.filter(item => item && typeof item.euroPrice === 'number' && !isNaN(item.euroPrice));
+    // --- ČISTIČ DAT ---
+    // Toto vymaže z košíka položky, ktoré sú pokazené (obsahujú NaN)
+    let cart = rawCart.filter(item => item && typeof item.euroPrice === 'number' && !isNaN(item.euroPrice));
     localStorage.setItem('cubix_cart', JSON.stringify(cart));
 
-    function formatPrice(euroAmount) {
+    function formatPrice(euroAmount) { 
         if (isNaN(euroAmount)) return "0.00";
-        const conf = currencyConfig[currentLang];
-        const converted = (euroAmount * conf.rate).toFixed(2);
-        return conf.pos === 'before' ? `${conf.symbol}${converted}` : `${converted} ${conf.symbol}`;
+        const conf = currencyConfig[currentLang]; 
+        const converted = (euroAmount * conf.rate).toFixed(2); 
+        return conf.pos === 'before' ? `${conf.symbol}${converted}` : `${converted} ${conf.symbol}`; 
+    }
+
+    function stepQty(id, amount) { const input = document.getElementById(`qty-${id}`); if (!input) return; const newVal = parseInt(input.value) + amount; if (newVal >= 1) { input.value = newVal; } }
+    function filterCategory(cat, btn) { currentCategory = cat; document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); document.getElementById('rankDurationNav').style.display = (cat === 'Ranks') ? 'flex' : 'none'; renderProducts(); }
+    function setDuration(dur, btn) { currentDuration = dur; document.querySelectorAll('.duration-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); renderProducts(); }
+    
+    function showToast(productName) {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerHTML = `<i class="fas fa-check-circle" style="color:#2ed573"></i> <div><b>${productName}</b><br><small>${translations[currentLang].toast_added}</small></div>`;
+        container.appendChild(toast);
+        setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 500); }, 3000);
     }
 
     function renderProducts() {
         const grid = document.getElementById('productsGrid');
         grid.innerHTML = '';
         products.forEach(p => {
+            if (currentCategory !== 'All' && p.cat !== currentCategory) return;
+            let finalPrice, isForbidden = false;
+            if (p.cat === 'Ranks') {
+                if (currentDuration === 'forever' && p.allowForever === false) isForbidden = true;
+                else { const mult = { week: 0.15, month: 0.30, year: 0.60, forever: 1 }; finalPrice = p.foreverPrice * mult[currentDuration]; }
+            } else finalPrice = p.price;
+
+            const isDonate = p.cat === 'Donate';
+            const isForeverRank = (p.cat === 'Ranks' && currentDuration === 'forever');
+            const priceDisplay = isForbidden ? translations[currentLang].forbidden : formatPrice(finalPrice);
+            
             grid.innerHTML += `
-                <div class="product-card">
-                    <div class="rank-name">${p.name}</div>
-                    <div class="price-tag">${formatPrice(p.price)}</div>
-                    <button class="buy-btn" onclick="addToCart(${p.id})">${translations[currentLang].btn_add}</button>
+                <div class="product-card ${isDonate ? 'donate-style' : ''}">
+                    <div class="product-tag">${p.cat}</div>
+                    <i class="fas fa-info-circle info-trigger" onclick="openInfo(${p.id})"></i>
+                    <div class="rank-big-name ${p.class}">${p.name}</div>
+                    <div class="product-price">${priceDisplay}</div>
+                    <div class="buy-controls">
+                        ${!isForeverRank ? `
+                        <div class="quantity-wrapper">
+                            <button class="qty-btn" onclick="stepQty(${p.id}, -1)">-</button>
+                            <input type="number" class="quantity-input" value="1" min="1" id="qty-${p.id}" readonly>
+                            <button class="qty-btn" onclick="stepQty(${p.id}, 1)">+</button>
+                        </div>` : ''}
+                        <button class="buy-btn" onclick="handleAddToCart(${p.id}, ${finalPrice})" ${isForbidden ? 'disabled' : ''}>
+                            ${translations[currentLang].btn_add}
+                        </button>
+                    </div>
                 </div>`;
         });
     }
 
-    function addToCart(id) {
-        const p = products.find(prod => prod.id === id);
-        cart.push({ name: p.name, euroPrice: p.price });
-        localStorage.setItem('cubix_cart', JSON.stringify(cart));
-        updateCartBadge();
-        showToast(p.name);
+    function handleAddToCart(id, priceInEuro) {
+        const product = products.find(p => p.id === id);
+        const qtyInput = document.getElementById(`qty-${id}`);
+        const quantity = qtyInput ? parseInt(qtyInput.value) : 1;
+        for(let i = 0; i < quantity; i++) { 
+            addToCart(product.name, priceInEuro); 
+        }
+        showToast(product.name);
     }
 
-    function openCart() {
-        const container = document.getElementById('cartItemsContainer');
+    function addToCart(name, priceInEuro) { 
+        cart.push({ name: name, euroPrice: Number(priceInEuro) }); 
+        localStorage.setItem('cubix_cart', JSON.stringify(cart)); 
+        updateCartBadge(); 
+    }
+
+    function openCart() { 
+        const container = document.getElementById('cartItemsContainer'); 
         const totalDisplay = document.getElementById('cartTotalDisplay');
-        container.innerHTML = cart.length ? '' : `<p style="text-align:center">${translations[currentLang].cart_empty}</p>`;
+        container.innerHTML = cart.length ? '' : `<p style="text-align:center">${translations[currentLang].cart_empty}</p>`; 
         
-        let total = 0;
-        cart.forEach((item, i) => {
-            total += item.euroPrice;
+        let totalEuro = 0;
+        cart.forEach((item, i) => { 
+            totalEuro += item.euroPrice;
             container.innerHTML += `
                 <div class="cart-item">
                     <span>${item.name}</span>
-                    <b>${formatPrice(item.euroPrice)}</b>
+                    <b>${formatPrice(item.euroPrice)}</b> 
                     <i class="fas fa-trash" onclick="removeFromCart(${i})" style="color:#ff4757; cursor:pointer"></i>
-                </div>`;
-        });
-        totalDisplay.innerText = `Spolu: ${formatPrice(total)}`;
-        document.getElementById('cartModal').style.display = 'block';
+                </div>`; 
+        }); 
+
+        totalDisplay.innerText = `Total: ${formatPrice(totalEuro)}`;
+        document.getElementById('cartModal').style.display = 'block'; 
     }
 
-    function removeFromCart(i) {
-        cart.splice(i, 1);
-        localStorage.setItem('cubix_cart', JSON.stringify(cart));
-        updateCartBadge();
-        openCart();
+    function openInfo(id) {
+        const p = products.find(prod => prod.id === id);
+        document.getElementById('infoTitle').innerText = p.name;
+        document.getElementById('infoDesc').innerText = p.desc || "";
+        const perkList = document.getElementById('infoPerks');
+        perkList.innerHTML = '';
+        if(p.perks) p.perks.forEach(perk => { perkList.innerHTML += `<li><i class="fas fa-check-circle" style="color:#2ed573"></i> ${perk}</li>`; });
+        document.getElementById('infoModal').style.display = 'block';
     }
 
-    function updateCartBadge() {
-        const b = document.getElementById('cartBadge');
-        b.innerText = cart.length;
-        b.style.display = cart.length > 0 ? 'block' : 'none';
-    }
-
-    function setLang(l) {
-        currentLang = l;
-        localStorage.setItem('selectedLanguage', l);
-        document.querySelectorAll('.lang-menu img').forEach(img => img.classList.remove('active'));
-        document.getElementById('lang-' + l).classList.add('active');
-        renderProducts();
-        updateUI();
-    }
-
-    function updateUI() {
-        document.querySelectorAll('[data-lang]').forEach(el => {
-            const key = el.getAttribute('data-lang');
-            if (translations[currentLang][key]) el.innerText = translations[currentLang][key];
-        });
-    }
-
-    function showToast(name) {
-        const container = document.getElementById('toast-container');
-        const toast = document.createElement('div');
-        toast.className = 'toast';
-        toast.innerHTML = `<i class="fas fa-check-circle"></i> <span>${name}: ${translations[currentLang].toast_added}</span>`;
-        container.appendChild(toast);
-        setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 500); }, 3000);
-    }
-
+    function setLang(l) { currentLang = l; localStorage.setItem('selectedLanguage', l); updateUI(); renderProducts(); }
+    function updateUI() { document.querySelectorAll('.lang-flag').forEach(f => f.classList.remove('active')); if(document.getElementById('lang-' + currentLang)) document.getElementById('lang-' + currentLang).classList.add('active'); document.querySelectorAll('[data-lang]').forEach(el => { const key = el.getAttribute('data-lang'); if (translations[currentLang][key]) el.innerText = translations[currentLang][key]; }); }
+    function updateCartBadge() { const b = document.getElementById('cartBadge'); b.innerText = cart.length; b.style.display = cart.length > 0 ? 'block' : 'none'; }
+    function removeFromCart(i) { cart.splice(i, 1); localStorage.setItem('cubix_cart', JSON.stringify(cart)); updateCartBadge(); openCart(); }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-
-    window.onload = () => {
-        setLang(currentLang);
-        updateCartBadge();
-    };
+    window.onload = () => { updateUI(); updateCartBadge(); renderProducts(); };
 </script>
 </body>
 </html>
