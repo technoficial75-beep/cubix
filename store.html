@@ -3,12 +3,11 @@
 <head>
     <link rel="icon" type="image/x-icon" href="favicon.ico?v=2">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cubix | Store</title>
+    <title>Cubix | Hlasovanie</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* MODAL KOŠÍKA - NAVRCHU */
+        /* --- ŠTÝLY HLAVIČKY A KOŠÍKA (Zladené so Store) --- */
         .modal {
             display: none;
             position: fixed;
@@ -40,7 +39,6 @@
             cursor: pointer;
         }
 
-        /* MODRÁ IKONKA V KOŠÍKU */
         .cart-icon-blue {
             color: #009dff !important;
             margin-right: 10px;
@@ -58,29 +56,20 @@
             border-radius: 2px;
         }
 
-        /* ŠTÝL TLAČIDLA STORE V NAVIGÁCII (Podľa obrázka) */
         .store-nav-item {
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 2px solid #009dff; /* Svetlomodré ohraničenie */
+            border: 2px solid #009dff;
             padding: 8px 15px;
             border-radius: 10px;
             background: rgba(11, 14, 17, 0.8);
             transition: 0.3s;
         }
         
-        .store-nav-item i {
-            color: #ffca28; /* Žltá ikonka */
-            margin-right: 8px;
-        }
+        .store-nav-item i { color: #ffca28; margin-right: 8px; }
+        .store-nav-item span { color: #ffca28; font-weight: 800; }
 
-        .store-nav-item span {
-            color: #ffca28; /* Žltý text */
-            font-weight: 800;
-        }
-
-        /* ČERVENÝ ODZNAK KOŠÍKA (Podľa obrázka) */
         .cart-wrapper {
             position: relative;
             cursor: pointer;
@@ -93,7 +82,7 @@
             position: absolute;
             top: -10px;
             right: -12px;
-            background: #ff4757; /* Červená farba */
+            background: #ff4757;
             color: white;
             font-size: 0.75rem;
             font-weight: 800;
@@ -106,25 +95,57 @@
             border: 2px solid #0b0e11;
         }
 
-        /* TOP KUPEC KARTA */
-        .top-donator-card {
-            background: #161b22;
-            border: 1px solid #009dff;
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-            margin-top: 25px;
+        /* --- ŠTÝLY HLASOVANIA --- */
+        .vote-section { padding: 60px 0; text-align: center; }
+        .hero-title { font-size: 3.5rem; font-weight: 800; margin-bottom: 20px; color: #fff; }
+        .hero-subtitle { color: #8b949e; font-size: 1.1rem; margin-bottom: 50px; max-width: 700px; margin: 0 auto 50px auto; }
+
+        .vote-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
         }
+
+        .vote-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 15px;
+            padding: 35px;
+            text-align: center;
+            transition: 0.3s ease;
+        }
+
+        .vote-card:hover { border-color: #009dff; transform: translateY(-5px); }
+        .vote-card i { font-size: 3rem; color: #009dff; margin-bottom: 20px; }
+        .vote-card h3 { font-size: 1.8rem; margin-bottom: 15px; color: #fff; }
+
+        .vote-btn {
+            display: inline-block;
+            width: 100%;
+            padding: 12px;
+            background: #009dff;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .separator { width: 100%; height: 1px; background: #30363d; margin: 50px 0; }
         
-        .top-donator-card span { color: #009dff !important; font-weight: 900; }
-        .donator-avatar { width: 64px; height: 64px; border-radius: 8px; margin: 15px 0; }
-        
-        .rank-card { background: #161b22; border: 1px solid #30363d; border-radius: 15px; padding: 30px; text-align: center; transition: 0.3s; }
-        .rank-card:hover { border-color: #009dff; }
-        
-        .hero-title { font-size: 3.5rem; font-weight: 800; margin-bottom: 20px; color: #ffca28; text-align: center; }
-        .price-tag { font-size: 2.2rem; font-weight: 800; margin: 15px 0; color: white; }
-        .btn-buy { width: 100%; padding: 12px; background: #009dff; color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; }
+        .rewards-container { display: flex; flex-direction: column; gap: 15px; max-width: 700px; margin: 0 auto; }
+        .reward-box {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 15px;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            text-align: left;
+        }
+        .reward-rank { font-size: 2.5rem; min-width: 60px; text-align: center; }
     </style>
 </head>
 <body>
@@ -133,14 +154,14 @@
     <div class="modal-content">
         <span class="close-modal" onclick="closeModal('cartModal')">&times;</span>
         <div style="display: flex; justify-content: space-between; align-items: center;">
-            <h2 style="margin: 0; font-size: 1.5rem; display: flex; align-items: center;">
+            <h2 style="margin: 0; font-size: 1.5rem; display: flex; align-items: center; color: white;">
                 <i class="fas fa-shopping-cart cart-icon-blue"></i> 
                 <span data-lang="cart_title">Košík</span>
             </h2>
             <div id="cartTotalDisplay" style="font-weight: 800;">Total: 0.00 €</div>
         </div>
         <div id="cartItemsContainer" style="margin: 20px 0;"></div>
-        <button class="checkout-btn" data-lang="btn_checkout">POKLADŇA</button>
+        <button class="checkout-btn" onclick="location.href='store.html'" data-lang="btn_checkout">POKLADŇA</button>
     </div>
 </div>
 
@@ -153,7 +174,7 @@
                 <li><a href="pravidla.html"><i class="fas fa-book"></i> <span data-lang="nav_rules">Pravidlá</span></a></li>
                 <li><a href="team.html"><i class="fas fa-users"></i> <span data-lang="nav_team">Tím</span></a></li>
                 <li><a href="nabory.html"><i class="fas fa-user-plus"></i> <span data-lang="nav_staff">Nábory</span></a></li>
-                <li><a href="hlasovanie.html"><i class="fas fa-check-square"></i> <span data-lang="nav_vote">Hlasovanie</span></a></li>
+                <li><a href="hlasovanie.html" class="active"><i class="fas fa-check-square"></i> <span data-lang="nav_vote">Hlasovanie</span></a></li>
                 <li>
                     <a href="store.html" style="padding: 0;">
                         <div class="store-nav-item">
@@ -178,32 +199,57 @@
     </div>
 </header>
 
-<main class="container store-section">
-    <h1 class="hero-title">CUBIX STORE</h1>
-    <div class="store-container">
-        <aside class="sidebar">
-            <div class="sidebar-item active">RANKS</div>
-            <div class="sidebar-item" style="color: #ffca28;">DONATE</div>
-            
-            <div class="top-donator-card">
-                <span data-lang="top_buyer">TOP KUPEC MESIACA</span><br>
-                <img src="https://mc-heads.net/avatar/Steve" class="donator-avatar">
-                <div style="font-weight: 800; color: white;">Steve</div>
-                <div id="top-donator-amt" style="font-weight: 900; color: #009dff; font-size: 1.2rem;">150.00€</div>
-            </div>
-        </aside>
+<main class="container">
+    <section class="vote-section">
+        <h1 class="hero-title"><span data-lang="vote_title_1">Podpor</span> <span style="color: #009dff;" data-lang="vote_title_2">Náš Server</span></h1>
+        <p class="hero-subtitle" data-lang="vote_subtitle">Hlasuj za nás na herných portáloch a získaj skvelé odmeny priamo v hre!</p>
 
-        <section class="ranks-grid" id="main-grid">
-            <div class="rank-card">
-                <div style="font-size: 1.8rem; font-weight: 800; color: #ff4757;">IMMORTAL</div>
-                <div class="price-tag">35.00 €</div>
-                <button class="btn-buy" onclick="addToCart('Immortal', 35)">KÚPIŤ</button>
+        <div class="vote-grid">
+            <div class="vote-card">
+                <i class="fas fa-trophy"></i>
+                <h3>Craftlist</h3>
+                <p data-lang="vote_desc">Hlasuj na Craftlist.org a pomôž nám v CZ/SK rebríčku.</p>
+                <a href="https://craftlist.org/cubix" target="_blank" class="vote-btn" data-lang="btn_vote">Hlasovať</a>
             </div>
-        </section>
-    </div>
+
+            <div class="vote-card">
+                <i class="fas fa-medal"></i>
+                <h3>CzechCraft</h3>
+                <p data-lang="vote_desc">Podpor nás na známom portáli Czech-Craft.eu.</p>
+                <a href="https://czech-craft.eu/server/cubix/" target="_blank" class="vote-btn" data-lang="btn_vote">Hlasovať</a>
+            </div>
+
+            <div class="vote-card">
+                <i class="fas fa-star"></i>
+                <h3>MServri.eu</h3>
+                <p data-lang="vote_desc">Tvoj hlas na MinecraftServery.eu nás posúva vpred.</p>
+                <a href="https://minecraftservery.eu/server/cubix" target="_blank" class="vote-btn" data-lang="btn_vote">Hlasovať</a>
+            </div>
+        </div>
+
+        <div class="separator"></div>
+
+        <h2 style="margin-bottom: 40px; color: white;" data-lang="rewards_title">Mesačné odmeny pre Top Hlasujúcich</h2>
+        
+        <div class="rewards-container">
+            <div class="reward-box">
+                <div class="reward-rank">🥇</div>
+                <div class="reward-info">
+                    <h4 data-lang="reward_1st" style="color: white;">1. Miesto</h4>
+                    <p data-lang="desc_1st" style="color: #8b949e;">VIP na 1 mesiac + 3x VIP Key + [VIP] Tag na Discorde</p>
+                </div>
+            </div>
+            </div>
+    </section>
 </main>
 
 <script>
+    const translations = {
+        sk: { nav_home: "Domov", nav_rules: "Pravidlá", nav_team: "Tím", nav_staff: "Nábory", nav_vote: "Hlasovanie", nav_store: "Store", vote_title_1: "Podpor", vote_title_2: "Náš Server", vote_subtitle: "Hlasuj za nás na herných portáloch a získaj skvelé odmeny priamo v hre!", vote_desc: "Hlasuj na tomto portáli a pomôž nám rásť v rebríčku.", btn_vote: "Hlasovať", rewards_title: "Mesačné odmeny pre Top Hlasujúcich", reward_1st: "1. Miesto", desc_1st: "VIP na 1 mesiac + 3x VIP Key + [VIP] Tag na Discorde", cart_title: "Košík", cart_empty: "Tvoj košík je prázdny.", btn_checkout: "POKLADŇA" },
+        cz: { nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování", nav_store: "Store", vote_title_1: "Podpoř", vote_title_2: "Náš Server", vote_subtitle: "Hlasuj pro nás na herních portálech a získej skvělé odměny přímo ve hře!", vote_desc: "Hlasuj na tomto portálu a pomoz nám růst v žebříčku.", btn_vote: "Hlasovat", rewards_title: "Měsíční odměny pro Top Hlasující", reward_1st: "1. Místo", desc_1st: "VIP na 1 měsíc + 3x VIP Key + [VIP] Tag na Discordu", cart_title: "Košík", cart_empty: "Tvůj košík je prázdný.", btn_checkout: "POKLADNA" },
+        en: { nav_home: "Home", nav_rules: "Rules", nav_team: "Staff", nav_staff: "Recruitment", nav_vote: "Vote", nav_store: "Store", vote_title_1: "Support", vote_title_2: "Our Server", vote_subtitle: "Vote for us on gaming portals and get great rewards directly in-game!", vote_desc: "Vote on this portal and help us grow in the rankings.", btn_vote: "Vote Now", rewards_title: "Monthly Rewards for Top Voters", reward_1st: "1st Place", desc_1st: "VIP for 1 month + 3x VIP Key + [VIP] Discord Tag", cart_title: "Cart", cart_empty: "Your cart is empty.", btn_checkout: "CHECKOUT" }
+    };
+
     let cart = JSON.parse(localStorage.getItem('cubix_cart')) || [];
 
     function updateCartBadge() {
@@ -214,28 +260,37 @@
         }
     }
 
-    function addToCart(name, price) {
-        cart.push({name, price});
-        localStorage.setItem('cubix_cart', JSON.stringify(cart));
-        updateCartBadge();
-    }
-
     function openCart() {
         const container = document.getElementById('cartItemsContainer');
+        const lang = localStorage.getItem('selectedLanguage') || 'sk';
         container.innerHTML = '';
         let total = 0;
-        cart.forEach(item => {
-            total += item.price;
-            container.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:10px;"><span>${item.name}</span><strong>${item.price.toFixed(2)} €</strong></div>`;
-        });
+        if(cart.length === 0) {
+            container.innerHTML = `<p style="text-align:center; color:#8b949e;">${translations[lang].cart_empty}</p>`;
+        } else {
+            cart.forEach(item => {
+                total += item.price;
+                container.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:10px; color: white;"><span>${item.name}</span><strong>${item.price.toFixed(2)} €</strong></div>`;
+            });
+        }
         document.getElementById('cartTotalDisplay').innerText = "Total: " + total.toFixed(2) + " €";
         document.getElementById('cartModal').style.display = 'block';
     }
 
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-    function setLang(id) { localStorage.setItem('selectedLanguage', id); location.reload(); }
+    function setLang(id) { localStorage.setItem('selectedLanguage', id); updateUI(id); }
 
-    window.onload = updateCartBadge;
+    function updateUI(langId) {
+        document.querySelectorAll('[data-lang]').forEach(el => {
+            const key = el.getAttribute('data-lang');
+            if (translations[langId][key]) el.innerText = translations[langId][key];
+        });
+    }
+
+    window.onload = function() {
+        updateCartBadge();
+        updateUI(localStorage.getItem('selectedLanguage') || 'sk');
+    };
 </script>
 </body>
 </html>
