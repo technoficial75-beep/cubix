@@ -18,41 +18,23 @@
         }
 
         /* OZNÁMENIE (TOAST) */
-        #toast-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 9999;
-        }
-        .toast {
-            background: var(--card-bg);
-            border-left: 4px solid var(--primary-blue);
-            color: white;
-            padding: 15px 25px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            animation: slideIn 0.3s ease-out forwards;
-        }
+        #toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; }
+        .toast { background: var(--card-bg); border-left: 4px solid var(--primary-blue); color: white; padding: 15px 25px; border-radius: 8px; margin-bottom: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); display: flex; align-items: center; gap: 12px; animation: slideIn 0.3s ease-out forwards; }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
-        /* TOP ZÁKAZNÍK */
-        .top-customer {
-            background: rgba(255, 202, 40, 0.05);
-            border: 1px solid rgba(255, 202, 40, 0.2);
-            padding: 15px;
-            border-radius: 12px;
-            display: inline-flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        .top-customer i { color: var(--gold); font-size: 1.5rem; }
-        .top-customer-info b { color: var(--gold); display: block; font-size: 1.1rem; }
-        .top-customer-info span { color: var(--text-gray); font-size: 0.85rem; }
+        /* NAVIGÁCIA A TOP ZÁKAZNÍK V JEDNOM RIADKU */
+        .store-controls-row { display: flex; justify-content: center; align-items: center; gap: 30px; margin-bottom: 30px; flex-wrap: wrap; }
+
+        .top-customer { background: rgba(255, 202, 40, 0.05); border: 1px solid rgba(255, 202, 40, 0.2); padding: 8px 15px; border-radius: 12px; display: flex; align-items: center; gap: 12px; }
+        .top-customer i { color: var(--gold); font-size: 1.2rem; }
+        .top-customer-info span { color: var(--text-gray); font-size: 0.7rem; text-transform: uppercase; font-weight: 700; display: block; line-height: 1; margin-bottom: 3px; }
+        .top-customer-info b { color: var(--gold); font-size: 0.95rem; display: block; line-height: 1; }
+
+        .category-nav { display: flex; gap: 10px; }
+        .category-btn { background: var(--card-bg); border: 1px solid var(--border-color); padding: 8px 20px; border-radius: 30px; color: #fff; cursor: pointer; transition: 0.3s; font-weight: 600; font-size: 0.9rem; }
+        .category-btn:hover, .category-btn.active { border-color: var(--primary-blue); background: rgba(0, 157, 255, 0.1); color: var(--primary-blue); }
+        .category-btn.donate-cat-btn { border-color: rgba(255, 202, 40, 0.3); }
+        .category-btn.donate-cat-btn:hover, .category-btn.donate-cat-btn.active { border-color: var(--gold); background: rgba(255, 202, 40, 0.1); color: var(--gold); }
 
         /* ZVYŠOK ŠTÝLOV */
         .cart-wrapper { position: relative; margin-left: 15px; cursor: pointer; }
@@ -60,17 +42,9 @@
         .cart-badge { position: absolute; top: -8px; right: -8px; background: #ff5252; color: white; font-size: 0.7rem; font-weight: 800; padding: 2px 6px; border-radius: 50%; display: none; border: 1.5px solid var(--dark-bg); }
 
         .nav-links li a.active { color: var(--gold) !important; display: flex; align-items: center; gap: 8px; }
-
         .store-header { padding: 40px 0; text-align: center; }
         .store-title { font-size: 3rem; font-weight: 800; margin-bottom: 5px; color: var(--primary-blue); }
         .store-subtitle { color: var(--text-gray); font-size: 1.1rem; max-width: 800px; margin: 0 auto 30px; line-height: 1.6; }
-
-        .category-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; }
-        .category-btn { background: var(--card-bg); border: 1px solid var(--border-color); padding: 10px 25px; border-radius: 30px; color: #fff; cursor: pointer; transition: 0.3s; font-weight: 600; }
-        .category-btn:hover, .category-btn.active { border-color: var(--primary-blue); background: rgba(0, 157, 255, 0.1); color: var(--primary-blue); }
-
-        .category-btn.donate-cat-btn { border-color: rgba(255, 202, 40, 0.3); }
-        .category-btn.donate-cat-btn:hover, .category-btn.donate-cat-btn.active { border-color: var(--gold); background: rgba(255, 202, 40, 0.1); color: var(--gold); }
 
         .rank-duration-nav { display: none; justify-content: center; gap: 10px; margin-bottom: 40px; }
         .duration-btn { background: transparent; border: 1px solid var(--border-color); padding: 5px 15px; border-radius: 15px; color: var(--text-gray); cursor: pointer; font-size: 0.9rem; transition: 0.3s; }
@@ -79,48 +53,33 @@
         .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; margin-bottom: 60px; }
         .product-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 15px; padding: 30px 25px; text-align: center; display: flex; flex-direction: column; position: relative; transition: transform 0.4s; }
         .product-card:hover { transform: translateY(-10px); border-color: var(--primary-blue); }
-
+        
         .product-card.donate-style { border-color: var(--gold); box-shadow: 0 0 15px rgba(255, 202, 40, 0.1); }
-        .product-card.donate-style .rank-big-name { color: var(--gold); }
-        .product-card.donate-style .product-price { color: var(--gold); }
+        .product-card.donate-style .rank-big-name, .product-card.donate-style .product-price { color: var(--gold); }
         .product-card.donate-style .buy-btn { background: var(--gold); color: #000; }
         .product-card.donate-style .quantity-wrapper { border-color: var(--gold); }
-        .product-card.donate-style .info-trigger { color: var(--gold); opacity: 0.7; }
 
         .product-tag { position: absolute; top: 15px; left: 15px; background: var(--border-color); color: var(--text-gray); font-size: 0.65rem; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; font-weight: 700; }
         .info-trigger { position: absolute; top: 15px; right: 15px; color: var(--text-gray); cursor: pointer; transition: 0.3s; font-size: 1.1rem; }
 
         .rank-big-name { font-size: 2.2rem; font-weight: 900; text-transform: uppercase; margin-bottom: 20px; letter-spacing: -1px; line-height: 1; }
-        .rank-immortal { color: #ff4757; }
-        .rank-legend { color: var(--gold); }
-        .rank-ultra { color: #1e90ff; }
-        .rank-elite { color: #2ed573; }
-        .rank-vip { color: #eccc68; }
-        .item-default { color: #fff; }
-
+        .rank-immortal { color: #ff4757; } .rank-legend { color: var(--gold); } .rank-ultra { color: #1e90ff; } .rank-elite { color: #2ed573; } .rank-vip { color: #eccc68; } .item-default { color: #fff; }
         .product-price { font-size: 1.8rem; font-weight: 800; color: var(--primary-blue); margin: 15px 0; }
 
         .buy-controls { display: flex; gap: 10px; margin-top: auto; }
         .quantity-wrapper { display: flex; align-items: center; background: var(--dark-bg); border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; }
-        .qty-btn { background: transparent; border: none; color: var(--text-gray); padding: 0 10px; cursor: pointer; font-size: 1.2rem; transition: 0.2s; }
-        .qty-btn:hover { color: white; }
-        .quantity-input { width: 35px; background: transparent; border: none; color: white; text-align: center; font-weight: bold; -moz-appearance: textfield; }
-        .quantity-input::-webkit-outer-spin-button, .quantity-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-
-        .buy-btn { flex: 1; background: var(--primary-blue); color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 800; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
-        .buy-btn:disabled { background: #30363d; color: var(--text-gray); cursor: not-allowed; }
+        .qty-btn { background: transparent; border: none; color: var(--text-gray); padding: 0 10px; cursor: pointer; font-size: 1.2rem; }
+        .quantity-input { width: 35px; background: transparent; border: none; color: white; text-align: center; font-weight: bold; }
+        
+        .buy-btn { flex: 1; background: var(--primary-blue); color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 800; cursor: pointer; text-transform: uppercase; }
 
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
         .modal-content { background: var(--card-bg); margin: 10% auto; padding: 30px; border: 1px solid var(--border-color); border-radius: 15px; width: 90%; max-width: 500px; color: #fff; position: relative; }
         .cart-item { display: flex; justify-content: space-between; align-items: center; background: var(--dark-bg); padding: 10px; border-radius: 8px; margin-bottom: 10px; }
         .checkout-btn { width: 100%; padding: 12px; background: #2ed573; color: white; border-radius: 8px; font-weight: 700; border: none; cursor: pointer; margin-top: 20px; }
         
-        .perks-list { text-align: left; list-style: none; padding: 0; margin-top: 15px; }
-        .perks-list li { margin-bottom: 10px; display: flex; align-items: center; gap: 10px; color: var(--text-gray); }
-        .perks-list li i { color: #2ed573; font-size: 0.9rem; }
-
-        .lang-menu { display: flex; gap: 10px; margin-left: 15px; align-items: center; border-left: 1px solid var(--border-color); padding-left: 15px; }
-        .lang-flag { width: 28px; height: 18px; object-fit: cover; opacity: 0.4; cursor: pointer; transition: 0.3s; border-radius: 4px; }
+        .lang-menu { display: flex; gap: 10px; margin-left: 15px; border-left: 1px solid var(--border-color); padding-left: 15px; }
+        .lang-flag { width: 28px; height: 18px; object-fit: cover; opacity: 0.4; cursor: pointer; border-radius: 4px; }
         .lang-flag.active { opacity: 1; border: 2px solid var(--primary-blue); }
     </style>
 </head>
@@ -143,7 +102,7 @@
         <span onclick="closeModal('infoModal')" style="float:right; cursor:pointer;">&times;</span>
         <h2 id="infoTitle" style="margin-bottom: 10px; color: var(--primary-blue);"></h2>
         <p id="infoDesc" style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 20px;"></p>
-        <ul id="infoPerks" class="perks-list"></ul>
+        <ul id="infoPerks" style="list-style:none; padding:0;"></ul>
     </div>
 </div>
 
@@ -177,19 +136,21 @@
         <h1 class="store-title" data-lang="store_title">Cubix Store</h1>
         <p class="store-subtitle" data-lang="store_description">Vitajte v oficiálnom obchode Cubix.</p>
         
-        <div class="top-customer">
-            <i class="fas fa-crown"></i>
-            <div class="top-customer-info">
-                <span>ZÁKAZNÍK MESIACA</span>
-                <b>Herač - 152.00 €</b>
+        <div class="store-controls-row">
+            <div class="category-nav">
+                <button class="category-btn active" onclick="filterCategory('All', this)" data-lang="cat_all">Všetko</button>
+                <button class="category-btn" onclick="filterCategory('Ranks', this)">Ranks</button>
+                <button class="category-btn" onclick="filterCategory('Boxfight', this)">Boxfight</button>
+                <button class="category-btn donate-cat-btn" onclick="filterCategory('Donate', this)">Donate</button>
             </div>
-        </div>
 
-        <div class="category-nav">
-            <button class="category-btn active" onclick="filterCategory('All', this)" data-lang="cat_all">Všetko</button>
-            <button class="category-btn" onclick="filterCategory('Ranks', this)">Ranks</button>
-            <button class="category-btn" onclick="filterCategory('Boxfight', this)">Boxfight</button>
-            <button class="category-btn donate-cat-btn" onclick="filterCategory('Donate', this)">Donate</button>
+            <div class="top-customer">
+                <i class="fas fa-crown"></i>
+                <div class="top-customer-info">
+                    <span>TOP ZÁKAZNÍK</span>
+                    <b>Herač - 152.00 €</b>
+                </div>
+            </div>
         </div>
 
         <div class="rank-duration-nav" id="rankDurationNav">
@@ -232,13 +193,10 @@
     let cart = JSON.parse(localStorage.getItem('cubix_cart')) || [];
 
     function formatPrice(euroAmount) { const conf = currencyConfig[currentLang]; const converted = (euroAmount * conf.rate).toFixed(2); return conf.pos === 'before' ? `${conf.symbol}${converted}` : `${converted} ${conf.symbol}`; }
-
     function stepQty(id, amount) { const input = document.getElementById(`qty-${id}`); if (!input) return; const newVal = parseInt(input.value) + amount; if (newVal >= 1) { input.value = newVal; } }
-
     function filterCategory(cat, btn) { currentCategory = cat; document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); document.getElementById('rankDurationNav').style.display = (cat === 'Ranks') ? 'flex' : 'none'; renderProducts(); }
-
     function setDuration(dur, btn) { currentDuration = dur; document.querySelectorAll('.duration-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); renderProducts(); }
-
+    
     function showToast(productName) {
         const container = document.getElementById('toast-container');
         const toast = document.createElement('div');
@@ -298,7 +256,7 @@
         document.getElementById('infoDesc').innerText = p.desc || "";
         const perkList = document.getElementById('infoPerks');
         perkList.innerHTML = '';
-        if(p.perks) p.perks.forEach(perk => { perkList.innerHTML += `<li><i class="fas fa-check-circle"></i> ${perk}</li>`; });
+        if(p.perks) p.perks.forEach(perk => { perkList.innerHTML += `<li><i class="fas fa-check-circle" style="color:#2ed573"></i> ${perk}</li>`; });
         document.getElementById('infoModal').style.display = 'block';
     }
 
