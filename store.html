@@ -234,7 +234,7 @@
                             <input type="number" class="quantity-input" value="1" min="1" id="qty-${p.id}" readonly>
                             <button class="qty-btn" onclick="stepQty(${p.id}, 1)">+</button>
                         </div>` : ''}
-                        <button class="buy-btn" onclick="handleAddToCart(${p.id}, '${priceDisplay}')" ${isForbidden ? 'disabled' : ''}>
+                        <button class="buy-btn" onclick="handleAddToCart(${p.id}, ${finalPrice})" ${isForbidden ? 'disabled' : ''}>
                             ${translations[currentLang].btn_add}
                         </button>
                     </div>
@@ -242,12 +242,43 @@
         });
     }
 
-    function handleAddToCart(id, pStr) {
+    // Upravená funkcia pre pridávanie do košíka - ukladáme číselnú cenu v EUR
+    function handleAddToCart(id, priceInEuro) {
         const product = products.find(p => p.id === id);
         const qtyInput = document.getElementById(`qty-${id}`);
         const quantity = qtyInput ? parseInt(qtyInput.value) : 1;
-        for(let i = 0; i < quantity; i++) { addToCart(id, pStr); }
+        for(let i = 0; i < quantity; i++) { 
+            addToCart(product.name, priceInEuro); 
+        }
         showToast(product.name);
+    }
+
+    function addToCart(name, priceInEuro) { 
+        cart.push({ name: name, euroPrice: priceInEuro }); 
+        localStorage.setItem('cubix_cart', JSON.stringify(cart)); 
+        updateCartBadge(); 
+    }
+
+    // Upravená funkcia pre otvorenie košíka - prepočíta ceny podľa aktuálneho jazyka
+    function openCart() { 
+        const container = document.getElementById('cartItemsContainer'); 
+        const totalDisplay = document.getElementById('cartTotalDisplay');
+        container.innerHTML = cart.length ? '' : `<p style="text-align:center">${translations[currentLang].cart_empty}</p>`; 
+        
+        let totalEuro = 0;
+        cart.forEach((item, i) => { 
+            totalEuro += item.euroPrice;
+            const formattedItemPrice = formatPrice(item.euroPrice);
+            container.innerHTML += `
+                <div class="cart-item">
+                    <span>${item.name}</span>
+                    <b>${formattedItemPrice}</b> 
+                    <i class="fas fa-trash" onclick="removeFromCart(${i})" style="color:#ff4757; cursor:pointer"></i>
+                </div>`; 
+        }); 
+
+        totalDisplay.innerText = `Total: ${formatPrice(totalEuro)}`;
+        document.getElementById('cartModal').style.display = 'block'; 
     }
 
     function openInfo(id) {
@@ -262,9 +293,7 @@
 
     function setLang(l) { currentLang = l; localStorage.setItem('selectedLanguage', l); updateUI(); renderProducts(); }
     function updateUI() { document.querySelectorAll('.lang-flag').forEach(f => f.classList.remove('active')); if(document.getElementById('lang-' + currentLang)) document.getElementById('lang-' + currentLang).classList.add('active'); document.querySelectorAll('[data-lang]').forEach(el => { const key = el.getAttribute('data-lang'); if (translations[currentLang][key]) el.innerText = translations[currentLang][key]; }); }
-    function addToCart(id, pStr) { const product = products.find(p => p.id === id); cart.push({ name: product.name, displayPrice: pStr }); localStorage.setItem('cubix_cart', JSON.stringify(cart)); updateCartBadge(); }
     function updateCartBadge() { const b = document.getElementById('cartBadge'); b.innerText = cart.length; b.style.display = cart.length > 0 ? 'block' : 'none'; }
-    function openCart() { const c = document.getElementById('cartItemsContainer'); c.innerHTML = cart.length ? '' : `<p style="text-align:center">${translations[currentLang].cart_empty}</p>`; cart.forEach((item, i) => { c.innerHTML += `<div class="cart-item"><span>${item.name}</span><b>${item.displayPrice}</b> <i class="fas fa-trash" onclick="removeFromCart(${i})" style="color:#ff4757; cursor:pointer"></i></div>`; }); document.getElementById('cartModal').style.display = 'block'; }
     function removeFromCart(i) { cart.splice(i, 1); localStorage.setItem('cubix_cart', JSON.stringify(cart)); updateCartBadge(); openCart(); }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
     window.onload = () => { updateUI(); updateCartBadge(); renderProducts(); };
