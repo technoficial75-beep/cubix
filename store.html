@@ -48,6 +48,7 @@
         .product-card.donate-style .rank-big-name { color: var(--gold); }
         .product-card.donate-style .product-price { color: var(--gold); }
         .product-card.donate-style .buy-btn { background: var(--gold); color: #000; }
+        .product-card.donate-style .quantity-input { border-color: var(--gold); }
         .product-card.donate-style .info-trigger { color: var(--gold); opacity: 0.7; }
 
         .product-tag { position: absolute; top: 15px; left: 15px; background: var(--border-color); color: var(--text-gray); font-size: 0.65rem; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; font-weight: 700; }
@@ -63,7 +64,11 @@
 
         .product-price { font-size: 1.8rem; font-weight: 800; color: var(--primary-blue); margin: 15px 0; }
 
-        .buy-btn { background: var(--primary-blue); color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 800; cursor: pointer; text-transform: uppercase; margin-top: auto; transition: 0.3s; }
+        /* OVLÁDANIE NÁKUPU (MNOŽSTVO + TLAČIDLO) */
+        .buy-controls { display: flex; gap: 10px; margin-top: auto; }
+        .quantity-input { width: 60px; background: var(--dark-bg); border: 1px solid var(--border-color); border-radius: 8px; color: white; padding: 8px; text-align: center; font-weight: bold; }
+        
+        .buy-btn { flex: 1; background: var(--primary-blue); color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 800; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
         .buy-btn:disabled { background: #30363d; color: var(--text-gray); cursor: not-allowed; }
 
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
@@ -195,6 +200,7 @@
             } else finalPrice = p.price;
 
             const isDonate = p.cat === 'Donate';
+            const isForeverRank = (p.cat === 'Ranks' && currentDuration === 'forever');
             const priceDisplay = isForbidden ? translations[currentLang].forbidden : formatPrice(finalPrice);
             
             grid.innerHTML += `
@@ -203,9 +209,31 @@
                     <i class="fas fa-info-circle info-trigger" onclick="openInfo(${p.id})"></i>
                     <div class="rank-big-name ${p.class}">${p.name}</div>
                     <div class="product-price">${priceDisplay}</div>
-                    <button class="buy-btn" onclick="addToCart(${p.id}, '${priceDisplay}')" ${isForbidden ? 'disabled' : ''}>${translations[currentLang].btn_add}</button>
+                    
+                    <div class="buy-controls">
+                        ${!isForeverRank ? `<input type="number" class="quantity-input" value="1" min="1" id="qty-${p.id}">` : ''}
+                        <button class="buy-btn" onclick="handleAddToCart(${p.id}, '${priceDisplay}')" ${isForbidden ? 'disabled' : ''}>
+                            ${translations[currentLang].btn_add}
+                        </button>
+                    </div>
                 </div>`;
         });
+    }
+
+    function handleAddToCart(id, pStr) {
+        const qtyInput = document.getElementById(`qty-${id}`);
+        const quantity = qtyInput ? parseInt(qtyInput.value) : 1;
+        for(let i = 0; i < quantity; i++) { addToCart(id, pStr); }
+    }
+
+    function openInfo(id) {
+        const p = products.find(prod => prod.id === id);
+        document.getElementById('infoTitle').innerText = p.name;
+        document.getElementById('infoDesc').innerText = p.desc || "";
+        const perkList = document.getElementById('infoPerks');
+        perkList.innerHTML = '';
+        if(p.perks) p.perks.forEach(perk => { perkList.innerHTML += `<li><i class="fas fa-check-circle"></i> ${perk}</li>`; });
+        document.getElementById('infoModal').style.display = 'block';
     }
 
     function setLang(l) { currentLang = l; localStorage.setItem('selectedLanguage', l); updateUI(); renderProducts(); }
