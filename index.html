@@ -8,36 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* --- ZACHOVANÉ ŠTÝLY Z TVOJHO VZORU HLAVIČKY --- */
-        .cart-wrapper { position: relative; margin-left: 15px; cursor: pointer; }
-        .cart-badge { position: absolute; top: -8px; right: -8px; background: #ff4757; color: white; font-size: 0.7rem; font-weight: 800; padding: 2px 6px; border-radius: 50%; display: none; }
-        
-        .lang-menu { 
-            display: flex; 
-            gap: 10px; 
-            margin-left: 15px; 
-            align-items: center;
-            border-left: 1px solid #30363d;
-            padding-left: 15px;
-        }
-        .lang-flag { 
-            width: 28px; 
-            height: 18px; 
-            object-fit: cover;
-            border-radius: 4px; 
-            cursor: pointer; 
-            opacity: 0.4; 
-            transition: 0.3s;
-            border: 2px solid transparent;
-        }
-        .lang-flag:hover { opacity: 0.8; }
-        .lang-flag.active { 
-            opacity: 1; 
-            border-color: #009dff; 
-            box-shadow: 0 0 8px rgba(0, 157, 255, 0.4);
-        }
-
-        /* --- ŠTÝLY PRE OBSAH STORE --- */
+        /* Tieto štýly zabezpečia žlté prvky v Store sekcii */
         .hero-title { font-size: 3.5rem; font-weight: 800; margin-bottom: 20px; color: #ffca28; text-align: center; text-shadow: 0 0 20px rgba(255, 202, 40, 0.4); }
         .hero-title span { color: #fff; }
 
@@ -70,10 +41,6 @@
         .rank-name { font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; text-transform: uppercase; }
         .price-tag { font-size: 2.2rem; font-weight: 800; margin: 15px 0; color: #fff; }
         .btn-buy { width: 100%; padding: 12px; background: #009dff; color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; }
-
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
-        .modal-content { background: #161b22; margin: 10% auto; padding: 30px; border: 1px solid #30363d; border-radius: 15px; width: 90%; max-width: 500px; color: #fff; position: relative; }
-        .close-modal { float: right; cursor: pointer; color: #8b949e; font-size: 1.5rem; }
     </style>
 </head>
 <body>
@@ -84,7 +51,7 @@
         <h2 style="margin-bottom: 20px;"><i class="fas fa-shopping-cart" style="color:#009dff"></i> <span data-lang="cart_title">Košík</span></h2>
         <div id="cartItemsContainer"></div>
         <div id="cartTotalDisplay" style="text-align: right; font-weight: 800; margin-top: 20px; border-top: 1px solid #30363d; padding-top: 10px;">Total: 0.00 €</div>
-        <button class="btn-buy" style="margin-top: 20px; background: #2ed573;" data-lang="btn_checkout">POKLADŇA</button>
+        <button class="checkout-btn" style="margin-top: 20px;" onclick="location.href='store.html'" data-lang="btn_checkout">POKLADŇA</button>
     </div>
 </div>
 
@@ -98,7 +65,7 @@
                 <li><a href="team.html"><i class="fas fa-users"></i> <span data-lang="nav_team">Tím</span></a></li>
                 <li><a href="nabory.html"><i class="fas fa-user-plus"></i> <span data-lang="nav_staff">Nábory</span></a></li>
                 <li><a href="hlasovanie.html"><i class="fas fa-check-square"></i> <span data-lang="nav_vote">Hlasovanie</span></a></li>
-                <li><a href="store.html" class="active" style="color: #ffca28;"><i class="fas fa-shopping-cart"></i> <span data-lang="nav_store">Store</span></a></li>
+                <li><a href="store.html" style="color: #ffca28;"><i class="fas fa-shopping-cart"></i> <span data-lang="nav_store">Store</span></a></li>
             </ul>
 
             <div class="cart-wrapper" onclick="openCart()">
@@ -143,6 +110,7 @@
 </main>
 
 <script>
+    // Preklady a logika mien (CZ koruny, EN doláre, SK eurá)
     const translations = {
         sk: { nav_home: "Domov", nav_rules: "Pravidlá", nav_team: "Tím", nav_staff: "Nábory", nav_vote: "Hlasovanie", nav_store: "Store", store_title_1: "CUBIX", store_title_2: "STORE", dur_week: "Týždeň", dur_month: "Mesiac", dur_year: "Rok", dur_life: "Navždy", top_buyer: "TOP KUPEC MESIACA", buy_btn: "KÚPIŤ", donate_btn: "DAROVAŤ", cart_title: "Košík", cart_empty: "Tvoj košík je prázdny.", btn_checkout: "POKLADŇA" },
         cz: { nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování", nav_store: "Store", store_title_1: "CUBIX", store_title_2: "STORE", dur_week: "Týden", dur_month: "Měsíc", dur_year: "Rok", dur_life: "Navždy", top_buyer: "TOP KUPUJÍCÍ", buy_btn: "KOUPIT", donate_btn: "DAROVAT", cart_title: "Košík", cart_empty: "Tvůj košík je prázdný.", btn_checkout: "POKLADNA" },
@@ -227,8 +195,10 @@
 
     function updateCartBadge() {
         const badge = document.getElementById('cartBadge');
-        badge.innerText = cart.length;
-        badge.style.display = cart.length > 0 ? 'block' : 'none';
+        if(badge) {
+            badge.innerText = cart.length;
+            badge.style.display = cart.length > 0 ? 'block' : 'none';
+        }
     }
 
     function openCart() {
