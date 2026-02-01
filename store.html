@@ -167,12 +167,13 @@
         en: { symbol: "$", rate: 1.05, pos: 'before' }
     };
 
+    // TU SÚ NASTAVENÉ CENY PRE "NAVŽDY" (FOREVER)
     const products = [
-        { id: 1, name: "Immortal", basePrice: 10.00, class: "rank-immortal", cat: "Ranks", forever: 35.00 },
-        { id: 2, name: "Legend", basePrice: 8.00, class: "rank-legend", cat: "Ranks", forever: 25.00 },
-        { id: 3, name: "Ultra", basePrice: 6.00, class: "rank-ultra", cat: "Ranks", forever: 20.00 },
-        { id: 4, name: "Elite", basePrice: 4.00, class: "rank-elite", cat: "Ranks", forever: 15.00 },
-        { id: 5, name: "VIP", basePrice: 2.00, class: "rank-vip", cat: "Ranks", forever: 8.00 },
+        { id: 1, name: "Immortal", foreverPrice: 40.00, class: "rank-immortal", cat: "Ranks" },
+        { id: 2, name: "Legend", foreverPrice: 25.00, class: "rank-legend", cat: "Ranks" },
+        { id: 3, name: "Ultra", foreverPrice: 20.00, class: "rank-ultra", cat: "Ranks" },
+        { id: 4, name: "Elite", foreverPrice: 15.00, class: "rank-elite", cat: "Ranks" },
+        { id: 5, name: "VIP", foreverPrice: 10.00, class: "rank-vip", cat: "Ranks" },
         { id: 6, name: "Case Key", price: 2.50, class: "item-default", cat: "Boxfight" },
         { id: 7, name: "Loot Case", price: 3.00, class: "item-default", cat: "Boxfight" }
     ];
@@ -211,15 +212,12 @@
             let finalPrice, isForbidden = false;
             
             if (p.cat === 'Ranks') {
-                if (currentDuration === 'forever') {
-                    if (p.forever === false) isForbidden = true;
-                    else finalPrice = p.forever;
-                } else {
-                    // Kalkulácia: Rok (6x mesačná cena), Týždeň (0.4x mesačná cena)
-                    const mult = { week: 0.4, month: 1, year: 6 };
-                    finalPrice = p.basePrice * mult[currentDuration];
-                }
-            } else finalPrice = p.price;
+                // KALKULÁCIA: Navždy (100%), Rok (60%), Mesiac (30%), Týždeň (15%)
+                const mult = { week: 0.15, month: 0.30, year: 0.60, forever: 1 };
+                finalPrice = p.foreverPrice * mult[currentDuration];
+            } else {
+                finalPrice = p.price;
+            }
 
             const priceDisplay = isForbidden ? translations[currentLang].forbidden : formatPrice(finalPrice);
             grid.innerHTML += `
