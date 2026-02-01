@@ -45,16 +45,6 @@
 </head>
 <body>
 
-<div id="cartModal" class="modal">
-    <div class="modal-content">
-        <span class="close-modal" onclick="closeModal('cartModal')">&times;</span>
-        <h2 style="margin-bottom: 20px;"><i class="fas fa-shopping-cart" style="color:#009dff"></i> <span data-lang="cart_title">Košík</span></h2>
-        <div id="cartItemsContainer"></div>
-        <div id="cartTotalDisplay" style="text-align: right; font-weight: 800; margin-top: 20px; border-top: 1px solid #30363d; padding-top: 10px;">Total: 0.00 €</div>
-        <button class="checkout-btn" style="margin-top: 20px;" onclick="location.href='store.html'" data-lang="btn_checkout">POKLADŇA</button>
-    </div>
-</div>
-
 <header>
     <div class="container header-wrap">
         <a href="index.html" class="logo"><img src="cubixtext.png" alt="Logo"></a>
@@ -201,23 +191,10 @@
     }
 
     function openCart() {
-        const container = document.getElementById('cartItemsContainer');
-        const lang = localStorage.getItem('selectedLanguage') || 'sk';
-        container.innerHTML = '';
-        let total = 0;
-        if(cart.length === 0) {
-            container.innerHTML = `<p style="text-align:center; color:#8b949e;">${translations[lang].cart_empty}</p>`;
-        } else {
-            cart.forEach(item => {
-                total += item.price;
-                container.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:10px; padding:10px; background:rgba(0,0,0,0.2); border-radius:5px;"><span>${item.name}</span><strong>${formatPrice(item.price)}</strong></div>`;
-            });
-        }
-        document.getElementById('cartTotalDisplay').innerText = "Total: " + formatPrice(total);
-        document.getElementById('cartModal').style.display = 'block';
+        // Tu môžeš pridať presmerovanie na stránku košíka alebo modál, ak ho neskôr vrátiš
+        console.log("Košík otvorený", cart);
     }
 
-    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
     function setDuration(d) { activeDuration = d; document.querySelectorAll('.duration-btn').forEach(b => b.classList.remove('active')); document.getElementById('btn-'+d).classList.add('active'); renderStore(); }
     function switchTab(t) { activeTab = t; document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active')); document.getElementById('side-'+t).classList.add('active'); renderStore(); }
 
