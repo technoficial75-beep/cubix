@@ -50,6 +50,11 @@
             border-color: var(--primary-blue); background: rgba(0, 157, 255, 0.1); color: var(--primary-blue);
         }
 
+        /* ŽLTÉ TLAČIDLO PRE KATEGÓRIU DONATE */
+        .category-btn.donate-cat-btn:hover, .category-btn.donate-cat-btn.active {
+            border-color: var(--gold); background: rgba(255, 202, 40, 0.1); color: var(--gold);
+        }
+
         .rank-duration-nav { display: none; justify-content: center; gap: 10px; margin-bottom: 40px; }
         .duration-btn {
             background: transparent; border: 1px solid var(--border-color); padding: 5px 15px;
@@ -65,7 +70,9 @@
         }
         .product-card:hover { transform: translateY(-10px); border-color: var(--primary-blue); }
 
-        /* TAG KATEGÓRIE */
+        /* ŠPECIÁLNY HOVER PRE DONATE KARTU */
+        .product-card.donate-style:hover { border-color: var(--gold); }
+
         .product-tag {
             position: absolute; top: 15px; left: 15px; background: var(--border-color);
             color: var(--text-gray); font-size: 0.65rem; padding: 3px 10px; border-radius: 20px;
@@ -77,6 +84,7 @@
             cursor: pointer; transition: 0.3s; font-size: 1.1rem;
         }
         .info-trigger:hover { color: var(--primary-blue); }
+        .donate-style .info-trigger:hover { color: var(--gold); }
 
         .rank-big-name { font-size: 2.2rem; font-weight: 900; text-transform: uppercase; margin-bottom: 20px; letter-spacing: -1px; line-height: 1; }
         .rank-immortal { color: #ff4757; text-shadow: 0 0 15px rgba(255, 71, 87, 0.3); }
@@ -85,12 +93,20 @@
         .rank-elite { color: #2ed573; }
         .rank-vip { color: #eccc68; }
         .item-default { color: #fff; }
+        
+        /* ŽLTÝ NÁZOV PRE DONATE */
+        .donate-name { color: var(--gold); }
 
         .product-price { font-size: 1.8rem; font-weight: 800; color: var(--primary-blue); margin: 15px 0; }
+        .donate-price { color: var(--gold); }
+
         .buy-btn {
             background: var(--primary-blue); color: #fff; border: none; padding: 12px;
             border-radius: 8px; font-weight: 800; cursor: pointer; text-transform: uppercase; margin-top: auto;
         }
+        /* ŽLTÉ TLAČIDLO PRE DONATE */
+        .buy-btn.donate-btn { background: var(--gold); color: #000; }
+        
         .buy-btn:disabled { background: #30363d; color: var(--text-gray); cursor: not-allowed; }
 
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
@@ -164,7 +180,7 @@
             <button class="category-btn active" onclick="filterCategory('All', this)" data-lang="cat_all">Všetko</button>
             <button class="category-btn" onclick="filterCategory('Ranks', this)">Ranks</button>
             <button class="category-btn" onclick="filterCategory('Boxfight', this)">Boxfight</button>
-            <button class="category-btn" onclick="filterCategory('Donate', this)">Donate</button>
+            <button class="category-btn donate-cat-btn" onclick="filterCategory('Donate', this)">Donate</button>
         </div>
 
         <div class="rank-duration-nav" id="rankDurationNav">
@@ -209,16 +225,14 @@
         { id: 3, name: "Ultra", foreverPrice: 20.00, class: "rank-ultra", cat: "Ranks", allowForever: true, desc: "Ultra zážitok.", perks: ["Prefix [Ultra]", "/fix"] },
         { id: 4, name: "Elite", foreverPrice: 15.00, class: "rank-elite", cat: "Ranks", allowForever: true, desc: "Pre elitu.", perks: ["Prefix [Elite]", "/hat"] },
         { id: 5, name: "VIP", foreverPrice: 10.00, class: "rank-vip", cat: "Ranks", allowForever: true, desc: "Podpora servera.", perks: ["Prefix [VIP]", "Slot"] },
-        
-        // BOXFIGHT (Iba VIP Key)
         { id: 6, name: "VIP Key", price: 5.00, class: "item-default", cat: "Boxfight", desc: "Kľúč k VIP boxu.", perks: ["Exkluzívny loot"] },
         
-        // DONATE CATEGORY
-        { id: 7, name: "Donate 5€", price: 5.00, class: "item-default", cat: "Donate", desc: "Dobrovoľný príspevok.", perks: ["Podpora vývoja", "Dobrá karma"] },
-        { id: 8, name: "Donate 10€", price: 10.00, class: "item-default", cat: "Donate", desc: "Dobrovoľný príspevok.", perks: ["Podpora vývoja", "Dobrá karma"] },
-        { id: 9, name: "Donate 20€", price: 20.00, class: "item-default", cat: "Donate", desc: "Dobrovoľný príspevok.", perks: ["Podpora vývoja", "Dobrá karma"] },
-        { id: 10, name: "Donate 50€", price: 50.00, class: "item-default", cat: "Donate", desc: "Dobrovoľný príspevok.", perks: ["Podpora vývoja", "Veľká vďaka!"] },
-        { id: 11, name: "Donate 100€", price: 100.00, class: "item-default", cat: "Donate", desc: "Dobrovoľný príspevok.", perks: ["Podpora vývoja", "Ultimátna vďaka!"] }
+        // DONATE
+        { id: 7, name: "Donate 5€", price: 5.00, class: "donate-name", cat: "Donate", desc: "Dobrovoľný príspevok.", perks: ["Podpora vývoja"] },
+        { id: 8, name: "Donate 10€", price: 10.00, class: "donate-name", cat: "Donate", desc: "Dobrovoľný príspevok.", perks: ["Podpora vývoja"] },
+        { id: 9, name: "Donate 20€", price: 20.00, class: "donate-name", cat: "Donate", desc: "Dobrovoľný príspevok.", perks: ["Podpora vývoja"] },
+        { id: 10, name: "Donate 50€", price: 50.00, class: "donate-name", cat: "Donate", desc: "Dobrovoľný príspevok.", perks: ["Podpora vývoja"] },
+        { id: 11, name: "Donate 100€", price: 100.00, class: "donate-name", cat: "Donate", desc: "Dobrovoľný príspevok.", perks: ["Podpora vývoja"] }
     ];
 
     let currentCategory = 'All';
@@ -277,14 +291,16 @@
                 finalPrice = p.price;
             }
 
+            const isDonate = p.cat === 'Donate';
             const priceDisplay = isForbidden ? translations[currentLang].forbidden : formatPrice(finalPrice);
+            
             grid.innerHTML += `
-                <div class="product-card">
+                <div class="product-card ${isDonate ? 'donate-style' : ''}">
                     <div class="product-tag">${p.cat}</div>
                     <i class="fas fa-info-circle info-trigger" onclick="openInfo(${p.id})"></i>
                     <div class="rank-big-name ${p.class}">${p.name}</div>
-                    <div class="product-price">${priceDisplay}</div>
-                    <button class="buy-btn" onclick="addToCart(${p.id}, '${priceDisplay}')" ${isForbidden ? 'disabled' : ''}>${translations[currentLang].btn_add}</button>
+                    <div class="product-price ${isDonate ? 'donate-price' : ''}">${priceDisplay}</div>
+                    <button class="buy-btn ${isDonate ? 'donate-btn' : ''}" onclick="addToCart(${p.id}, '${priceDisplay}')" ${isForbidden ? 'disabled' : ''}>${translations[currentLang].btn_add}</button>
                 </div>`;
         });
     }
