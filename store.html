@@ -14,17 +14,15 @@
             --border-color: #30363d;
             --text-gray: #8b949e;
             --gold: #ffca28;
-            --cart-gray: #6e7681; /* Sivá farba pre ikonku */
+            --cart-gray: #8b949e; 
         }
 
-        /* KOŠÍK V HLAVIČKE - IKONKA SIVÁ */
+        /* HLAVNÁ IKONKA KOŠÍKA (VPRAVO) - SIVÁ */
         .cart-wrapper { position: relative; margin-left: 15px; cursor: pointer; }
         .cart-wrapper i { 
             color: var(--cart-gray) !important; 
             font-size: 1.3rem; 
-            transition: 0.3s;
         }
-        .cart-wrapper:hover i { color: #fff !important; }
         
         .cart-badge { 
             position: absolute; top: -8px; right: -8px; background: #ff5252; 
@@ -32,8 +30,13 @@
             border-radius: 50%; display: none; border: 1.5px solid var(--dark-bg);
         }
 
-        /* TEXT V MENU OSTÁVA ŽLTÝ */
-        .nav-links li a.active { color: var(--gold) !important; }
+        /* MENU - STORE ŽLTÝ TEXT + IKONKA */
+        .nav-links li a.active { 
+            color: var(--gold) !important; 
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
         /* STORE DIZAJN */
         .store-header { padding: 40px 0; text-align: center; }
@@ -114,7 +117,7 @@
                 <li><a href="team.html"><i class="fas fa-users"></i> <span data-lang="nav_team">Tím</span></a></li>
                 <li><a href="nabory.html"><i class="fas fa-user-plus"></i> <span data-lang="nav_staff">Nábory</span></a></li>
                 <li><a href="hlasovanie.html"><i class="fas fa-check-square"></i> <span data-lang="nav_vote">Hlasovanie</span></a></li>
-                <li><a href="store.html" class="active"><i class="fas fa-shopping-cart" style="display:none;"></i> <span data-lang="nav_store">Store</span></a></li>
+                <li><a href="store.html" class="active"><i class="fas fa-shopping-cart"></i> <span data-lang="nav_store">Store</span></a></li>
             </ul>
             <div class="cart-wrapper" onclick="openCart()">
                 <i class="fas fa-shopping-basket"></i>
