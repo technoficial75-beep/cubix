@@ -7,103 +7,14 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        .vote-section { padding: 60px 0; text-align: center; }
-        .hero-title { font-size: 3.5rem; font-weight: 800; margin-bottom: 20px; color: #fff; }
-        .hero-subtitle { color: #8b949e; font-size: 1.1rem; margin-bottom: 50px; max-width: 700px; margin-left: auto; margin-right: auto; }
-
-        .vote-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
-        }
-
-        .vote-card {
-            background: #161b22;
-            border: 1px solid #30363d;
-            border-radius: 15px;
-            padding: 35px;
-            text-align: center;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .vote-card:hover { 
-            transform: translateY(-10px) scale(1.02); 
-            border-color: #009dff; 
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); 
-        }
-
-        .vote-card i { font-size: 3rem; color: #009dff; margin-bottom: 20px; }
-        .vote-card h3 { font-size: 1.8rem; margin-bottom: 15px; color: #fff; }
-        .vote-card p { color: #8b949e; margin-bottom: 25px; font-size: 0.95rem; }
-
-        .vote-btn {
-            display: inline-block;
-            width: 100%;
-            padding: 12px;
-            background: #009dff;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 700;
-            transition: 0.3s;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-        }
-        .vote-btn:hover { background: #007ccb; }
-
-        /* SEKČIA ODMENY */
-        .separator { width: 100%; height: 1px; background: linear-gradient(90deg, #30363d 0%, transparent 100%); margin: 50px 0; }
-        
-        .rewards-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .reward-box {
-            background: #161b22;
-            border: 1px solid #30363d;
-            border-radius: 15px;
-            padding: 25px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            text-align: left;
-            transition: 0.3s;
-        }
-        .reward-box:hover { border-color: #009dff; background: #1c2128; }
-
-        .reward-rank { font-size: 2.5rem; min-width: 60px; text-align: center; }
-        .reward-info h4 { color: #fff; margin-bottom: 5px; font-size: 1.2rem; }
-        .reward-info p { color: #8b949e; font-size: 0.95rem; margin: 0; }
-
-        /* VLAJKY A KOŠÍK */
-        .lang-menu { display: flex; gap: 10px; margin-left: 15px; align-items: center; border-left: 1px solid #30363d; padding-left: 15px; }
-        .lang-flag { width: 28px; height: 18px; object-fit: cover; border-radius: 4px; cursor: pointer; opacity: 0.4; transition: 0.3s; border: 2px solid transparent; }
-        .lang-flag:hover { opacity: 0.8; }
-        .lang-flag.active { opacity: 1; border-color: #009dff; box-shadow: 0 0 8px rgba(0, 157, 255, 0.4); }
-
-        .cart-wrapper { position: relative; margin-left: 15px; cursor: pointer; }
-        .cart-icon { font-size: 1.2rem; color: #8b949e; transition: 0.3s; }
-        .cart-wrapper:hover .cart-icon { color: #fff; }
-        .cart-badge { position: absolute; top: -8px; right: -8px; background: #ff4757; color: white; font-size: 0.7rem; font-weight: 800; padding: 2px 6px; border-radius: 50%; display: none; }
-
-        /* MODAL STYLES */
+        .vote-section { padding: 60px 0; text-align: center; color: white; }
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
-        .modal-content { background: #161b22; margin: 10% auto; padding: 30px; border: 1px solid #30363d; border-radius: 15px; width: 90%; max-width: 500px; color: #fff; animation: modalAnim 0.3s ease; position: relative; }
-        @keyframes modalAnim { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .modal-content { background: #161b22; margin: 10% auto; padding: 30px; border: 1px solid #30363d; border-radius: 15px; width: 90%; max-width: 500px; color: #fff; position: relative; text-align: left; }
+        .cart-wrapper { position: relative; margin-left: 15px; cursor: pointer; }
+        .cart-badge { position: absolute; top: -8px; right: -8px; background: #ff4757; color: white; font-size: 0.7rem; font-weight: 800; padding: 2px 6px; border-radius: 50%; display: none; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; background: #0d1117; padding: 10px; border-radius: 8px; margin-bottom: 10px; }
+        .btn-buy { width: 100%; padding: 12px; background: #009dff; color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; margin-top: 10px; }
         .close-modal { float: right; cursor: pointer; color: #8b949e; font-size: 1.5rem; }
-        .cart-item { display: flex; justify-content: space-between; align-items: center; background: #0d1117; padding: 10px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #30363d; }
-        .cart-remove { color: #ff4757; cursor: pointer; margin-left: 10px; }
-        .cart-total { font-size: 1.2rem; font-weight: 800; text-align: right; margin-top: 20px; border-top: 1px solid #30363d; padding-top: 10px; }
-        .btn-buy { width: 100%; padding: 12px; background: #009dff; color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; transition: 0.3s; margin-top: 10px; }
-        .checkout-form input { width: 100%; padding: 12px; background: #0d1117; border: 1px solid #30363d; border-radius: 8px; color: #fff; margin-bottom: 15px; }
     </style>
 </head>
 <body>
@@ -111,181 +22,37 @@
 <div id="cartModal" class="modal">
     <div class="modal-content">
         <span class="close-modal" onclick="closeModal('cartModal')">&times;</span>
-        <h2 style="margin-bottom: 20px;"><i class="fas fa-shopping-cart" style="color:#009dff"></i> <span data-lang="cart_title">Košík</span></h2>
+        <h2><i class="fas fa-shopping-cart"></i> Košík</h2>
         <div id="cartItemsContainer"></div>
-        <div class="cart-total" id="cartTotalDisplay">Total: 0.00 €</div>
-        <button class="btn-buy" style="margin-top: 20px; background: #2ed573;" onclick="openCheckout()" id="btnCheckout" data-lang="btn_checkout">POKLADŇA</button>
-    </div>
-</div>
-
-<div id="checkoutModal" class="modal">
-    <div class="modal-content">
-        <span class="close-modal" onclick="closeModal('checkoutModal')">&times;</span>
-        <h2 style="margin-bottom: 20px;"><i class="fas fa-credit-card" style="color:#2ed573"></i> <span data-lang="checkout_title">Platba</span></h2>
-        <div class="checkout-form">
-            <label style="display:block; margin-bottom:5px; color:#8b949e;" data-lang="form_mcname">Minecraft Meno (Nick)</label>
-            <input type="text" id="mcNick" placeholder="Steve">
-            <button class="btn-buy" onclick="processPayment()" data-lang="btn_pay">ZAPLATIŤ</button>
-        </div>
+        <div id="cartTotalDisplay" style="text-align:right; font-weight:800; margin-top:15px;">Total: 0.00 €</div>
+        <button class="btn-buy" style="background:#2ed573; margin-top:15px;" onclick="location.href='store.html'">SPÄŤ DO OBCHODU</button>
     </div>
 </div>
 
 <header>
-    <div class="container header-wrap">
-        <a href="index.html" class="logo"><img src="cubixtext.png" alt="Logo"></a>
+    <div class="container header-wrap" style="display:flex; justify-content:space-between; align-items:center;">
+        <a href="index.html" class="logo"><img src="cubixtext.png" alt="Logo" style="height:40px;"></a>
         <div style="display: flex; align-items: center;">
-            <ul class="nav-links">
-                <li><a href="index.html"><i class="fas fa-home"></i> <span data-lang="nav_home">Domov</span></a></li>
-                <li><a href="pravidla.html"><i class="fas fa-book"></i> <span data-lang="nav_rules">Pravidlá</span></a></li>
-                <li><a href="team.html"><i class="fas fa-users"></i> <span data-lang="nav_team">Tím</span></a></li>
-                <li><a href="nabory.html"><i class="fas fa-user-plus"></i> <span data-lang="nav_staff">Nábory</span></a></li>
-                <li><a href="hlasovanie.html" class="active"><i class="fas fa-check-square"></i> <span data-lang="nav_vote">Hlasovanie</span></a></li>
-                <li><a href="store.html" style="color: #ffca28;"><i class="fas fa-shopping-cart"></i> <span data-lang="nav_store">Store</span></a></li>
+            <ul class="nav-links" style="display:flex; list-style:none; gap:20px;">
+                <li><a href="index.html">Domov</a></li>
+                <li><a href="hlasovanie.html" class="active">Hlasovanie</a></li>
+                <li><a href="store.html" style="color:#ffca28">Store</a></li>
             </ul>
-
             <div class="cart-wrapper" onclick="openCart()">
-                <i class="fas fa-shopping-basket cart-icon"></i>
+                <i class="fas fa-shopping-basket" style="color:#8b949e; font-size:1.2rem;"></i>
                 <span class="cart-badge" id="cartBadge">0</span>
-            </div>
-
-            <div class="lang-menu">
-                <img src="https://flagcdn.com/w80/sk.png" class="lang-flag" id="lang-sk" onclick="setLang('sk')" title="Slovenčina">
-                <img src="https://flagcdn.com/w80/cz.png" class="lang-flag" id="lang-cz" onclick="setLang('cz')" title="Čeština">
-                <img src="https://flagcdn.com/w80/gb.png" class="lang-flag" id="lang-en" onclick="setLang('en')" title="English">
             </div>
         </div>
     </div>
 </header>
 
-<main class="container">
-    <section class="vote-section">
-        <h1 class="hero-title"><span data-lang="vote_title_1">Podpor</span> <span style="color: #009dff;" data-lang="vote_title_2">Náš Server</span></h1>
-        <p class="hero-subtitle" data-lang="vote_subtitle">Hlasuj za nás na herných portáloch a získaj skvelé odmeny priamo v hre!</p>
-
-        <div class="vote-grid">
-            <div class="vote-card">
-                <i class="fas fa-trophy"></i>
-                <h3>Craftlist</h3>
-                <p data-lang="vote_desc">Hlasuj na Craftlist.org a pomôž nám v CZ/SK rebríčku.</p>
-                <a href="https://craftlist.org/cubix" target="_blank" class="vote-btn" data-lang="btn_vote">Hlasovať</a>
-            </div>
-
-            <div class="vote-card">
-                <i class="fas fa-medal"></i>
-                <h3>CzechCraft</h3>
-                <p data-lang="vote_desc">Podpor nás na známom portáli Czech-Craft.eu.</p>
-                <a href="https://czech-craft.eu/server/cubix/" target="_blank" class="vote-btn" data-lang="btn_vote">Hlasovať</a>
-            </div>
-
-            <div class="vote-card">
-                <i class="fas fa-star"></i>
-                <h3>MServri.eu</h3>
-                <p data-lang="vote_desc">Tvoj hlas na MinecraftServery.eu nás posúva vpred.</p>
-                <a href="https://minecraftservery.eu/server/cubix" target="_blank" class="vote-btn" data-lang="btn_vote">Hlasovať</a>
-            </div>
-        </div>
-
-        <div class="separator"></div>
-
-        <h2 style="margin-bottom: 40px;" data-lang="rewards_title">Mesačné odmeny pre Top Hlasujúcich</h2>
-        
-        <div class="rewards-container">
-            <div class="reward-box">
-                <div class="reward-rank">🥇</div>
-                <div class="reward-info">
-                    <h4 data-lang="reward_1st">1. Miesto</h4>
-                    <p data-lang="desc_1st">VIP na 1 mesiac + 3x VIP Key + [VIP] Tag na Discorde</p>
-                </div>
-            </div>
-
-            <div class="reward-box">
-                <div class="reward-rank">🥈</div>
-                <div class="reward-info">
-                    <h4 data-lang="reward_2nd">2. Miesto</h4>
-                    <p data-lang="desc_2nd">VIP na 14 dní + 2x VIP Key + [VIP] Tag na Discorde</p>
-                </div>
-            </div>
-
-            <div class="reward-box">
-                <div class="reward-rank">🥉</div>
-                <div class="reward-info">
-                    <h4 data-lang="reward_3rd">3. Miesto</h4>
-                    <p data-lang="desc_3rd">VIP na 7 dní + 1x VIP Key</p>
-                </div>
-            </div>
-        </div>
-
-        <p style="margin-top: 30px; font-size: 0.9rem; color: #8b949e;" data-lang="reward_info">* Odmeny sa vyhodnocujú a odovzdávajú automaticky na konci každého mesiaca.</p>
-
-    </section>
+<main class="container vote-section">
+    <h1>Hlasuj za Cubix</h1>
+    <p>Tvoj košík ťa bude sprevádzať celým webom!</p>
 </main>
 
 <script>
-    const translations = {
-        sk: {
-            nav_home: "Domov", nav_rules: "Pravidlá", nav_team: "Tím", nav_staff: "Nábory", nav_vote: "Hlasovanie", nav_store: "Store",
-            vote_title_1: "Podpor", vote_title_2: "Náš Server",
-            vote_subtitle: "Hlasuj za nás na herných portáloch a získaj skvelé odmeny priamo v hre!",
-            vote_desc: "Hlasuj na tomto portáli a pomôž nám rásť v rebríčku.",
-            btn_vote: "Hlasovať",
-            rewards_title: "Mesačné odmeny pre Top Hlasujúcich",
-            reward_1st: "1. Miesto", desc_1st: "VIP na 1 mesiac + 3x VIP Key + [VIP] Tag na Discorde",
-            reward_2nd: "2. Miesto", desc_2nd: "VIP na 14 dní + 2x VIP Key + [VIP] Tag na Discorde",
-            reward_3rd: "3. Miesto", desc_3rd: "VIP na 7 dní + 1x VIP Key",
-            reward_info: "* Odmeny sa vyhodnocujú a odovzdávajú automaticky na konci každého mesiaca.",
-            cart_title: "Košík", cart_empty: "Tvoj košík je prázdny.", btn_checkout: "POKLADŇA",
-            checkout_title: "Platba", form_mcname: "Minecraft Meno (Nick)", btn_pay: "ZAPLATIŤ"
-        },
-        cz: {
-            nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování", nav_store: "Store",
-            vote_title_1: "Podpoř", vote_title_2: "Náš Server",
-            vote_subtitle: "Hlasuj pro nás na herních portálech a získej skvělé odměny přímo ve hře!",
-            vote_desc: "Hlasuj na tomto portálu a pomoz nám růst v žebříčku.",
-            btn_vote: "Hlasovat",
-            rewards_title: "Měsíční odměny pro Top Hlasující",
-            reward_1st: "1. Místo", desc_1st: "VIP na 1 měsíc + 3x VIP Key + [VIP] Tag na Discordu",
-            reward_2nd: "2. Místo", desc_2nd: "VIP na 14 dní + 2x VIP Key + [VIP] Tag na Discordu",
-            reward_3rd: "3. Místo", desc_3rd: "VIP na 7 dní + 1x VIP Key",
-            reward_info: "* Odměny se vyhodnocují a odevzdávají automaticky na konci každého měsíce.",
-            cart_title: "Košík", cart_empty: "Tvůj košík je prázdný.", btn_checkout: "POKLADNA",
-            checkout_title: "Platba", form_mcname: "Minecraft Jméno (Nick)", btn_pay: "ZAPLATIT"
-        },
-        en: {
-            nav_home: "Home", nav_rules: "Rules", nav_team: "Team", nav_staff: "Staff", nav_vote: "Vote", nav_store: "Store",
-            vote_title_1: "Support", vote_title_2: "Our Server",
-            vote_subtitle: "Vote for us on gaming portals and get great rewards directly in-game!",
-            vote_desc: "Vote on this portal and help us grow in the rankings.",
-            btn_vote: "Vote Now",
-            rewards_title: "Monthly Rewards for Top Voters",
-            reward_1st: "1st Place", desc_1st: "VIP for 1 month + 3x VIP Key + [VIP] Discord Tag",
-            reward_2nd: "2nd Place", desc_2nd: "VIP for 14 days + 2x VIP Key + [VIP] Discord Tag",
-            reward_3rd: "3rd Place", desc_3rd: "VIP for 7 days + 1x VIP Key",
-            reward_info: "* Rewards are evaluated and distributed automatically at the end of each month.",
-            cart_title: "Cart", cart_empty: "Your cart is empty.", btn_checkout: "CHECKOUT",
-            checkout_title: "Checkout", form_mcname: "Minecraft Username", btn_pay: "PAY NOW"
-        }
-    };
-
     let cart = JSON.parse(localStorage.getItem('cubix_cart')) || [];
-
-    function setLang(langId) {
-        localStorage.setItem('selectedLanguage', langId);
-        updateUI(langId);
-    }
-
-    function updateUI(langId) {
-        document.querySelectorAll('.lang-flag').forEach(flag => flag.classList.remove('active'));
-        const selected = document.getElementById('lang-' + langId);
-        if (selected) selected.classList.add('active');
-
-        document.querySelectorAll('[data-lang]').forEach(element => {
-            const key = element.getAttribute('data-lang');
-            if (translations[langId] && translations[langId][key]) {
-                element.innerText = translations[langId][key];
-            }
-        });
-        updateCartBadge();
-    }
 
     function updateCartBadge() {
         const badge = document.getElementById('cartBadge');
@@ -295,69 +62,21 @@
     }
 
     function openCart() {
-        const modal = document.getElementById('cartModal');
         const container = document.getElementById('cartItemsContainer');
-        const lang = localStorage.getItem('selectedLanguage') || 'sk';
-        const t = translations[lang];
-
-        container.innerHTML = '';
+        container.innerHTML = cart.length ? '' : '<p>Košík je prázdny</p>';
         let total = 0;
-
-        if (cart.length === 0) {
-            container.innerHTML = `<p style="color: #8b949e; text-align: center;">${t.cart_empty}</p>`;
-            document.getElementById('btnCheckout').style.display = 'none';
-        } else {
-            document.getElementById('btnCheckout').style.display = 'block';
-            cart.forEach((item, index) => {
-                total += item.price;
-                container.innerHTML += `
-                    <div class="cart-item">
-                        <span>${item.name}</span>
-                        <div>
-                            <span style="font-weight:700; color:#2ed573">${item.price.toFixed(2)} €</span>
-                            <i class="fas fa-trash cart-remove" onclick="removeFromCart(${index})"></i>
-                        </div>
-                    </div>`;
-            });
-        }
-        document.getElementById('cartTotalDisplay').innerText = "Total: " + total.toFixed(2) + " €";
-        modal.style.display = 'block';
+        cart.forEach((item, i) => {
+            total += item.price;
+            container.innerHTML += `<div class="cart-item"><span>${item.name}</span><span>${item.price.toFixed(2)}€ <i class="fas fa-trash" onclick="removeItem(${i})" style="color:red; cursor:pointer"></i></span></div>`;
+        });
+        document.getElementById('cartTotalDisplay').innerText = "Total: " + total.toFixed(2) + "€";
+        document.getElementById('cartModal').style.display = 'block';
     }
 
-    function removeFromCart(index) {
-        cart.splice(index, 1);
-        updateCartBadge();
-        openCart();
-    }
+    function removeItem(i) { cart.splice(i, 1); updateCartBadge(); openCart(); }
+    function closeModal(id) { document.getElementById(id).style.display='none'; }
 
-    function openCheckout() {
-        closeModal('cartModal');
-        document.getElementById('checkoutModal').style.display = 'block';
-    }
-
-    function closeModal(id) {
-        document.getElementById(id).style.display = 'none';
-    }
-
-    function processPayment() {
-        const nick = document.getElementById('mcNick').value;
-        if (!nick) { alert("Zadaj meno!"); return; }
-        alert(`Ďakujeme ${nick}! (Demo)`);
-        cart = [];
-        updateCartBadge();
-        closeModal('checkoutModal');
-    }
-
-    window.onclick = (e) => {
-        if (e.target.classList.contains('modal')) {
-            e.target.style.display = 'none';
-        }
-    }
-
-    window.onload = function() {
-        const savedLang = localStorage.getItem('selectedLanguage') || 'sk';
-        updateUI(savedLang);
-    };
+    window.onload = updateCartBadge;
 </script>
 </body>
 </html>
