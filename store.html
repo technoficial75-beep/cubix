@@ -11,29 +11,109 @@
         .store-section { padding: 60px 0; }
         .hero-title { font-size: 3.5rem; font-weight: 800; margin-bottom: 20px; color: #fff; text-align: center; }
         .hero-title span { color: #009dff; }
-        .hero-subtitle { color: #8b949e; font-size: 1.1rem; margin-bottom: 50px; text-align: center; }
-        .duration-selector { display: flex; justify-content: center; gap: 10px; margin-bottom: 40px; background: #161b22; padding: 8px; border-radius: 12px; border: 1px solid #30363d; max-width: fit-content; margin: 0 auto 40px auto; }
-        .duration-btn { padding: 10px 20px; border-radius: 8px; border: none; background: transparent; color: #8b949e; cursor: pointer; font-weight: 700; transition: 0.3s ease; text-transform: uppercase; font-size: 0.8rem; }
-        .duration-btn.active { background: #009dff; color: white; }
+        .hero-subtitle { color: #8b949e; font-size: 1.1rem; margin-bottom: 50px; text-align: center; max-width: 700px; margin-left: auto; margin-right: auto; }
+
+        .duration-selector {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 40px;
+            background: #161b22;
+            padding: 8px;
+            border-radius: 12px;
+            border: 1px solid #30363d;
+            max-width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .duration-btn {
+            padding: 10px 25px;
+            border-radius: 8px;
+            border: none;
+            background: transparent;
+            color: #8b949e;
+            cursor: pointer;
+            font-weight: 700;
+            transition: 0.3s ease;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        .duration-btn.active { background: #009dff; color: white; box-shadow: 0 4px 15px rgba(0, 157, 255, 0.3); }
+
         .store-container { display: flex; gap: 30px; margin-top: 40px; align-items: flex-start; }
-        .sidebar { width: 250px; flex-shrink: 0; position: sticky; top: 100px; }
-        .sidebar-item { background: #161b22; border: 1px solid #30363d; padding: 15px 20px; margin-bottom: 10px; border-radius: 10px; cursor: pointer; font-weight: 700; color: #fff; transition: 0.3s; display: flex; align-items: center; gap: 12px; text-transform: uppercase; font-size: 0.9rem; }
-        .sidebar-item.active { border-color: #009dff; background: #1c2128; }
-        .ranks-grid { flex-grow: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-        .rank-card { background: #161b22; border: 1px solid #30363d; border-radius: 15px; padding: 30px; text-align: center; transition: 0.4s; display: flex; flex-direction: column; justify-content: space-between; position: relative; }
-        .rank-card:hover:not(.disabled) { transform: translateY(-10px); border-color: #009dff; }
-        .rank-card.disabled { opacity: 0.4; filter: grayscale(1); cursor: not-allowed; }
-        .price-tag { font-size: 2.2rem; font-weight: 800; margin: 15px 0; display: block; }
-        .btn-buy { width: 100%; padding: 12px; background: #009dff; color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
         
-        /* Modal & Cart */
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
-        .modal-content { background: #161b22; margin: 10% auto; padding: 30px; border: 1px solid #30363d; border-radius: 15px; width: 90%; max-width: 500px; color: #fff; position: relative; }
+        .sidebar { width: 260px; flex-shrink: 0; position: sticky; top: 100px; }
+        .sidebar-item {
+            background: #161b22;
+            border: 1px solid #30363d;
+            padding: 18px 25px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            color: #8b949e;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+        .sidebar-item i { font-size: 1.1rem; }
+        .sidebar-item.active { border-color: #009dff; background: #1c2128; color: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .sidebar-item:hover:not(.active) { border-color: #484f58; color: #fff; }
+
+        .ranks-grid { flex-grow: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
+
+        .rank-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .rank-card:hover:not(.disabled) { transform: translateY(-10px); border-color: #009dff; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .rank-card.disabled { opacity: 0.5; filter: grayscale(1); cursor: not-allowed; }
+
+        .rank-name { font-size: 2.2rem; font-weight: 900; margin-bottom: 10px; text-transform: uppercase; letter-spacing: -1px; }
+        .price-tag { font-size: 2.8rem; font-weight: 800; margin: 20px 0; color: #fff; }
+        .price-tag span { font-size: 1.2rem; color: #8b949e; margin-left: 5px; }
+
+        .btn-buy {
+            width: 100%;
+            padding: 15px;
+            background: #009dff;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 800;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.3s;
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+        .btn-buy:hover { background: #007ccb; transform: scale(1.02); }
+
+        /* MODALS */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); }
+        .modal-content { background: #161b22; margin: 8% auto; padding: 40px; border: 1px solid #30363d; border-radius: 20px; width: 90%; max-width: 500px; color: #fff; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
+        .close-modal { position: absolute; top: 20px; right: 25px; cursor: pointer; color: #8b949e; font-size: 1.8rem; transition: 0.3s; }
+        .close-modal:hover { color: #fff; }
+
+        .cart-item { display: flex; justify-content: space-between; align-items: center; background: #0d1117; padding: 15px; border-radius: 12px; margin-bottom: 12px; border: 1px solid #30363d; }
         .cart-wrapper { position: relative; margin-left: 15px; cursor: pointer; }
-        .cart-badge { position: absolute; top: -8px; right: -8px; background: #ff4757; color: white; font-size: 0.7rem; font-weight: 800; padding: 2px 6px; border-radius: 50%; display: none; }
-        .cart-item { display: flex; justify-content: space-between; align-items: center; background: #0d1117; padding: 10px; border-radius: 8px; margin-bottom: 10px; }
-        .checkout-form input { width: 100%; padding: 12px; background: #0d1117; border: 1px solid #30363d; border-radius: 8px; color: #fff; margin-bottom: 15px; }
-        .close-modal { float: right; cursor: pointer; color: #8b949e; font-size: 1.5rem; }
+        .cart-badge { position: absolute; top: -8px; right: -8px; background: #ff4757; color: white; font-size: 0.75rem; font-weight: 800; padding: 2px 7px; border-radius: 50%; display: none; border: 2px solid #0d1117; }
     </style>
 </head>
 <body>
@@ -41,22 +121,10 @@
 <div id="cartModal" class="modal">
     <div class="modal-content">
         <span class="close-modal" onclick="closeModal('cartModal')">&times;</span>
-        <h2><i class="fas fa-shopping-cart"></i> <span data-lang="cart_title">Košík</span></h2>
+        <h2 style="margin-bottom: 25px;"><i class="fas fa-shopping-cart" style="color:#009dff"></i> Košík</h2>
         <div id="cartItemsContainer"></div>
-        <div id="cartTotalDisplay" style="text-align:right; font-weight:800; margin-top:15px;">Total: 0.00 €</div>
-        <button class="btn-buy" style="background:#2ed573; margin-top:15px;" onclick="openCheckout()" data-lang="btn_checkout">POKLADŇA</button>
-    </div>
-</div>
-
-<div id="checkoutModal" class="modal">
-    <div class="modal-content">
-        <span class="close-modal" onclick="closeModal('checkoutModal')">&times;</span>
-        <h2><i class="fas fa-credit-card"></i> <span data-lang="checkout_title">Platba</span></h2>
-        <div class="checkout-form">
-            <label data-lang="form_mcname">Minecraft Meno</label>
-            <input type="text" id="mcNick" placeholder="Steve">
-            <button class="btn-buy" onclick="processPayment()" data-lang="btn_pay">ZAPLATIŤ</button>
-        </div>
+        <div id="cartTotalDisplay" style="text-align: right; font-size: 1.4rem; font-weight: 800; margin-top: 25px; border-top: 1px solid #30363d; padding-top: 15px;">Total: 0.00 €</div>
+        <button class="btn-buy" style="margin-top: 25px; background: #2ed573;" onclick="alert('Demo: Platba spracovaná!')">ZAPLATIŤ</button>
     </div>
 </div>
 
@@ -67,15 +135,11 @@
             <ul class="nav-links">
                 <li><a href="index.html">Domov</a></li>
                 <li><a href="hlasovanie.html">Hlasovanie</a></li>
-                <li><a href="store.html" class="active" style="color:#ffca28">Store</a></li>
+                <li><a href="store.html" class="active" style="color: #ffca28;">Store</a></li>
             </ul>
             <div class="cart-wrapper" onclick="openCart()">
-                <i class="fas fa-shopping-basket" style="color:#8b949e; font-size:1.2rem;"></i>
+                <i class="fas fa-shopping-basket" style="font-size: 1.3rem; color: #8b949e;"></i>
                 <span class="cart-badge" id="cartBadge">0</span>
-            </div>
-            <div class="lang-menu" style="margin-left:15px;">
-                <img src="https://flagcdn.com/w80/sk.png" class="lang-flag" onclick="setLang('sk')" style="width:25px; cursor:pointer;">
-                <img src="https://flagcdn.com/w80/cz.png" class="lang-flag" onclick="setLang('cz')" style="width:25px; cursor:pointer;">
             </div>
         </div>
     </div>
@@ -83,76 +147,118 @@
 
 <main class="container store-section">
     <h1 class="hero-title"><span>Oficiálny</span> Obchod</h1>
+    <p class="hero-subtitle">Vyber si rank a podpor vývoj nášho serveru. Všetky výhody získaš okamžite po zakúpení!</p>
+
     <div class="duration-selector">
-        <button class="duration-btn" onclick="setDuration('month')" id="btn-month">Mesiac</button>
+        <button class="duration-btn" onclick="setDuration('month')" id="btn-month">Mesačné</button>
         <button class="duration-btn active" onclick="setDuration('lifetime')" id="btn-lifetime">Navždy</button>
     </div>
+
     <div class="store-container">
         <aside class="sidebar">
-            <div class="sidebar-item active">Ranks</div>
+            <div class="sidebar-item active"><i class="fas fa-crown"></i> Ranks</div>
+            <div class="sidebar-item"><i class="fas fa-box-open"></i> Crates</div>
+            <div class="sidebar-item"><i class="fas fa-gem"></i> Extra</div>
         </aside>
-        <section class="ranks-grid" id="main-grid"></section>
+
+        <section class="ranks-grid" id="main-grid">
+            </section>
     </div>
 </main>
 
 <script>
-    const translations = {
-        sk: { cart_title: "Košík", cart_empty: "Košík je prázdny", btn_checkout: "POKLADŇA", checkout_title: "Platba", form_mcname: "Minecraft Meno", btn_pay: "ZAPLATIŤ", buy_btn: "KÚPIŤ" },
-        cz: { cart_title: "Košík", cart_empty: "Košík je prázdný", btn_checkout: "POKLADNA", checkout_title: "Platba", form_mcname: "Minecraft Jméno", btn_pay: "ZAPLATIT", buy_btn: "KOUPIT" }
-    };
-
+    // NAČÍTANIE KOŠÍKA Z PAMÄTE
     let cart = JSON.parse(localStorage.getItem('cubix_cart')) || [];
     let activeDuration = 'lifetime';
-    const ranks = [
-        { name: "Immortal", price: 35, color: "#ff4757" },
-        { name: "Legend", price: 18, color: "#2ed573" }
+
+    const items = [
+        { id: 1, name: "Immortal", price: 35.00, color: "#ff4757", type: "rank" },
+        { id: 2, name: "Legend", price: 18.00, color: "#2ed573", type: "rank" },
+        { id: 3, name: "Elite", price: 10.00, color: "#009dff", type: "rank" }
     ];
 
     function updateCartBadge() {
         const badge = document.getElementById('cartBadge');
         badge.innerText = cart.length;
         badge.style.display = cart.length > 0 ? 'block' : 'none';
+        
+        // TENTO RIADOK JE KĽÚČOVÝ - UKLADÁ KOŠÍK
         localStorage.setItem('cubix_cart', JSON.stringify(cart));
     }
 
     function renderStore() {
         const grid = document.getElementById('main-grid');
         grid.innerHTML = '';
-        ranks.forEach(r => {
-            let p = activeDuration === 'month' ? r.price * 0.3 : r.price;
+        
+        items.forEach(item => {
+            let finalPrice = activeDuration === 'month' ? (item.price * 0.4).toFixed(2) : item.price.toFixed(2);
             grid.innerHTML += `
                 <div class="rank-card">
-                    <h2 style="color:${r.color}">${r.name}</h2>
-                    <div class="price-tag">${p.toFixed(2)}€</div>
-                    <button class="btn-buy" onclick="addToCart('${r.name}', ${p})">KÚPIŤ</button>
+                    <div class="rank-name" style="color: ${item.color}">${item.name}</div>
+                    <div class="price-tag">${finalPrice}<span>€</span></div>
+                    <button class="btn-buy" onclick="addToCart('${item.name}', ${finalPrice})">Pridať do košíka</button>
                 </div>`;
         });
     }
 
     function addToCart(name, price) {
-        cart.push({ name: name + " (" + activeDuration + ")", price: price });
+        cart.push({ name: name + " (" + activeDuration + ")", price: parseFloat(price) });
         updateCartBadge();
+        // Malá vizuálna spätná väzba
+        const badge = document.getElementById('cartBadge');
+        badge.style.transform = "scale(1.5)";
+        setTimeout(() => badge.style.transform = "scale(1)", 200);
     }
 
     function openCart() {
         const container = document.getElementById('cartItemsContainer');
-        container.innerHTML = cart.length ? '' : '<p>Košík je prázdny</p>';
+        container.innerHTML = '';
         let total = 0;
-        cart.forEach((item, i) => {
-            total += item.price;
-            container.innerHTML += `<div class="cart-item"><span>${item.name}</span><span>${item.price.toFixed(2)}€ <i class="fas fa-trash" onclick="removeItem(${i})" style="color:red; cursor:pointer"></i></span></div>`;
-        });
-        document.getElementById('cartTotalDisplay').innerText = "Total: " + total.toFixed(2) + "€";
+
+        if (cart.length === 0) {
+            container.innerHTML = '<p style="text-align:center; color:#8b949e; padding: 20px;">Košík je prázdny.</p>';
+        } else {
+            cart.forEach((item, index) => {
+                total += item.price;
+                container.innerHTML += `
+                    <div class="cart-item">
+                        <span>${item.name}</span>
+                        <div>
+                            <span style="font-weight:700; color:#2ed573; margin-right:15px;">${item.price.toFixed(2)} €</span>
+                            <i class="fas fa-trash" style="color:#ff4757; cursor:pointer;" onclick="removeItem(${index})"></i>
+                        </div>
+                    </div>`;
+            });
+        }
+        document.getElementById('cartTotalDisplay').innerText = "Total: " + total.toFixed(2) + " €";
         document.getElementById('cartModal').style.display = 'block';
     }
 
-    function removeItem(i) { cart.splice(i, 1); updateCartBadge(); openCart(); }
-    function openCheckout() { document.getElementById('cartModal').style.display='none'; document.getElementById('checkoutModal').style.display='block'; }
-    function closeModal(id) { document.getElementById(id).style.display='none'; }
-    function processPayment() { alert("Vďaka! (Demo)"); cart=[]; updateCartBadge(); closeModal('checkoutModal'); }
-    function setDuration(d) { activeDuration = d; document.querySelectorAll('.duration-btn').forEach(b => b.classList.remove('active')); document.getElementById('btn-'+d).classList.add('active'); renderStore(); }
+    function removeItem(index) {
+        cart.splice(index, 1);
+        updateCartBadge();
+        openCart();
+    }
 
-    window.onload = () => { updateCartBadge(); renderStore(); };
+    function closeModal(id) {
+        document.getElementById(id).style.display = 'none';
+    }
+
+    function setDuration(dur) {
+        activeDuration = dur;
+        document.getElementById('btn-month').classList.toggle('active', dur === 'month');
+        document.getElementById('btn-lifetime').classList.toggle('active', dur === 'lifetime');
+        renderStore();
+    }
+
+    window.onload = () => {
+        updateCartBadge();
+        renderStore();
+    };
+
+    window.onclick = (e) => {
+        if (e.target.className === 'modal') e.target.style.display = 'none';
+    };
 </script>
 </body>
 </html>
