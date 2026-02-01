@@ -57,7 +57,7 @@
         .apply-btn:hover { background: #007ccb; }
         .apply-btn.disabled { background: #21262d; color: #484f58; cursor: not-allowed; pointer-events: none; }
 
-        /* VLAJKY - PODĽA INDEXU */
+        /* VLAJKY */
         .lang-menu { 
             display: flex; 
             gap: 10px; 
@@ -83,7 +83,17 @@
             box-shadow: 0 0 8px rgba(0, 157, 255, 0.4);
         }
 
-        /* MODAL */
+        /* --- KOŠÍK ŠTÝLY --- */
+        .cart-wrapper { position: relative; margin-left: 15px; cursor: pointer; }
+        .cart-badge { position: absolute; top: -8px; right: -8px; background: #ff4757; color: white; font-size: 0.7rem; font-weight: 800; padding: 2px 6px; border-radius: 50%; display: none; }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
+        .modal-content-cart { background: #161b22; margin: 10% auto; padding: 30px; border: 1px solid #30363d; border-radius: 15px; width: 90%; max-width: 500px; color: #fff; position: relative; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; background: #0d1117; padding: 10px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #30363d; }
+        .close-cart { float: right; cursor: pointer; color: #8b949e; font-size: 1.5rem; }
+        .checkout-btn { display: inline-block; width: 100%; padding: 12px; background: #2ed573; color: white; text-decoration: none; border-radius: 8px; font-weight: 700; transition: 0.3s; text-transform: uppercase; text-align: center; font-size: 0.9rem; border: none; cursor: pointer; }
+        .checkout-btn:hover { background: #26af5f; }
+
+        /* MODAL NÁBOR */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -114,7 +124,7 @@
             background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 12px; color: #fff; outline: none;
         }
 
-        /* TOAST OZNÁMENIE */
+        /* TOAST */
         .toast-notification {
             position: fixed;
             bottom: 30px;
@@ -141,6 +151,16 @@
 </head>
 <body>
 
+<div id="cartModal" class="modal">
+    <div class="modal-content-cart">
+        <span class="close-cart" onclick="closeCartModal()">&times;</span>
+        <h2 style="margin-bottom: 20px;"><i class="fas fa-shopping-cart" style="color:#009dff"></i> <span data-lang="cart_title">Košík</span></h2>
+        <div id="cartItemsContainer"></div>
+        <div id="cartTotalDisplay" style="text-align: right; font-weight: 800; margin-top: 20px; border-top: 1px solid #30363d; padding-top: 10px;">Total: 0.00 €</div>
+        <button class="checkout-btn" style="margin-top: 20px;" onclick="location.href='store.html'" data-lang="btn_checkout">POKLADŇA</button>
+    </div>
+</div>
+
 <header>
     <div class="container header-wrap">
         <a href="index.html" class="logo"><img src="cubixtext.png" alt="Logo"></a>
@@ -153,6 +173,12 @@
                 <li><a href="hlasovanie.html"><i class="fas fa-check-square"></i> <span data-lang="nav_vote">Hlasovanie</span></a></li>
                 <li><a href="store.html" style="color: #ffca28;"><i class="fas fa-shopping-cart"></i> <span data-lang="nav_store">Store</span></a></li>
             </ul>
+
+            <div class="cart-wrapper" onclick="openCart()">
+                <i class="fas fa-shopping-basket" style="font-size: 1.2rem; color: #8b949e;"></i>
+                <span class="cart-badge" id="cartBadge">0</span>
+            </div>
+
             <div class="lang-menu">
                 <img src="https://flagcdn.com/w80/sk.png" class="lang-flag" id="lang-sk" onclick="setLang('sk')" title="Slovenčina">
                 <img src="https://flagcdn.com/w80/cz.png" class="lang-flag" id="lang-cz" onclick="setLang('cz')" title="Čeština">
@@ -172,21 +198,21 @@
                 <span class="nabor-status status-open" data-lang="status_open">OTVORENÉ</span>
                 <h3>Developer</h3>
                 <p data-lang="desc_dev">Technická správa servera.</p>
-                <button onclick="openModal('Developer')" class="apply-btn" data-lang="btn_apply">Poslať prihlášku</button>
+                <button onclick="openApplyModal('Developer')" class="apply-btn" data-lang="btn_apply">Poslať prihlášku</button>
             </div>
 
             <div class="nabor-card">
                 <span class="nabor-status status-open" data-lang="status_open">OTVORENÉ</span>
                 <h3>Moderator</h3>
                 <p data-lang="desc_mod">Dohľad nad poriadkom.</p>
-                <button onclick="openModal('Moderator')" class="apply-btn" data-lang="btn_apply">Poslať prihlášku</button>
+                <button onclick="openApplyModal('Moderator')" class="apply-btn" data-lang="btn_apply">Poslať prihlášku</button>
             </div>
 
             <div class="nabor-card">
                 <span class="nabor-status status-open" data-lang="status_open">OTVORENÉ</span>
                 <h3>Builder</h3>
                 <p data-lang="desc_build">Stavba máp.</p>
-                <button onclick="openModal('Builder')" class="apply-btn" data-lang="btn_apply">Poslať prihlášku</button>
+                <button onclick="openApplyModal('Builder')" class="apply-btn" data-lang="btn_apply">Poslať prihlášku</button>
             </div>
 
             <div class="nabor-card">
@@ -200,7 +226,7 @@
                 <span class="nabor-status status-open" data-lang="status_open">OTVORENÉ</span>
                 <h3>Creator</h3>
                 <p data-lang="desc_cre">Tvorba obsahu.</p>
-                <button onclick="openModal('Creator')" class="apply-btn" data-lang="btn_apply">Poslať prihlášku</button>
+                <button onclick="openApplyModal('Creator')" class="apply-btn" data-lang="btn_apply">Poslať prihlášku</button>
             </div>
         </div>
     </section>
@@ -208,7 +234,7 @@
 
 <div id="applyModal" class="modal-overlay">
     <div class="modal-content">
-        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <span class="close-modal" onclick="closeApplyModal()">&times;</span>
         <h2 id="modalRoleTitle" style="color: #fff;">Prihláška</h2>
         <form class="modal-form" id="applicationForm">
             <input type="hidden" id="formPosition" name="role">
@@ -247,7 +273,7 @@
             desc_dev: "Technická správa servera.", desc_mod: "Dohľad nad poriadkom.", desc_build: "Stavba máp.",
             desc_man: "Vedenie tímu.", desc_cre: "Tvorba obsahu.", form_nick: "Minecraft Nick:", form_age: "Vek:",
             form_discord: "Discord:", form_why: "Prečo práve ty?", form_experience: "Tvoje skúsenosti:", btn_send: "Odoslať",
-            toast_success: "Prihláška bola úspešne odoslaná!"
+            toast_success: "Prihláška bola úspešne odoslaná!", cart_title: "Košík", cart_empty: "Tvoj košík je prázdny.", btn_checkout: "POKLADŇA"
         },
         cz: {
             nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování", nav_store: "Store",
@@ -256,26 +282,79 @@
             desc_dev: "Technická správa serveru.", desc_mod: "Dohled nad pořádkem.", desc_build: "Stavba map.",
             desc_man: "Vedení týmu.", desc_cre: "Tvorba obsahu.", form_nick: "Minecraft Nick:", form_age: "Věk:",
             form_discord: "Discord:", form_why: "Proč právě ty?", form_experience: "Tvé zkušenosti:", btn_send: "Odeslat",
-            toast_success: "Přihláška byla úspěšně odeslána!"
+            toast_success: "Přihláška byla úspěšně odeslána!", cart_title: "Košík", cart_empty: "Tvůj košík je prázdný.", btn_checkout: "POKLADNA"
         },
         en: {
-            nav_home: "Home", nav_rules: "Rules", nav_team: "Team", nav_staff: "Apply", nav_vote: "Vote", nav_store: "Store",
+            nav_home: "Home", nav_rules: "Rules", nav_team: "Staff", nav_staff: "Recruitment", nav_vote: "Vote", nav_store: "Store",
             apply_title_1: "Current", apply_title_2: "Recruitment", apply_subtitle: "Pick a position and fill out the form.",
             status_open: "Open", status_closed: "Closed", btn_apply: "Apply Now", btn_closed: "Suspended",
             desc_dev: "Server tech management.", desc_mod: "Server moderation.", desc_build: "Building maps.",
             desc_man: "Team leadership.", desc_cre: "Content creation.", form_nick: "Minecraft Nick:", form_age: "Age:",
             form_discord: "Discord:", form_why: "Why you?", form_experience: "Your experience:", btn_send: "Submit",
-            toast_success: "Application successfully submitted!"
+            toast_success: "Application successfully submitted!", cart_title: "Cart", cart_empty: "Your cart is empty.", btn_checkout: "CHECKOUT"
         }
     };
 
-    function openModal(role) {
+    const currencyConfig = {
+        sk: { symbol: "€", rate: 1, decimals: 2, pos: 'after' },
+        cz: { symbol: "Kč", rate: 25, decimals: 0, pos: 'after' },
+        en: { symbol: "$", rate: 1.05, decimals: 2, pos: 'before' }
+    };
+
+    // --- LOGIKA KOŠÍKA ---
+    let cart = JSON.parse(localStorage.getItem('cubix_cart')) || [];
+
+    function updateCartBadge() {
+        const badge = document.getElementById('cartBadge');
+        if(badge) {
+            badge.innerText = cart.length;
+            badge.style.display = cart.length > 0 ? 'block' : 'none';
+        }
+    }
+
+    function formatPrice(euroAmount, lang) {
+        const conf = currencyConfig[lang];
+        const converted = (euroAmount * conf.rate).toFixed(conf.decimals);
+        return conf.pos === 'before' ? `${conf.symbol}${converted}` : `${converted} ${conf.symbol}`;
+    }
+
+    function openCart() {
+        const modal = document.getElementById('cartModal');
+        const container = document.getElementById('cartItemsContainer');
+        const lang = localStorage.getItem('selectedLanguage') || 'sk';
+        const t = translations[lang];
+        
+        container.innerHTML = '';
+        let total = 0;
+
+        if (cart.length === 0) {
+            container.innerHTML = `<p style="text-align:center; color:#8b949e;">${t.cart_empty}</p>`;
+        } else {
+            cart.forEach((item) => {
+                total += item.price;
+                container.innerHTML += `
+                    <div class="cart-item">
+                        <span>${item.name}</span>
+                        <span style="font-weight:700; color:#009dff">${formatPrice(item.price, lang)}</span>
+                    </div>`;
+            });
+        }
+        document.getElementById('cartTotalDisplay').innerText = "Total: " + formatPrice(total, lang);
+        modal.style.display = 'block';
+    }
+
+    function closeCartModal() {
+        document.getElementById('cartModal').style.display = 'none';
+    }
+
+    // --- LOGIKA NÁBOROV ---
+    function openApplyModal(role) {
         document.getElementById('modalRoleTitle').innerText = 'Nábor: ' + role;
         document.getElementById('formPosition').value = role;
         document.getElementById('applyModal').style.display = 'flex';
     }
 
-    function closeModal() {
+    function closeApplyModal() {
         document.getElementById('applyModal').style.display = 'none';
         document.getElementById('applicationForm').reset();
     }
@@ -304,7 +383,7 @@
                     }, 500);
                 }, 4000);
 
-                closeModal();
+                closeApplyModal();
             } else {
                 alert('Chyba na serveri.');
             }
@@ -313,6 +392,7 @@
         }
     });
 
+    // --- OSTATNÉ FUNKCIE ---
     function setLang(langId) {
         localStorage.setItem('selectedLanguage', langId);
         updateUI(langId);
@@ -329,13 +409,20 @@
                 element.innerText = translations[langId][key];
             }
         });
+        if (document.getElementById('cartModal').style.display === 'block') openCart();
     }
 
     window.onload = function() {
         const savedLang = localStorage.getItem('selectedLanguage') || 'sk';
         updateUI(savedLang);
+        updateCartBadge();
+    };
+
+    window.onclick = function(event) {
+        if (event.target.className === 'modal' || event.target.className === 'modal-overlay') {
+            event.target.style.display = "none";
+        }
     };
 </script>
 </body>
 </html>
-
