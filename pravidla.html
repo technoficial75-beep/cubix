@@ -94,7 +94,7 @@
             background: #ff4757; color: white; 
             font-size: 0.7rem; font-weight: 800; 
             padding: 2px 6px; border-radius: 50%; 
-            display: none; /* Skryté, kým nie je v košíku niečo */
+            display: none; 
         }
         
         .lang-menu { display: flex; gap: 10px; margin-left: 15px; align-items: center; border-left: 1px solid #30363d; padding-left: 15px; }
@@ -119,7 +119,7 @@
                 <li><a href="store.html" style="color: #ffca28;"><i class="fas fa-shopping-cart"></i> <span data-lang="nav_store">Store</span></a></li>
             </ul>
 
-            <div class="cart-wrapper" onclick="window.location.href='store.html'">
+            <div class="cart-wrapper" onclick="showCart()">
                 <i class="fas fa-shopping-basket" style="font-size: 1.2rem; color: #8b949e;"></i>
                 <span class="cart-badge" id="cartBadge">0</span>
             </div>
@@ -160,15 +160,26 @@
 </main>
 
 <script>
-    // --- FUNKCIA PRE KOŠÍK ---
     function updateCartBadge() {
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
         const badge = document.getElementById('cartBadge');
-        if (cart.length > 0) {
-            badge.innerText = cart.length;
-            badge.style.display = 'block';
+        if (badge) {
+            if (cart.length > 0) {
+                badge.innerText = cart.length;
+                badge.style.display = 'block';
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+    }
+
+    function showCart() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        if (cart.length === 0) {
+            alert("Tvoj košík je prázdny.");
         } else {
-            badge.style.display = 'none';
+            console.log("Košík:", cart);
+            alert("Máš " + cart.length + " položiek v košíku. Podrobnosti sú v konzole.");
         }
     }
 
@@ -249,7 +260,7 @@
                 { t: "Shazování TPS", d: "Nezpůsobujte lagy serveru.", c: "Stavění lag-strojů nebo přetěžování entitami je zakázáno." },
                 { t: "Provokování A-Týmu", d: "Respektujte administrátory.", c: "Neustálé provokování nebo zpochybňování AT v chatu je zakázáno." },
                 { t: "Griefování lobby", d: "Neničte společné prostory.", c: "Jakýkoliv pokus o poškodenie spawnu nebo lobby je zakázán." },
-                { t: "Spamování příkazů", d: "Nepoužívejte příkazy opakovaně.", c: "Zahlcování konzole příkazy (spam) je trestáno." },
+                { t: "Spamování příkazov", d: "Nepoužívejte příkazy opakovaně.", c: "Zahlcování konzole příkazy (spam) je trestáno." },
                 { t: "Zodpovědnost za účet", d: "Tvůj účet, tvá zodpovědnost.", c: "Za činy na tvém účtu zodpovídáš ty, bez ohledu na to, kdo hrál." }
             ]
         },
@@ -284,7 +295,7 @@
                 { t: "Inappropriate Identity", d: "Keep skin/nick appropriate.", c: "NSFW skins or offensive nicknames are not allowed." },
                 { t: "Teaming (Solo)", d: "No teaming in solo modes.", c: "Cooperation between players in solo Boxfights is forbidden." },
                 { t: "Lying to A-Team", d: "Be honest with admins.", c: "Providing false information to the AT is punished." },
-                { t: "Report Abuse", d: "Report real offenses only.", c: "Spamowanie /report with fake claims is prohibited." },
+                { t: "Report Abuse", d: "Report real offenses only.", c: "Spamming /report with fake claims is prohibited." },
                 { t: "Scamming", d: "No stealing during trades.", c: "Scams during agreed trades result in a ban." },
                 { t: "Server Lagging", d: "Don't cause server lag.", c: "Building lag-machines or entity overloading is prohibited." },
                 { t: "AT Provocation", d: "Respect administrators.", c: "Constantly questioning or provoking AT in chat is forbidden." },
@@ -334,7 +345,7 @@
     window.onload = () => {
         const savedLang = localStorage.getItem('selectedLanguage') || 'sk';
         setLang(savedLang);
-        updateCartBadge(); // Spustenie košíka pri načítaní
+        updateCartBadge();
     };
 </script>
 
