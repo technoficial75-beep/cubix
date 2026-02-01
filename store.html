@@ -168,11 +168,11 @@
     };
 
     const products = [
-        { id: 1, name: "Immortal", basePrice: 8.00, class: "rank-immortal", cat: "Ranks", forever: false },
-        { id: 2, name: "Legend", basePrice: 10.00, class: "rank-legend", cat: "Ranks", forever: 20.00 },
-        { id: 3, name: "Ultra", basePrice: 6.00, class: "rank-ultra", cat: "Ranks", forever: 15.00 },
-        { id: 4, name: "Elite", basePrice: 4.00, class: "rank-elite", cat: "Ranks", forever: 10.00 },
-        { id: 5, name: "VIP", basePrice: 2.00, class: "rank-vip", cat: "Ranks", forever: 5.00 },
+        { id: 1, name: "Immortal", basePrice: 10.00, class: "rank-immortal", cat: "Ranks", forever: 35.00 },
+        { id: 2, name: "Legend", basePrice: 8.00, class: "rank-legend", cat: "Ranks", forever: 25.00 },
+        { id: 3, name: "Ultra", basePrice: 6.00, class: "rank-ultra", cat: "Ranks", forever: 20.00 },
+        { id: 4, name: "Elite", basePrice: 4.00, class: "rank-elite", cat: "Ranks", forever: 15.00 },
+        { id: 5, name: "VIP", basePrice: 2.00, class: "rank-vip", cat: "Ranks", forever: 8.00 },
         { id: 6, name: "Case Key", price: 2.50, class: "item-default", cat: "Boxfight" },
         { id: 7, name: "Loot Case", price: 3.00, class: "item-default", cat: "Boxfight" }
     ];
@@ -209,12 +209,14 @@
         products.forEach(p => {
             if (currentCategory !== 'All' && p.cat !== currentCategory) return;
             let finalPrice, isForbidden = false;
+            
             if (p.cat === 'Ranks') {
                 if (currentDuration === 'forever') {
                     if (p.forever === false) isForbidden = true;
                     else finalPrice = p.forever;
                 } else {
-                    const mult = { week: 0.4, month: 1, year: 8 };
+                    // Kalkulácia: Rok (6x mesačná cena), Týždeň (0.4x mesačná cena)
+                    const mult = { week: 0.4, month: 1, year: 6 };
                     finalPrice = p.basePrice * mult[currentDuration];
                 }
             } else finalPrice = p.price;
