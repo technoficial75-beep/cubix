@@ -17,96 +17,53 @@
             --cart-gray: #8b949e; 
         }
 
-        /* HLAVNÁ IKONKA KOŠÍKA (VPRAVO) - SIVÁ */
         .cart-wrapper { position: relative; margin-left: 15px; cursor: pointer; }
-        .cart-wrapper i { 
-            color: var(--cart-gray) !important; 
-            font-size: 1.3rem; 
-        }
-        
-        .cart-badge { 
-            position: absolute; top: -8px; right: -8px; background: #ff5252; 
-            color: white; font-size: 0.7rem; font-weight: 800; padding: 2px 6px; 
-            border-radius: 50%; display: none; border: 1.5px solid var(--dark-bg);
-        }
+        .cart-wrapper i { color: var(--cart-gray) !important; font-size: 1.3rem; }
+        .cart-badge { position: absolute; top: -8px; right: -8px; background: #ff5252; color: white; font-size: 0.7rem; font-weight: 800; padding: 2px 6px; border-radius: 50%; display: none; border: 1.5px solid var(--dark-bg); }
 
-        .nav-links li a.active { 
-            color: var(--gold) !important; 
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+        .nav-links li a.active { color: var(--gold) !important; display: flex; align-items: center; gap: 8px; }
 
         .store-header { padding: 40px 0; text-align: center; }
         .store-title { font-size: 3rem; font-weight: 800; margin-bottom: 15px; color: var(--primary-blue); }
         .store-subtitle { color: var(--text-gray); font-size: 1.1rem; max-width: 800px; margin: 0 auto 40px; line-height: 1.6; }
 
         .category-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; }
-        .category-btn {
-            background: var(--card-bg); border: 1px solid var(--border-color); padding: 10px 25px;
-            border-radius: 30px; color: #fff; cursor: pointer; transition: 0.3s; font-weight: 600;
-        }
-        .category-btn:hover, .category-btn.active {
-            border-color: var(--primary-blue); background: rgba(0, 157, 255, 0.1); color: var(--primary-blue);
-        }
+        .category-btn { background: var(--card-bg); border: 1px solid var(--border-color); padding: 10px 25px; border-radius: 30px; color: #fff; cursor: pointer; transition: 0.3s; font-weight: 600; }
+        .category-btn:hover, .category-btn.active { border-color: var(--primary-blue); background: rgba(0, 157, 255, 0.1); color: var(--primary-blue); }
 
-        /* ŽLTÉ TLAČIDLO PRE KATEGÓRIU DONATE */
-        .category-btn.donate-cat-btn:hover, .category-btn.donate-cat-btn.active {
-            border-color: var(--gold); background: rgba(255, 202, 40, 0.1); color: var(--gold);
-        }
+        /* ŽLTÁ KATEGÓRIA DONATE V MENU */
+        .category-btn.donate-cat-btn { border-color: rgba(255, 202, 40, 0.3); }
+        .category-btn.donate-cat-btn:hover, .category-btn.donate-cat-btn.active { border-color: var(--gold); background: rgba(255, 202, 40, 0.1); color: var(--gold); }
 
         .rank-duration-nav { display: none; justify-content: center; gap: 10px; margin-bottom: 40px; }
-        .duration-btn {
-            background: transparent; border: 1px solid var(--border-color); padding: 5px 15px;
-            border-radius: 15px; color: var(--text-gray); cursor: pointer; font-size: 0.9rem; transition: 0.3s;
-        }
+        .duration-btn { background: transparent; border: 1px solid var(--border-color); padding: 5px 15px; border-radius: 15px; color: var(--text-gray); cursor: pointer; font-size: 0.9rem; transition: 0.3s; }
         .duration-btn.active { background: var(--primary-blue); color: #fff; border-color: var(--primary-blue); }
 
         .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; margin-bottom: 60px; }
-        .product-card {
-            background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 15px;
-            padding: 30px 25px; text-align: center; display: flex; flex-direction: column; position: relative;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
+        .product-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 15px; padding: 30px 25px; text-align: center; display: flex; flex-direction: column; position: relative; transition: transform 0.4s; }
         .product-card:hover { transform: translateY(-10px); border-color: var(--primary-blue); }
 
-        /* ŠPECIÁLNY HOVER PRE DONATE KARTU */
-        .product-card.donate-style:hover { border-color: var(--gold); }
+        /* FIXNÉ ŽLTÉ ZVÝRAZNENIE PRE DONATE KARTU */
+        .product-card.donate-style { border-color: var(--gold); box-shadow: 0 0 15px rgba(255, 202, 40, 0.1); }
+        .product-card.donate-style .rank-big-name { color: var(--gold); }
+        .product-card.donate-style .product-price { color: var(--gold); }
+        .product-card.donate-style .buy-btn { background: var(--gold); color: #000; }
+        .product-card.donate-style .info-trigger { color: var(--gold); opacity: 0.7; }
 
-        .product-tag {
-            position: absolute; top: 15px; left: 15px; background: var(--border-color);
-            color: var(--text-gray); font-size: 0.65rem; padding: 3px 10px; border-radius: 20px;
-            text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;
-        }
-
-        .info-trigger {
-            position: absolute; top: 15px; right: 15px; color: var(--text-gray);
-            cursor: pointer; transition: 0.3s; font-size: 1.1rem;
-        }
-        .info-trigger:hover { color: var(--primary-blue); }
-        .donate-style .info-trigger:hover { color: var(--gold); }
+        .product-tag { position: absolute; top: 15px; left: 15px; background: var(--border-color); color: var(--text-gray); font-size: 0.65rem; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; font-weight: 700; }
+        .info-trigger { position: absolute; top: 15px; right: 15px; color: var(--text-gray); cursor: pointer; transition: 0.3s; font-size: 1.1rem; }
 
         .rank-big-name { font-size: 2.2rem; font-weight: 900; text-transform: uppercase; margin-bottom: 20px; letter-spacing: -1px; line-height: 1; }
-        .rank-immortal { color: #ff4757; text-shadow: 0 0 15px rgba(255, 71, 87, 0.3); }
+        .rank-immortal { color: #ff4757; }
         .rank-legend { color: var(--gold); }
         .rank-ultra { color: #1e90ff; }
         .rank-elite { color: #2ed573; }
         .rank-vip { color: #eccc68; }
         .item-default { color: #fff; }
-        
-        /* ŽLTÝ NÁZOV PRE DONATE */
-        .donate-name { color: var(--gold); }
 
         .product-price { font-size: 1.8rem; font-weight: 800; color: var(--primary-blue); margin: 15px 0; }
-        .donate-price { color: var(--gold); }
 
-        .buy-btn {
-            background: var(--primary-blue); color: #fff; border: none; padding: 12px;
-            border-radius: 8px; font-weight: 800; cursor: pointer; text-transform: uppercase; margin-top: auto;
-        }
-        /* ŽLTÉ TLAČIDLO PRE DONATE */
-        .buy-btn.donate-btn { background: var(--gold); color: #000; }
-        
+        .buy-btn { background: var(--primary-blue); color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 800; cursor: pointer; text-transform: uppercase; margin-top: auto; transition: 0.3s; }
         .buy-btn:disabled { background: #30363d; color: var(--text-gray); cursor: not-allowed; }
 
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
@@ -172,9 +129,7 @@
 <main class="container">
     <section class="store-header">
         <h1 class="store-title" data-lang="store_title">Cubix Store</h1>
-        <p class="store-subtitle" data-lang="store_description">
-            Vitajte v oficiálnom obchode herného portálu Cubix. Tu môžete podporiť chod nášho servera a zároveň získať exkluzívne výhody.
-        </p>
+        <p class="store-subtitle" data-lang="store_description">Vitajte v oficiálnom obchode Cubix. Tu môžete podporiť náš server.</p>
         
         <div class="category-nav">
             <button class="category-btn active" onclick="filterCategory('All', this)" data-lang="cat_all">Všetko</button>
@@ -196,43 +151,25 @@
 
 <script>
     const translations = {
-        sk: { 
-            nav_home: "Domov", nav_store: "Store", store_title: "Cubix Store", 
-            store_description: "Vitajte v oficiálnom obchode herného portálu Cubix. Tu môžete podporiť chod nášho servera a zároveň získať exkluzívne výhody.",
-            cat_all: "Všetko", cart_title: "Košík", btn_add: "Pridať", btn_buy_now: "ZAPLATIŤ", cart_empty: "Košík je prázdny.", dur_week: "Týždeň", dur_month: "Mesiac", dur_year: "Rok", dur_forever: "Navždy", forbidden: "Nemožné" 
-        },
-        cz: { 
-            nav_home: "Domů", nav_store: "Store", store_title: "Cubix Store", 
-            store_description: "Vítejte v oficiálním obchodě herního portálu Cubix. Zde můžete podpořit chod našeho serveru a získat exkluzivní výhody.",
-            cat_all: "Vše", cart_title: "Košík", btn_add: "Přidat", btn_buy_now: "ZAPLATIT", cart_empty: "Košík je prázdny.", dur_week: "Týden", dur_month: "Měsíc", dur_year: "Rok", dur_forever: "Navždy", forbidden: "Nemožné" 
-        },
-        en: { 
-            nav_home: "Home", nav_store: "Store", store_title: "Cubix Store", 
-            store_description: "Welcome to the official Cubix store. Support our server and get exclusive benefits.",
-            cat_all: "All", cart_title: "Cart", btn_add: "Add", btn_buy_now: "PAY NOW", cart_empty: "Cart is empty.", dur_week: "Week", dur_month: "Month", dur_year: "Year", dur_forever: "Forever", forbidden: "Impossible" 
-        }
+        sk: { nav_home: "Domov", nav_store: "Store", store_title: "Cubix Store", store_description: "Vitajte v oficiálnom obchode Cubix. Tu môžete podporiť náš server.", cat_all: "Všetko", cart_title: "Košík", btn_add: "Pridať", btn_buy_now: "ZAPLATIŤ", cart_empty: "Košík je prázdny.", dur_week: "Týždeň", dur_month: "Mesiac", dur_year: "Rok", dur_forever: "Navždy", forbidden: "Nemožné" },
+        cz: { nav_home: "Domů", nav_store: "Store", store_title: "Cubix Store", store_description: "Vítejte v oficiálním obchodě Cubix. Zde můžete podpořit náš server.", cat_all: "Vše", cart_title: "Košík", btn_add: "Přidat", btn_buy_now: "ZAPLATIT", cart_empty: "Košík je prázdny.", dur_week: "Týden", dur_month: "Měsíc", dur_year: "Rok", dur_forever: "Navždy", forbidden: "Nemožné" },
+        en: { nav_home: "Home", nav_store: "Store", store_title: "Cubix Store", store_description: "Welcome to the official Cubix store. Support our server.", cat_all: "All", cart_title: "Cart", btn_add: "Add", btn_buy_now: "PAY NOW", cart_empty: "Cart is empty.", dur_week: "Week", dur_month: "Month", dur_year: "Year", dur_forever: "Forever", forbidden: "Impossible" }
     };
 
-    const currencyConfig = {
-        sk: { symbol: "€", rate: 1, pos: 'after' },
-        cz: { symbol: "Kč", rate: 25, pos: 'after' },
-        en: { symbol: "$", rate: 1.05, pos: 'before' }
-    };
+    const currencyConfig = { sk: { symbol: "€", rate: 1, pos: 'after' }, cz: { symbol: "Kč", rate: 25, pos: 'after' }, en: { symbol: "$", rate: 1.05, pos: 'before' } };
 
     const products = [
-        { id: 1, name: "Immortal", foreverPrice: 40.00, class: "rank-immortal", cat: "Ranks", allowForever: false, desc: "Najvyšší rank.", perks: ["Prefix [Immortal]", "Všetky kity", "/fly"] },
-        { id: 2, name: "Legend", foreverPrice: 25.00, class: "rank-legend", cat: "Ranks", allowForever: true, desc: "Legenda serveru.", perks: ["Prefix [Legend]", "/workbench"] },
-        { id: 3, name: "Ultra", foreverPrice: 20.00, class: "rank-ultra", cat: "Ranks", allowForever: true, desc: "Ultra zážitok.", perks: ["Prefix [Ultra]", "/fix"] },
-        { id: 4, name: "Elite", foreverPrice: 15.00, class: "rank-elite", cat: "Ranks", allowForever: true, desc: "Pre elitu.", perks: ["Prefix [Elite]", "/hat"] },
-        { id: 5, name: "VIP", foreverPrice: 10.00, class: "rank-vip", cat: "Ranks", allowForever: true, desc: "Podpora servera.", perks: ["Prefix [VIP]", "Slot"] },
+        { id: 1, name: "Immortal", foreverPrice: 40.00, class: "rank-immortal", cat: "Ranks", allowForever: false, desc: "Najvyšší rank.", perks: ["Prefix [Immortal]"] },
+        { id: 2, name: "Legend", foreverPrice: 25.00, class: "rank-legend", cat: "Ranks", allowForever: true, desc: "Legenda.", perks: ["Prefix [Legend]"] },
+        { id: 3, name: "Ultra", foreverPrice: 20.00, class: "rank-ultra", cat: "Ranks", allowForever: true, desc: "Ultra rank.", perks: ["Prefix [Ultra]"] },
+        { id: 4, name: "Elite", foreverPrice: 15.00, class: "rank-elite", cat: "Ranks", allowForever: true, desc: "Elite rank.", perks: ["Prefix [Elite]"] },
+        { id: 5, name: "VIP", foreverPrice: 10.00, class: "rank-vip", cat: "Ranks", allowForever: true, desc: "VIP rank.", perks: ["Prefix [VIP]"] },
         { id: 6, name: "VIP Key", price: 5.00, class: "item-default", cat: "Boxfight", desc: "Kľúč k VIP boxu.", perks: ["Exkluzívny loot"] },
-        
-        // DONATE
-        { id: 7, name: "Donate 5€", price: 5.00, class: "donate-name", cat: "Donate", desc: "Dobrovoľný príspevok.", perks: ["Podpora vývoja"] },
-        { id: 8, name: "Donate 10€", price: 10.00, class: "donate-name", cat: "Donate", desc: "Dobrovoľný príspevok.", perks: ["Podpora vývoja"] },
-        { id: 9, name: "Donate 20€", price: 20.00, class: "donate-name", cat: "Donate", desc: "Dobrovoľný príspevok.", perks: ["Podpora vývoja"] },
-        { id: 10, name: "Donate 50€", price: 50.00, class: "donate-name", cat: "Donate", desc: "Dobrovoľný príspevok.", perks: ["Podpora vývoja"] },
-        { id: 11, name: "Donate 100€", price: 100.00, class: "donate-name", cat: "Donate", desc: "Dobrovoľný príspevok.", perks: ["Podpora vývoja"] }
+        { id: 7, name: "Donate 5€", price: 5.00, class: "", cat: "Donate", desc: "Príspevok.", perks: ["Podpora"] },
+        { id: 8, name: "Donate 10€", price: 10.00, class: "", cat: "Donate", desc: "Príspevok.", perks: ["Podpora"] },
+        { id: 9, name: "Donate 20€", price: 20.00, class: "", cat: "Donate", desc: "Príspevok.", perks: ["Podpora"] },
+        { id: 10, name: "Donate 50€", price: 50.00, class: "", cat: "Donate", desc: "Príspevok.", perks: ["Podpora"] },
+        { id: 11, name: "Donate 100€", price: 100.00, class: "", cat: "Donate", desc: "Príspevok.", perks: ["Podpora"] }
     ];
 
     let currentCategory = 'All';
@@ -240,38 +177,11 @@
     let currentLang = localStorage.getItem('selectedLanguage') || 'sk';
     let cart = JSON.parse(localStorage.getItem('cubix_cart')) || [];
 
-    function formatPrice(euroAmount) {
-        const conf = currencyConfig[currentLang];
-        const converted = (euroAmount * conf.rate).toFixed(2);
-        return conf.pos === 'before' ? `${conf.symbol}${converted}` : `${converted} ${conf.symbol}`;
-    }
+    function formatPrice(euroAmount) { const conf = currencyConfig[currentLang]; const converted = (euroAmount * conf.rate).toFixed(2); return conf.pos === 'before' ? `${conf.symbol}${converted}` : `${converted} ${conf.symbol}`; }
 
-    function filterCategory(cat, btn) {
-        currentCategory = cat;
-        document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        document.getElementById('rankDurationNav').style.display = (cat === 'Ranks') ? 'flex' : 'none';
-        renderProducts();
-    }
+    function filterCategory(cat, btn) { currentCategory = cat; document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); document.getElementById('rankDurationNav').style.display = (cat === 'Ranks') ? 'flex' : 'none'; renderProducts(); }
 
-    function setDuration(dur, btn) {
-        currentDuration = dur;
-        document.querySelectorAll('.duration-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        renderProducts();
-    }
-
-    function openInfo(id) {
-        const p = products.find(prod => prod.id === id);
-        document.getElementById('infoTitle').innerText = p.name;
-        document.getElementById('infoDesc').innerText = p.desc;
-        const perkList = document.getElementById('infoPerks');
-        perkList.innerHTML = '';
-        p.perks.forEach(perk => {
-            perkList.innerHTML += `<li><i class="fas fa-check-circle"></i> ${perk}</li>`;
-        });
-        document.getElementById('infoModal').style.display = 'block';
-    }
+    function setDuration(dur, btn) { currentDuration = dur; document.querySelectorAll('.duration-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); renderProducts(); }
 
     function renderProducts() {
         const grid = document.getElementById('productsGrid');
@@ -279,17 +189,10 @@
         products.forEach(p => {
             if (currentCategory !== 'All' && p.cat !== currentCategory) return;
             let finalPrice, isForbidden = false;
-            
             if (p.cat === 'Ranks') {
-                if (currentDuration === 'forever' && p.allowForever === false) {
-                    isForbidden = true;
-                } else {
-                    const mult = { week: 0.15, month: 0.30, year: 0.60, forever: 1 };
-                    finalPrice = p.foreverPrice * mult[currentDuration];
-                }
-            } else {
-                finalPrice = p.price;
-            }
+                if (currentDuration === 'forever' && p.allowForever === false) isForbidden = true;
+                else { const mult = { week: 0.15, month: 0.30, year: 0.60, forever: 1 }; finalPrice = p.foreverPrice * mult[currentDuration]; }
+            } else finalPrice = p.price;
 
             const isDonate = p.cat === 'Donate';
             const priceDisplay = isForbidden ? translations[currentLang].forbidden : formatPrice(finalPrice);
@@ -299,53 +202,19 @@
                     <div class="product-tag">${p.cat}</div>
                     <i class="fas fa-info-circle info-trigger" onclick="openInfo(${p.id})"></i>
                     <div class="rank-big-name ${p.class}">${p.name}</div>
-                    <div class="product-price ${isDonate ? 'donate-price' : ''}">${priceDisplay}</div>
-                    <button class="buy-btn ${isDonate ? 'donate-btn' : ''}" onclick="addToCart(${p.id}, '${priceDisplay}')" ${isForbidden ? 'disabled' : ''}>${translations[currentLang].btn_add}</button>
+                    <div class="product-price">${priceDisplay}</div>
+                    <button class="buy-btn" onclick="addToCart(${p.id}, '${priceDisplay}')" ${isForbidden ? 'disabled' : ''}>${translations[currentLang].btn_add}</button>
                 </div>`;
         });
     }
 
     function setLang(l) { currentLang = l; localStorage.setItem('selectedLanguage', l); updateUI(); renderProducts(); }
-    function updateUI() {
-        document.querySelectorAll('.lang-flag').forEach(f => f.classList.remove('active'));
-        if(document.getElementById('lang-' + currentLang)) document.getElementById('lang-' + currentLang).classList.add('active');
-        document.querySelectorAll('[data-lang]').forEach(el => {
-            const key = el.getAttribute('data-lang');
-            if (translations[currentLang][key]) el.innerText = translations[currentLang][key];
-        });
-    }
-
-    function addToCart(id, pStr) {
-        const product = products.find(p => p.id === id);
-        cart.push({ name: product.name, displayPrice: pStr });
-        localStorage.setItem('cubix_cart', JSON.stringify(cart));
-        updateCartBadge();
-    }
-
-    function updateCartBadge() {
-        const b = document.getElementById('cartBadge');
-        b.innerText = cart.length;
-        b.style.display = cart.length > 0 ? 'block' : 'none';
-    }
-
-    function openCart() {
-        const c = document.getElementById('cartItemsContainer');
-        c.innerHTML = cart.length ? '' : `<p style="text-align:center">${translations[currentLang].cart_empty}</p>`;
-        cart.forEach((item, i) => {
-            c.innerHTML += `<div class="cart-item"><span>${item.name}</span><b>${item.displayPrice}</b> <i class="fas fa-trash" onclick="removeFromCart(${i})" style="color:#ff4757; cursor:pointer"></i></div>`;
-        });
-        document.getElementById('cartModal').style.display = 'block';
-    }
-
+    function updateUI() { document.querySelectorAll('.lang-flag').forEach(f => f.classList.remove('active')); if(document.getElementById('lang-' + currentLang)) document.getElementById('lang-' + currentLang).classList.add('active'); document.querySelectorAll('[data-lang]').forEach(el => { const key = el.getAttribute('data-lang'); if (translations[currentLang][key]) el.innerText = translations[currentLang][key]; }); }
+    function addToCart(id, pStr) { const product = products.find(p => p.id === id); cart.push({ name: product.name, displayPrice: pStr }); localStorage.setItem('cubix_cart', JSON.stringify(cart)); updateCartBadge(); }
+    function updateCartBadge() { const b = document.getElementById('cartBadge'); b.innerText = cart.length; b.style.display = cart.length > 0 ? 'block' : 'none'; }
+    function openCart() { const c = document.getElementById('cartItemsContainer'); c.innerHTML = cart.length ? '' : `<p style="text-align:center">${translations[currentLang].cart_empty}</p>`; cart.forEach((item, i) => { c.innerHTML += `<div class="cart-item"><span>${item.name}</span><b>${item.displayPrice}</b> <i class="fas fa-trash" onclick="removeFromCart(${i})" style="color:#ff4757; cursor:pointer"></i></div>`; }); document.getElementById('cartModal').style.display = 'block'; }
     function removeFromCart(i) { cart.splice(i, 1); localStorage.setItem('cubix_cart', JSON.stringify(cart)); updateCartBadge(); openCart(); }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-
-    window.onclick = function(event) {
-        if (event.target.className === 'modal') {
-            event.target.style.display = "none";
-        }
-    }
-
     window.onload = () => { updateUI(); updateCartBadge(); renderProducts(); };
 </script>
 </body>
