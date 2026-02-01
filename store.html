@@ -103,9 +103,6 @@
             text-align: center;
             position: relative;
             transition: 0.3s;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
         }
         .product-card:hover { transform: translateY(-5px); border-color: var(--primary-blue); }
 
@@ -150,45 +147,32 @@
     </div>
 
     <div class="product-card">
-        <div>
-            <div class="rank-name immortal">IMMORTAL</div>
-            <div class="price">40.00 €</div>
+        <div class="rank-name immortal">IMMORTAL</div>
+        <div class="price">40.00 €</div>
+        <div class="quantity-controls">
+            <button class="qty-btn" onclick="changeQty('qty-immortal', -1)">-</button>
+            <input type="text" id="qty-immortal" class="qty-input" value="1" readonly>
+            <button class="qty-btn" onclick="changeQty('qty-immortal', 1)">+</button>
         </div>
-        <div>
-            <div class="quantity-controls">
-                <button class="qty-btn" onclick="changeQty('qty-immortal', -1)">-</button>
-                <input type="text" id="qty-immortal" class="qty-input" value="1" readonly>
-                <button class="qty-btn" onclick="changeQty('qty-immortal', 1)">+</button>
-            </div>
-            <button class="add-btn" onclick="addToCart('IMMORTAL')">Pridať</button>
-        </div>
+        <button class="add-btn" onclick="addToCart('IMMORTAL')">Pridať</button>
     </div>
 
     <div class="product-card">
-        <div>
-            <div class="rank-name" style="color:var(--gold)">LEGEND</div>
-            <div class="price">25.00 €</div>
-        </div>
-        <div>
-            <div class="quantity-controls">
-                <button class="qty-btn" onclick="changeQty('qty-legend', -1)">-</button>
-                <input type="text" id="qty-legend" class="qty-input" value="1" readonly>
-                <button class="qty-btn" onclick="changeQty('qty-legend', 1)">+</button>
-            </div>
-            <button class="add-btn" onclick="addToCart('LEGEND')">Pridať</button>
-        </div>
+        <div class="rank-name" style="color:var(--gold)">LEGEND</div>
+        <div class="price">25.00 €</div>
+        <div class="add-btn" onclick="addToCart('LEGEND')">Pridať</div>
     </div>
 </div>
 
 <script>
     function changeQty(id, delta) {
         let input = document.getElementById(id);
-        if (!input) return;
         let val = parseInt(input.value) + delta;
         if (val >= 1) input.value = val;
     }
 
     function addToCart(name) {
+        // Zobrazenie Toast správy
         const container = document.getElementById('toast-container');
         const toast = document.createElement('div');
         toast.className = 'toast';
@@ -196,6 +180,7 @@
         
         container.appendChild(toast);
 
+        // Zmiznutie po 3 sekundách
         setTimeout(() => {
             toast.style.opacity = '0';
             setTimeout(() => toast.remove(), 500);
