@@ -33,13 +33,16 @@
         .ranks-grid { flex-grow: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
         .rank-card { background: #161b22; border: 1px solid #30363d; border-radius: 15px; padding: 30px; text-align: center; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; justify-content: space-between; position: relative; }
         .rank-card:hover:not(.disabled) { transform: translateY(-10px) scale(1.02); border-color: #009dff; box-shadow: 0 15px 30px rgba(0, 157, 255, 0.15); }
+        
+        /* Glow pre Donate sekciu */
+        .rank-card.donate-card:hover { border-color: #ffca28; box-shadow: 0 15px 30px rgba(255, 202, 40, 0.25); }
+
         .info-icon { position: absolute; top: 15px; right: 15px; color: #484f58; cursor: pointer; transition: 0.3s; font-size: 1.1rem; }
         .info-icon:hover { color: #fff; transform: rotate(15deg); }
         
         .rank-card.disabled { opacity: 0.4; filter: grayscale(1); background: #0d1117; border-color: #21262d; cursor: not-allowed; }
 
         .rank-name { font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; text-transform: uppercase; }
-        /* Ceny v obchode biele */
         .price-tag { font-size: 2.2rem; font-weight: 800; margin: 15px 0; display: block; color: #fff; }
         
         .btn-buy { width: 100%; padding: 12px; background: #009dff; color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; transition: all 0.3s ease; margin-top: 10px; }
@@ -52,7 +55,6 @@
         @keyframes modalAnim { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         .close-modal { float: right; cursor: pointer; color: #8b949e; font-size: 1.5rem; transition: 0.2s; }
 
-        /* KOŠÍK ŠTÝL */
         #cartItemsContainer { max-height: 350px; overflow-y: auto; margin: 20px 0; padding-right: 5px; }
         .cart-item { display: flex; justify-content: space-between; align-items: center; background: #0d1117; padding: 15px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #30363d; }
         .cart-item-details b { display: block; color: #fff; font-size: 0.95rem; }
@@ -60,20 +62,20 @@
         .cart-remove { background: rgba(255, 71, 87, 0.1); color: #ff4757; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; border-radius: 8px; cursor: pointer; }
         .cart-total { font-size: 1.3rem; font-weight: 800; text-align: right; margin-top: 20px; border-top: 1px solid #30363d; padding-top: 15px; color: #fff; }
 
-        /* TOASTS */
         .toast-container { position: fixed; bottom: 25px; right: 25px; z-index: 9999; }
         .toast { background: #1c2128; color: #fff; padding: 16px 24px; border-radius: 12px; border-left: 4px solid #009dff; box-shadow: 0 10px 40px rgba(0,0,0,0.6); margin-top: 10px; display: flex; align-items: center; gap: 15px; animation: slideIn 0.3s ease; min-width: 280px; }
         .toast.error { border-left-color: #ff4757; }
         @keyframes slideIn { from { transform: translateX(110%); } to { transform: translateX(0); } }
         .fade-out { animation: fadeOut 0.5s forwards; }
-        @keyframes fadeOut { to { opacity: 0; transform: translateY(-10px); } }
 
         .checkout-form label { display: block; margin-bottom: 5px; color: #8b949e; font-size: 0.9rem; font-weight: 600; }
         .checkout-form input, .checkout-form select { width: 100%; padding: 12px; background: #0d1117; border: 1px solid #30363d; border-radius: 8px; color: #fff; margin-bottom: 15px; }
 
         .lang-flag { width: 28px; height: 18px; border-radius: 4px; cursor: pointer; opacity: 0.3; transition: 0.3s; }
         .lang-flag.active { opacity: 1; border: 1px solid #009dff; }
-        .cart-badge { position: absolute; top: -8px; right: -8px; background: #009dff; color: white; font-size: 0.7rem; font-weight: 800; padding: 2px 6px; border-radius: 50%; display: none; }
+        
+        /* Červený badge pre košík */
+        .cart-badge { position: absolute; top: -8px; right: -8px; background: #ff4757; color: white; font-size: 0.7rem; font-weight: 800; padding: 2px 6px; border-radius: 50%; display: none; }
     </style>
 </head>
 <body>
@@ -128,7 +130,7 @@
                 <li><a href="team.html"><i class="fas fa-users"></i> <span data-lang="nav_team">Tím</span></a></li>
                 <li><a href="nabory.html"><i class="fas fa-user-plus"></i> <span data-lang="nav_staff">Nábory</span></a></li>
                 <li><a href="hlasovanie.html"><i class="fas fa-check-square"></i> <span data-lang="nav_vote">Hlasovanie</span></a></li>
-                <li><a href="store.html" class="active" style="color: #009dff;"><i class="fas fa-shopping-cart"></i> <span data-lang="nav_store">Store</span></a></li>
+                <li><a href="store.html" class="active" style="color: #ffca28;"><i class="fas fa-shopping-cart"></i> <span data-lang="nav_store">Store</span></a></li>
             </ul>
             <div class="cart-wrapper" onclick="openCart()" style="position:relative; margin-left:15px; cursor:pointer;">
                 <i class="fas fa-shopping-basket" style="color:#8b949e; font-size:1.2rem"></i>
@@ -169,8 +171,8 @@
 <script>
     const translations = {
         sk: { nav_home: "Domov", nav_rules: "Pravidlá", nav_team: "Tím", nav_staff: "Nábory", nav_vote: "Hlasovanie", nav_store: "Store", store_title_1: "Oficiálny", store_title_2: "Obchod", dur_week: "Týždeň", dur_month: "Mesiac", dur_year: "Rok", dur_life: "Navždy", top_buyer: "Top Kupec Mesiaca", buy_btn: "KÚPIŤ", donate_btn: "DAROVAŤ", cart_title: "Košík", cart_empty: "Tvoj košík je prázdny.", btn_checkout: "POKLADŇA", checkout_title: "Platba", form_mcname: "Minecraft Meno (Nick)", form_method: "Spôsob platby", btn_pay: "ZAPLATIŤ", added_msg: "Pridané do košíka!", error_nick: "Prosím, zadaj svoje Minecraft meno!", success_pay: "Platba bola úspešne odoslaná!" },
-        cz: { nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování", nav_store: "Store", store_title_1: "Oficiální", store_title_2: "Obchod", dur_week: "Týden", dur_month: "Měsíc", dur_year: "Rok", dur_life: "Navždy", top_buyer: "Top Kupující Měsíce", buy_btn: "KOUPIT", donate_btn: "DAROVAT", cart_title: "Košík", cart_empty: "Tvůj košík je prázdný.", btn_checkout: "POKLADNA", checkout_title: "Platba", form_mcname: "Minecraft Jméno (Nick)", form_method: "Způsob platby", btn_pay: "ZAPLATIT", added_msg: "Přidáno do košíku!", error_nick: "Prosím, zadej své Minecraft jméno!", success_pay: "Platba byla úspěšně odeslána!" },
-        en: { nav_home: "Home", nav_rules: "Rules", nav_team: "Staff", nav_staff: "Recruitment", nav_vote: "Vote", nav_store: "Store", store_title_1: "Official", store_title_2: "Store", dur_week: "Week", dur_month: "Month", dur_year: "Year", dur_life: "Lifetime", top_buyer: "Top Buyer of the Month", buy_btn: "BUY", donate_btn: "DONATE", cart_title: "Cart", cart_empty: "Your cart is empty.", btn_checkout: "CHECKOUT", checkout_title: "Checkout", form_mcname: "Minecraft Username", form_method: "Payment Method", btn_pay: "PAY NOW", added_msg: "Added to cart!", error_nick: "Please enter your Minecraft name!", success_pay: "Payment sent successfully!" }
+        cz: { nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování", nav_store: "Store", store_title_1: "Oficiální", store_title_2: "Obchod", dur_week: "Týden", dur_month: "Měsíc", dur_year: "Rok", dur_life: "Navždy", top_buyer: "Top Kupující Měsíce", buy_btn: "KOUPIT", donate_btn: "DAROVAT", cart_title: "Košík", cart_empty: "Tvůj košík je prázdný.", btn_checkout: "POKLADNA", checkout_title: "Platba", form_mcname: "Minecraft Jméno (Nick)", form_method: "Způsob platby", btn_pay: "ZAPLATIT", added_msg: "Přidáno do košíku!", error_nick: "Prosím, zadej své Minecraft jméno!", success_pay: "Platba byla úspešne odeslána!" },
+        en: { nav_home: "Home", nav_rules: "Rules", nav_team: "Staff", nav_staff: "Recruitment", nav_vote: "Vote", nav_store: "Store", store_title_1: "Official", store_title_2: "Store", dur_week: "Week", dur_month: "Month", dur_year: "Year", dur_life: "Lifetime", top_buyer: "Top Buyer", buy_btn: "BUY", donate_btn: "DONATE", cart_title: "Cart", cart_empty: "Your cart is empty.", btn_checkout: "CHECKOUT", checkout_title: "Checkout", form_mcname: "Minecraft Username", form_method: "Payment Method", btn_pay: "PAY NOW", added_msg: "Added to cart!", error_nick: "Please enter your Minecraft name!", success_pay: "Payment sent successfully!" }
     };
 
     const multipliers = { week: 0.12, month: 0.25, year: 0.6, lifetime: 1 };
@@ -196,7 +198,7 @@
         setTimeout(() => { toast.classList.add('fade-out'); setTimeout(() => toast.remove(), 500); }, 3000);
     }
 
-    function setLang(langId) { localStorage.setItem('selectedLanguage', langId); updateUI(langId); }
+    function setLang(l) { localStorage.setItem('selectedLanguage', l); updateUI(l); }
 
     function updateUI(langId) {
         document.querySelectorAll('.lang-flag').forEach(f => f.classList.remove('active'));
@@ -226,9 +228,9 @@
             });
         } else {
             [5, 10, 20, 50].forEach(amt => {
-                grid.innerHTML += `<div class="rank-card">
+                grid.innerHTML += `<div class="rank-card donate-card">
                     <div class="rank-name" style="color:#ffca28">DONATE</div>
-                    <div class="price-tag" style="color:#fff">${amt}.00 €</div>
+                    <div class="price-tag">${amt}.00 €</div>
                     <button class="btn-buy" style="background:#ffca28; color:#000;" onclick="addToCart('Donate', ${amt})">${translations[lang].donate_btn}</button>
                 </div>`;
             });
