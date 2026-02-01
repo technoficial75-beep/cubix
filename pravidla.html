@@ -17,7 +17,27 @@
             padding: 20px;
             margin-bottom: 40px;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
         }
+        .ban-appeal-box h2 { color: #ff4444; font-size: 1.2rem; margin: 0; text-transform: uppercase; letter-spacing: 1px; }
+        .ban-appeal-box p { color: #8b949e; margin: 0; font-size: 0.95rem; }
+        
+        .discord-btn {
+            background: #5865F2;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+        .discord-btn:hover { background: #4752c4; transform: translateY(-2px); }
 
         .rules-grid { 
             display: flex; 
@@ -29,77 +49,86 @@
         .rules-column { 
             flex: 1; 
             min-width: 300px; 
-            background: #161b22;
+            max-width: 550px; 
             border-radius: 12px;
-            padding: 20px;
+            overflow: hidden;
             border: 2px solid #30363d;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .category-title { font-size: 1.5rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .column-discord { background: linear-gradient(135deg, rgba(88, 101, 242, 0.1), #0d1117); padding: 20px; }
+        .column-minecraft { background: linear-gradient(135deg, rgba(0, 157, 255, 0.1), #0d1117); padding: 20px; }
+        
+        .category-title { font-size: 1.5rem; margin-bottom: 20px; color: #fff; display: flex; align-items: center; gap: 12px; }
 
-        /* Accordion Style */
         .rule-item {
-            background: #0d1117;
-            border: 1px solid #30363d;
+            background: rgba(22, 27, 34, 0.85); 
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 6px;
             margin-bottom: 8px;
-            cursor: pointer;
-            transition: 0.3s;
+            overflow: hidden;
+            transition: 0.2s;
         }
+
         .rule-header {
             padding: 12px 15px;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
+
+        .rule-info { display: flex; align-items: center; gap: 12px; }
+        
         .rule-number {
             background: #009dff;
-            color: white;
-            width: 25px; height: 25px;
+            color: #fff;
+            width: 28px; height: 28px;
+            display: flex; align-items: center; justify-content: center;
             border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            margin-right: 10px;
+            font-weight: 800; font-size: 0.8rem;
         }
-        .rule-title { font-weight: 600; font-size: 0.95rem; }
+
+        .rule-main h3 { font-size: 0.95rem; color: #fff; margin: 0; }
+        .rule-main p { color: #8b949e; font-size: 0.75rem; margin: 0; }
+
         .rule-content {
             max-height: 0;
             overflow: hidden;
-            padding: 0 15px;
-            color: #8b949e;
-            font-size: 0.85rem;
             transition: all 0.3s ease;
+            background: rgba(0, 0, 0, 0.2);
+            color: #d1d5db;
+            font-size: 0.85rem;
+            padding: 0 15px;
         }
-        .rule-item.active .rule-content {
-            max-height: 200px;
-            padding: 10px 15px 15px 15px;
-            border-top: 1px solid #30363d;
-        }
-        .rule-item.active { border-color: #009dff; }
 
-        /* Cart & Nav (Zjednodušené pre funkčnosť) */
-        .cart-badge { background: #ff4757; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; }
-        .lang-flag { width: 25px; cursor: pointer; opacity: 0.6; margin-left: 10px; }
-        .lang-flag.active { opacity: 1; border-bottom: 2px solid #009dff; }
+        .rule-item.active { border-color: #009dff; }
+        .rule-item.active .rule-content { max-height: 200px; padding: 12px 15px; border-top: 1px solid rgba(255,255,255,0.1); }
+        .rule-item.active .fa-chevron-down { transform: rotate(180deg); color: #009dff; }
+        .fa-chevron-down { color: #30363d; font-size: 0.8rem; transition: 0.3s; }
+
+        .lang-menu { display: flex; gap: 10px; margin-left: 15px; }
+        .lang-flag { width: 25px; cursor: pointer; opacity: 0.5; transition: 0.3s; }
+        .lang-flag.active { opacity: 1; transform: scale(1.1); border-bottom: 2px solid #009dff; }
+
+        @media (max-width: 800px) { .rules-grid { flex-direction: column; } }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="container header-wrap" style="display:flex; justify-content: space-between; align-items: center; padding: 15px 0;">
+    <div class="container" style="display:flex; justify-content: space-between; align-items: center; padding: 15px 0;">
         <a href="index.html" class="logo"><img src="cubixtext.png" alt="Logo" style="height: 40px;"></a>
         <nav style="display: flex; align-items: center;">
-            <ul class="nav-links" style="display: flex; list-style: none; gap: 20px; margin-right: 20px;">
+            <ul style="display: flex; list-style: none; gap: 20px; margin: 0; padding: 0;">
                 <li><a href="index.html" data-lang="nav_home">Domov</a></li>
                 <li><a href="pravidla.html" style="color:#009dff" data-lang="nav_rules">Pravidlá</a></li>
                 <li><a href="store.html" data-lang="nav_store">Store</a></li>
             </ul>
-            <div id="lang-selectors">
-                <img src="https://flagcdn.com/w80/sk.png" class="lang-flag" onclick="setLang('sk')" id="flag-sk">
-                <img src="https://flagcdn.com/w80/cz.png" class="lang-flag" onclick="setLang('cz')" id="flag-cz">
-                <img src="https://flagcdn.com/w80/gb.png" class="lang-flag" onclick="setLang('en')" id="flag-en">
+            <div class="lang-menu">
+                <img src="https://flagcdn.com/w80/sk.png" class="lang-flag" id="lang-sk" onclick="setLang('sk')">
+                <img src="https://flagcdn.com/w80/cz.png" class="lang-flag" id="lang-cz" onclick="setLang('cz')">
+                <img src="https://flagcdn.com/w80/gb.png" class="lang-flag" id="lang-en" onclick="setLang('en')">
             </div>
         </nav>
     </div>
@@ -112,62 +141,63 @@
         <div class="ban-appeal-box">
             <h2 data-lang="ban_title">Dostal si ban neprávom?</h2>
             <p data-lang="ban_desc">Odvolaj sa na našom Discorde.</p>
+            <a href="#" class="discord-btn"><i class="fab fa-discord"></i> Discord</a>
         </div>
         
         <div class="rules-grid">
-            <div class="rules-column">
+            <div class="rules-column column-discord">
                 <h2 class="category-title"><i class="fab fa-discord"></i> Discord</h2>
-                <div id="dc-rules"></div>
+                <div id="discord-rules-container"></div>
             </div>
 
-            <div class="rules-column">
+            <div class="rules-column column-minecraft">
                 <h2 class="category-title"><i class="fas fa-cube"></i> Minecraft</h2>
-                <div id="mc-rules"></div>
+                <div id="minecraft-rules-container"></div>
             </div>
         </div>
     </section>
 </main>
 
 <script>
-    const translations = {
+    const ruleData = {
         sk: {
             nav_home: "Domov", nav_rules: "Pravidlá", nav_store: "Store",
             rules_main_title: "Pravidlá projektu",
             ban_title: "Dostal si ban neprávom?",
-            ban_desc: "Ak si myslíš, že tvoj trest je nespravodlivý, neváhaj sa odvolať na našom Discord serveri.",
+            ban_desc: "Ak si myslíš, že tvoj trest je nespravodlivý, odvolaj sa na našom Discorde.",
             dc: [
-                {t: "Žiadny spam", c: "Nespamuj správami, príkazmi, emoji, obrázkami alebo odkazmi mimo príslušného kanála."},
-                {t: "Žiadny toxický obsah", c: "Zakázané urážky, rasizmus, xenofóbia, diskriminácia alebo nenávistné prejavy."},
-                {t: "Žiadny NSFW obsah", c: "Žiadna pornografia, sexuálne náznaky, gore alebo šokujúce materiály."},
-                {t: "Zbytočne nepinguj A-Team", c: "Pokiaľ nemáš vážny dôvod na pingnutie AT, tak to nerob."},
-                {t: "Správne pulty", c: "Nepoužívaj @everyone, @here alebo masívne pulty bez súhlasu vedenia."},
-                {t: "Rešpektuj štruktúru", c: "Používaj kanály podľa ich témy a účelu – žiadne off-topic príspevky."},
-                {t: "Žiadne reklamy", c: "Neposielaj reklamy, pozvanie na iné servery alebo promo materiály."},
-                {t: "Neobťažuj hráčov", c: "Nepýtaj sa na súkromné info alebo osobné údaje iných hráčov."},
-                {t: "Žiadne drámy", c: "Nerieš spory verejne – rieš ich v súkromí cez moderátorov."},
-                {t: "Rešpektuj moderátorov", c: "Neprekračuj ich pokyny a neignoruj varovania moderátorov."},
-                {t: "Žiadne scam/podvody", c: "Neponúkaj falošné ponuky, phishing linky alebo podozrivé služby."},
-                {t: "Správny jazyk", c: "Komunikuj slušne – žiadne nadávky, provokácie alebo flame wars."},
-                {t: "Žiadne exploits", c: "Neporušuj Discord TOS, nezdieľaj súkromné kanály."},
-                {t: "Reportuj problémy", c: "Problémy hlás privátne moderátorom – nie verejne v kanáloch."},
-                {t: "Aktualizácie pravidiel", c: "Pravidlá sa môžu meniť – pravidelne sleduj kanál #pravidlá."}
+                { t: "Žiadny spam", d: "Nespamuj správy, emoji ani linky.", c: "Nespamuj správami, príkazmi, emoji, obrázkami alebo odkazmi mimo príslušného kanála." },
+                { t: "Žiadny toxický obsah", d: "Urážky a diskriminácia sú zakázané.", c: "Zakázané urážky, rasizmus, xenofóbia, diskriminácia alebo nenávistné prejavy." },
+                { t: "Žiadny NSFW obsah", d: "Žiadna pornografia ani gore.", c: "Žiadna pornografia, sexuálne náznaky, gore alebo šokujúce materiály." },
+                { t: "Zbytočne nepinguj A-Team", d: "Pinguj len v dôležitých prípadoch.", c: "Pokiaľ nemáš vážny dôvod na pingnutie AT, tak to nerob." },
+                { t: "Správne pulty", d: "Zákaz hromadných pingov.", c: "Nepoužívaj @everyone, @here alebo masívne pulty bez súhlasu vedenia." },
+                { t: "Rešpektuj štruktúru", d: "Používaj kanály správne.", c: "Používaj kanály podľa ich témy a účelu – žiadne off-topic príspevky." },
+                { t: "Žiadne reklamy", d: "Zákaz propagácie iných serverov.", c: "Neposielaj reklamy, pozvanie na iné servery alebo promo materiály." },
+                { t: "Neobťažuj hráčov", d: "Nepýtaj sa na súkromné údaje.", c: "Nepýtaj sa na súkromné info alebo osobné údaje iných hráčov." },
+                { t: "Žiadne drámy", d: "Nerieš spory verejne.", c: "Nerieš spory verejne – rieš ich v súkromí cez moderátorov." },
+                { t: "Rešpektuj moderátorov", d: "Dbaj na pokyny Admin Tímu.", c: "Neprekračuj ich pokyny a neignoruj varovania moderátorov." },
+                { t: "Žiadne scam/podvody", d: "Zákaz falošných ponúk.", c: "Neponúkaj falošné ponuky, phishing linky alebo podozrivé služby." },
+                { t: "Správny jazyk", d: "Slušná komunikácia.", c: "Komunikuj slušne – žiadne nadávky, provokácie alebo flame wars." },
+                { t: "Žiadne exploits", d: "Dodržiavaj Discord TOS.", c: "Neporušuj Discord TOS, nezdieľaj súkromné kanály." },
+                { t: "Reportuj problémy", d: "Hlásenie chýb moderátorom.", c: "Problémy hlás privátne moderátorom – nie verejne v kanáloch." },
+                { t: "Aktualizácie pravidiel", d: "Sleduj zmeny v pravidlách.", c: "Pravidlá sa môžu meniť – pravidelne sleduj kanál #pravidlá." }
             ],
             mc: [
-                {t: "Zákaz Cheatovania", c: "Killaura, Fly, X-ray alebo AutoClicker nad 15 CPS sú trestané perma banom."},
-                {t: "Zneužívanie chýb", c: "Zneužívanie chýb hry, máp alebo pluginov je prísne zakázané."},
-                {t: "Vulgárnosť a toxicita", c: "Nadávky a urážky v chate budú trestané mutom alebo banom."},
-                {t: "Zákaz reklamy", c: "Propagácia iných projektov alebo IP adries v chate je zakázaná."},
-                {t: "Obchádzanie trestu", c: "Vstup na server cez iný účet počas banu vedie k IP banu."},
-                {t: "Nevhodný skin / meno", c: "NSFW skiny alebo urážlivé nicky nie sú povolené."},
-                {t: "Teaming (Solo)", c: "V solo Boxfightech je spolupráca viacerých hráčov zakázaná."},
-                {t: "Klamanie A-Týmu", c: "Uvádzanie nepravdivých informácií AT je trestané."},
-                {t: "Zneužívanie reportov", c: "Spamovanie /report falošnými hláseniami je zakázané."},
-                {t: "Scamovanie hráčov", c: "Podvody pri dohodnutých obchodoch sú trestané banom."},
-                {t: "Zhadzovanie TPS", c: "Stavanie lag-strojov alebo preťažovanie entitami je zakázané."},
-                {t: "Provokovanie A-Týmu", c: "Neustále provokovanie alebo spochybňovanie AT v chate je zakázané."},
-                {t: "Griefovanie lobby", c: "Akýkoľvek pokus o poškodenie spawnu alebo lobby je zakázaný."},
-                {t: "Spamovanie príkazov", c: "Zahlcovanie konzoly príkazmi (spam) je trestané."},
-                {t: "Zodpovednosť za účet", c: "Za činy na tvojom účte zodpovedáš ty, bez ohľadu na to, kto hral."}
+                { t: "Zákaz Cheatovania", d: "Žiadne externé výhody.", c: "Killaura, Fly, X-ray alebo AutoClicker nad 15 CPS sú trestané perma banom." },
+                { t: "Zneužívanie chýb", d: "Nahlasuj bugy, nezneužívaj ich.", c: "Zneužívanie chýb hry, máp alebo pluginov je prísne zakázané." },
+                { t: "Vulgárnosť a toxicita", d: "Udržuj slušnú komunitu.", c: "Nadávky a urážky v chate budú trestané mutom alebo banom." },
+                { t: "Zákaz reklamy", d: "Nepropaguj iné servery.", c: "Propagácia iných projektov alebo IP adries v chate je zakázaná." },
+                { t: "Obchádzanie trestu", d: "Zákaz hrania počas banu.", c: "Vstup na server cez iný účet počas banu vedie k IP banu." },
+                { t: "Nevhodný skin / meno", d: "Slušná prezentácia hráča.", c: "NSFW skiny alebo urážlivé nicky nie sú povolené." },
+                { t: "Teaming (Solo)", d: "Zákaz tímovania v solo módoch.", c: "V solo Boxfightech je spolupráca viacerých hráčov zakázaná." },
+                { t: "Klamanie A-Týmu", d: "Buď úprimný k adminom.", c: "Uvádzanie nepravdivých informácií AT je trestané." },
+                { t: "Zneužívanie reportov", d: "Nahlasuj len reálne priestupky.", c: "Spamovanie /report falošnými hláseniami je zakázané." },
+                { t: "Scamovanie hráčov", d: "Zákaz okrádania pri tradovaní.", c: "Podvody pri dohodnutých obchodoch sú trestané banom." },
+                { t: "Zhadzovanie TPS", d: "Nespôsobuj lagy servera.", c: "Stavanie lag-strojov alebo preťažovanie entitami je zakázané." },
+                { t: "Provokovanie A-Týmu", d: "Rešpektuj administrátorov.", c: "Neustále provokovanie alebo spochybňovanie AT v chate je zakázané." },
+                { t: "Griefovanie lobby", d: "Nenič spoločné priestory.", c: "Akýkoľvek pokus o poškodenie spawnu alebo lobby je zakázaný." },
+                { t: "Spamovanie príkazov", d: "Nepoužívaj príkazy opakovane.", c: "Zahlcovanie konzoly príkazmi (spam) je trestané." },
+                { t: "Zodpovednosť za účet", d: "Tvoj účet, tvoja zodpovednosť.", c: "Za činy na tvojom účte zodpovedáš ty, bez ohľadu na to, kto hral." }
             ]
         },
         cz: {
@@ -175,66 +205,63 @@
             rules_main_title: "Pravidla projektu",
             ban_title: "Dostal jsi ban neprávem?",
             ban_desc: "Odvolej se na našem Discordu.",
-            dc: [
-                {t: "Žádný spam", c: "Nespamuj zprávami, příkazy, emoji nebo odkazy."},
-                // ... (ostatné CZ pravidlá by sa doplnili sem)
-            ],
-            mc: [
-                {t: "Zákaz Cheatování", c: "Killaura, Fly, X-ray a další jsou zakázány."},
-                // ... (ostatné CZ pravidlá by sa doplnili sem)
-            ]
+            dc: [ { t: "Žádný spam", d: "Nespamuj zprávy.", c: "Nespamuj zprávami ani odkazy." } ], // Pre ilustráciu skrátené, v reálnom kóde doplňte podľa SK verzie
+            mc: [ { t: "Zákaz Cheatování", d: "Žádné cheaty.", c: "Killaura a jiné jsou zakázány." } ]
         },
         en: {
             nav_home: "Home", nav_rules: "Rules", nav_store: "Store",
             rules_main_title: "Project Rules",
             ban_title: "Banned unfairly?",
-            ban_desc: "Appeal on our Discord server.",
-            dc: [
-                {t: "No spam", c: "Do not spam messages, commands, or links."},
-                // ... (ostatné EN pravidlá by sa doplnili sem)
-            ],
-            mc: [
-                {t: "No Cheating", c: "Killaura, Fly, X-ray are strictly forbidden."},
-                // ... (ostatné EN pravidlá by sa doplnili sem)
-            ]
+            ban_desc: "Appeal on our Discord.",
+            dc: [ { t: "No spamming", d: "Don't spam.", c: "No spamming messages or links." } ],
+            mc: [ { t: "No Cheating", d: "No hacks.", c: "Killaura and other hacks are banned." } ]
         }
     };
 
     function setLang(lang) {
         localStorage.setItem('selectedLanguage', lang);
         
-        // Update flags
+        // Aktívny stav vlajok
         document.querySelectorAll('.lang-flag').forEach(f => f.classList.remove('active'));
-        document.getElementById(`flag-${lang}`).classList.add('active');
+        document.getElementById(`lang-${lang}`).classList.add('active');
 
-        // Update static text
-        const t = translations[lang];
+        const t = ruleData[lang] || ruleData.sk;
+
+        // Preklad statických textov
         document.querySelectorAll('[data-lang]').forEach(el => {
             const key = el.getAttribute('data-lang');
             if(t[key]) el.innerText = t[key];
         });
 
-        // Render Rules
-        renderRulesList('dc-rules', t.dc || translations.sk.dc);
-        renderRulesList('mc-rules', t.mc || translations.sk.mc);
+        // Generovanie pravidiel
+        renderRules('discord-rules-container', t.dc || ruleData.sk.dc);
+        renderRules('minecraft-rules-container', t.mc || ruleData.sk.mc);
     }
 
-    function renderRulesList(containerId, rules) {
+    function renderRules(containerId, rules) {
         const container = document.getElementById(containerId);
-        container.innerHTML = rules.map((r, i) => `
-            <div class="rule-item" onclick="this.classList.toggle('active')">
-                <div class="rule-header">
-                    <div><span class="rule-number">${i+1}</span><span class="rule-title">${r.t}</span></div>
+        if(!container) return;
+        
+        container.innerHTML = rules.map((rule, index) => `
+            <div class="rule-item">
+                <div class="rule-header" onclick="this.parentElement.classList.toggle('active')">
+                    <div class="rule-info">
+                        <div class="rule-number">${index + 1}</div>
+                        <div class="rule-main">
+                            <h3>${rule.t}</h3>
+                            <p>${rule.d}</p>
+                        </div>
+                    </div>
                     <i class="fas fa-chevron-down"></i>
                 </div>
-                <div class="rule-content">${r.c}</div>
+                <div class="rule-content">${rule.c}</div>
             </div>
         `).join('');
     }
 
     window.onload = () => {
-        const lang = localStorage.getItem('selectedLanguage') || 'sk';
-        setLang(lang);
+        const savedLang = localStorage.getItem('selectedLanguage') || 'sk';
+        setLang(savedLang);
     };
 </script>
 
