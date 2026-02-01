@@ -55,7 +55,6 @@
         }
         .vote-btn:hover { background: #007ccb; }
 
-        /* SEKČIA ODMENY */
         .separator { width: 100%; height: 1px; background: linear-gradient(90deg, #30363d 0%, transparent 100%); margin: 50px 0; }
         
         .rewards-container {
@@ -83,13 +82,11 @@
         .reward-info h4 { color: #fff; margin-bottom: 5px; font-size: 1.2rem; }
         .reward-info p { color: #8b949e; font-size: 0.95rem; margin: 0; }
 
-        /* VLAJKY */
         .lang-menu { display: flex; gap: 10px; margin-left: 15px; align-items: center; border-left: 1px solid #30363d; padding-left: 15px; }
         .lang-flag { width: 28px; height: 18px; object-fit: cover; border-radius: 4px; cursor: pointer; opacity: 0.4; transition: 0.3s; border: 2px solid transparent; }
         .lang-flag:hover { opacity: 0.8; }
         .lang-flag.active { opacity: 1; border-color: #009dff; box-shadow: 0 0 8px rgba(0, 157, 255, 0.4); }
 
-        /* --- PRIDANÉ PRE KOŠÍK --- */
         .cart-wrapper { position: relative; margin-left: 15px; cursor: pointer; }
         .cart-badge { position: absolute; top: -8px; right: -8px; background: #ff4757; color: white; font-size: 0.7rem; font-weight: 800; padding: 2px 6px; border-radius: 50%; display: none; }
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
@@ -103,10 +100,10 @@
 <div id="cartModal" class="modal">
     <div class="modal-content">
         <span class="close-modal" onclick="closeModal('cartModal')">&times;</span>
-        <h2 style="margin-bottom: 20px;"><i class="fas fa-shopping-cart" style="color:#009dff"></i> Košík</h2>
+        <h2 style="margin-bottom: 20px;"><i class="fas fa-shopping-cart" style="color:#009dff"></i> <span data-lang="cart_title">Košík</span></h2>
         <div id="cartItemsContainer"></div>
         <div id="cartTotalDisplay" style="text-align: right; font-weight: 800; margin-top: 20px; border-top: 1px solid #30363d; padding-top: 10px;">Total: 0.00 €</div>
-        <button class="vote-btn" style="margin-top: 20px; background: #2ed573;" onclick="location.href='store.html'">SPÄŤ DO OBCHODU</button>
+        <button class="vote-btn" style="margin-top: 20px; background: #2ed573;" onclick="location.href='store.html'" data-lang="btn_back_store">SPÄŤ DO OBCHODU</button>
     </div>
 </div>
 
@@ -212,7 +209,8 @@
             reward_1st: "1. Miesto", desc_1st: "VIP na 1 mesiac + 3x VIP Key + [VIP] Tag na Discorde",
             reward_2nd: "2. Miesto", desc_2nd: "VIP na 14 dní + 2x VIP Key + [VIP] Tag na Discorde",
             reward_3rd: "3. Miesto", desc_3rd: "VIP na 7 dní + 1x VIP Key",
-            reward_info: "* Odmeny sa vyhodnocujú a odovzdávajú automaticky na konci každého mesiaca."
+            reward_info: "* Odmeny sa vyhodnocujú a odovzdávajú automaticky na konci každého mesiaca.",
+            cart_title: "Košík", cart_empty: "Tvoj košík je prázdny.", btn_back_store: "SPÄŤ DO OBCHODU"
         },
         cz: {
             nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování", nav_store: "Store",
@@ -224,7 +222,8 @@
             reward_1st: "1. Místo", desc_1st: "VIP na 1 měsíc + 3x VIP Key + [VIP] Tag na Discordu",
             reward_2nd: "2. Místo", desc_2nd: "VIP na 14 dní + 2x VIP Key + [VIP] Tag na Discordu",
             reward_3rd: "3. Místo", desc_3rd: "VIP na 7 dní + 1x VIP Key",
-            reward_info: "* Odměny se vyhodnocují a odevzdávají automaticky na konci každého měsíce."
+            reward_info: "* Odměny se vyhodnocují a odevzdávají automaticky na konci každého měsíce.",
+            cart_title: "Košík", cart_empty: "Tvůj košík je prázdný.", btn_back_store: "ZPĚT DO OBCHODU"
         },
         en: {
             nav_home: "Home", nav_rules: "Rules", nav_team: "Team", nav_staff: "Staff", nav_vote: "Vote", nav_store: "Store",
@@ -236,8 +235,15 @@
             reward_1st: "1st Place", desc_1st: "VIP for 1 month + 3x VIP Key + [VIP] Discord Tag",
             reward_2nd: "2nd Place", desc_2nd: "VIP for 14 days + 2x VIP Key + [VIP] Discord Tag",
             reward_3rd: "3rd Place", desc_3rd: "VIP for 7 days + 1x VIP Key",
-            reward_info: "* Rewards are evaluated and distributed automatically at the end of each month."
+            reward_info: "* Rewards are evaluated and distributed automatically at the end of each month.",
+            cart_title: "Cart", cart_empty: "Your cart is empty.", btn_back_store: "BACK TO STORE"
         }
+    };
+
+    const currencyConfig = {
+        sk: { symbol: "€", rate: 1, decimals: 2, pos: 'after' },
+        cz: { symbol: "Kč", rate: 25, decimals: 0, pos: 'after' },
+        en: { symbol: "$", rate: 1.05, decimals: 2, pos: 'before' }
     };
 
     /* --- LOGIKA KOŠÍKA --- */
@@ -251,25 +257,34 @@
         }
     }
 
+    function formatPrice(euroAmount, lang) {
+        const conf = currencyConfig[lang];
+        const converted = (euroAmount * conf.rate).toFixed(conf.decimals);
+        return conf.pos === 'before' ? `${conf.symbol}${converted}` : `${converted} ${conf.symbol}`;
+    }
+
     function openCart() {
         const modal = document.getElementById('cartModal');
         const container = document.getElementById('cartItemsContainer');
+        const lang = localStorage.getItem('selectedLanguage') || 'sk';
+        const t = translations[lang];
+        
         container.innerHTML = '';
         let total = 0;
 
         if (cart.length === 0) {
-            container.innerHTML = '<p style="text-align:center; color:#8b949e;">Košík je prázdny.</p>';
+            container.innerHTML = `<p style="text-align:center; color:#8b949e;">${t.cart_empty}</p>`;
         } else {
             cart.forEach((item, index) => {
                 total += item.price;
                 container.innerHTML += `
                     <div class="cart-item">
                         <span>${item.name}</span>
-                        <span>${item.price.toFixed(2)} €</span>
+                        <span style="font-weight:700; color:#2ed573">${formatPrice(item.price, lang)}</span>
                     </div>`;
             });
         }
-        document.getElementById('cartTotalDisplay').innerText = "Total: " + total.toFixed(2) + " €";
+        document.getElementById('cartTotalDisplay').innerText = "Total: " + formatPrice(total, lang);
         modal.style.display = 'block';
     }
 
@@ -294,6 +309,9 @@
                 element.innerText = translations[langId][key];
             }
         });
+
+        // Ak je košík otvorený, hneď ho prekresli s novou menou a prekladom
+        if (document.getElementById('cartModal').style.display === 'block') openCart();
     }
 
     window.onload = function() {
