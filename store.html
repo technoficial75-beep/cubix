@@ -16,9 +16,9 @@
             --gold: #ffca28;
         }
 
-        /* HLAVIČKA A KOŠÍK */
+        /* HLAVIČKA A KOŠÍK - PONECHANÝ ŠEDÝ */
         .cart-wrapper { position: relative; margin-left: 15px; cursor: pointer; }
-        .cart-wrapper i { color: var(--gold) !important; font-size: 1.3rem; }
+        .cart-wrapper i { color: #8b949e !important; font-size: 1.3rem; }
         
         .cart-badge { 
             position: absolute; top: -8px; right: -8px; background: #ff5252; 
@@ -88,7 +88,7 @@
 <div id="cartModal" class="modal">
     <div class="modal-content">
         <span onclick="closeModal('cartModal')" style="float:right; cursor:pointer;">&times;</span>
-        <h2 style="margin-bottom: 20px;"><i class="fas fa-shopping-cart" style="color:var(--gold)"></i> <span data-lang="cart_title">Košík</span></h2>
+        <h2 style="margin-bottom: 20px;"><i class="fas fa-shopping-cart" style="color:var(--text-gray)"></i> <span data-lang="cart_title">Košík</span></h2>
         <div id="cartItemsContainer"></div>
         <div id="cartTotalDisplay" style="text-align: right; font-weight: 800; margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 10px;">Total: 0.00 €</div>
         <button class="checkout-btn" onclick="alert('System Cubix: Redirecting...')" data-lang="btn_buy_now">ZAPLATIŤ</button>
@@ -105,7 +105,7 @@
                 <li><a href="team.html"><i class="fas fa-users"></i> <span data-lang="nav_team">Tím</span></a></li>
                 <li><a href="nabory.html"><i class="fas fa-user-plus"></i> <span data-lang="nav_staff">Nábory</span></a></li>
                 <li><a href="hlasovanie.html"><i class="fas fa-check-square"></i> <span data-lang="nav_vote">Hlasovanie</span></a></li>
-                <li><a href="store.html" class="active" style="color: var(--gold);"><i class="fas fa-shopping-cart"></i> <span data-lang="nav_store">Store</span></a></li>
+                <li><a href="store.html" class="active" style="color: var(--primary-blue);"><i class="fas fa-shopping-cart"></i> <span data-lang="nav_store">Store</span></a></li>
             </ul>
             <div class="cart-wrapper" onclick="openCart()">
                 <i class="fas fa-shopping-basket"></i>
