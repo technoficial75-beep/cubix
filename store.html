@@ -31,7 +31,6 @@
         .category-btn { background: var(--card-bg); border: 1px solid var(--border-color); padding: 10px 25px; border-radius: 30px; color: #fff; cursor: pointer; transition: 0.3s; font-weight: 600; }
         .category-btn:hover, .category-btn.active { border-color: var(--primary-blue); background: rgba(0, 157, 255, 0.1); color: var(--primary-blue); }
 
-        /* ŽLTÁ KATEGÓRIA DONATE V MENU */
         .category-btn.donate-cat-btn { border-color: rgba(255, 202, 40, 0.3); }
         .category-btn.donate-cat-btn:hover, .category-btn.donate-cat-btn.active { border-color: var(--gold); background: rgba(255, 202, 40, 0.1); color: var(--gold); }
 
@@ -43,12 +42,12 @@
         .product-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 15px; padding: 30px 25px; text-align: center; display: flex; flex-direction: column; position: relative; transition: transform 0.4s; }
         .product-card:hover { transform: translateY(-10px); border-color: var(--primary-blue); }
 
-        /* FIXNÉ ŽLTÉ ZVÝRAZNENIE PRE DONATE KARTU */
+        /* FIXNÉ ŽLTÉ ZVÝRAZNENIE PRE DONATE */
         .product-card.donate-style { border-color: var(--gold); box-shadow: 0 0 15px rgba(255, 202, 40, 0.1); }
         .product-card.donate-style .rank-big-name { color: var(--gold); }
         .product-card.donate-style .product-price { color: var(--gold); }
         .product-card.donate-style .buy-btn { background: var(--gold); color: #000; }
-        .product-card.donate-style .quantity-input { border-color: var(--gold); }
+        .product-card.donate-style .quantity-wrapper { border-color: var(--gold); }
         .product-card.donate-style .info-trigger { color: var(--gold); opacity: 0.7; }
 
         .product-tag { position: absolute; top: 15px; left: 15px; background: var(--border-color); color: var(--text-gray); font-size: 0.65rem; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; font-weight: 700; }
@@ -64,10 +63,14 @@
 
         .product-price { font-size: 1.8rem; font-weight: 800; color: var(--primary-blue); margin: 15px 0; }
 
-        /* OVLÁDANIE NÁKUPU (MNOŽSTVO + TLAČIDLO) */
+        /* MNOŽSTVO SO ŠÍPKAMI */
         .buy-controls { display: flex; gap: 10px; margin-top: auto; }
-        .quantity-input { width: 60px; background: var(--dark-bg); border: 1px solid var(--border-color); border-radius: 8px; color: white; padding: 8px; text-align: center; font-weight: bold; }
-        
+        .quantity-wrapper { display: flex; align-items: center; background: var(--dark-bg); border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; }
+        .qty-btn { background: transparent; border: none; color: var(--text-gray); padding: 0 10px; cursor: pointer; font-size: 1.2rem; transition: 0.2s; }
+        .qty-btn:hover { color: white; }
+        .quantity-input { width: 35px; background: transparent; border: none; color: white; text-align: center; font-weight: bold; -moz-appearance: textfield; }
+        .quantity-input::-webkit-outer-spin-button, .quantity-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
         .buy-btn { flex: 1; background: var(--primary-blue); color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 800; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
         .buy-btn:disabled { background: #30363d; color: var(--text-gray); cursor: not-allowed; }
 
@@ -134,7 +137,7 @@
 <main class="container">
     <section class="store-header">
         <h1 class="store-title" data-lang="store_title">Cubix Store</h1>
-        <p class="store-subtitle" data-lang="store_description">Vitajte v oficiálnom obchode Cubix. Tu môžete podporiť náš server.</p>
+        <p class="store-subtitle" data-lang="store_description">Vitajte v oficiálnom obchode Cubix.</p>
         
         <div class="category-nav">
             <button class="category-btn active" onclick="filterCategory('All', this)" data-lang="cat_all">Všetko</button>
@@ -156,9 +159,9 @@
 
 <script>
     const translations = {
-        sk: { nav_home: "Domov", nav_store: "Store", store_title: "Cubix Store", store_description: "Vitajte v oficiálnom obchode Cubix. Tu môžete podporiť náš server.", cat_all: "Všetko", cart_title: "Košík", btn_add: "Pridať", btn_buy_now: "ZAPLATIŤ", cart_empty: "Košík je prázdny.", dur_week: "Týždeň", dur_month: "Mesiac", dur_year: "Rok", dur_forever: "Navždy", forbidden: "Nemožné" },
-        cz: { nav_home: "Domů", nav_store: "Store", store_title: "Cubix Store", store_description: "Vítejte v oficiálním obchodě Cubix. Zde můžete podpořit náš server.", cat_all: "Vše", cart_title: "Košík", btn_add: "Přidat", btn_buy_now: "ZAPLATIT", cart_empty: "Košík je prázdny.", dur_week: "Týden", dur_month: "Měsíc", dur_year: "Rok", dur_forever: "Navždy", forbidden: "Nemožné" },
-        en: { nav_home: "Home", nav_store: "Store", store_title: "Cubix Store", store_description: "Welcome to the official Cubix store. Support our server.", cat_all: "All", cart_title: "Cart", btn_add: "Add", btn_buy_now: "PAY NOW", cart_empty: "Cart is empty.", dur_week: "Week", dur_month: "Month", dur_year: "Year", dur_forever: "Forever", forbidden: "Impossible" }
+        sk: { nav_home: "Domov", nav_store: "Store", store_title: "Cubix Store", store_description: "Vitajte v oficiálnom obchode Cubix.", cat_all: "Všetko", cart_title: "Košík", btn_add: "Pridať", btn_buy_now: "ZAPLATIŤ", cart_empty: "Košík je prázdny.", dur_week: "Týždeň", dur_month: "Mesiac", dur_year: "Rok", dur_forever: "Navždy", forbidden: "Nemožné" },
+        cz: { nav_home: "Domů", nav_store: "Store", store_title: "Cubix Store", store_description: "Vítejte v oficiálním obchodě Cubix.", cat_all: "Vše", cart_title: "Košík", btn_add: "Přidat", btn_buy_now: "ZAPLATIT", cart_empty: "Košík je prázdny.", dur_week: "Týden", dur_month: "Měsíc", dur_year: "Rok", dur_forever: "Navždy", forbidden: "Nemožné" },
+        en: { nav_home: "Home", nav_store: "Store", store_title: "Cubix Store", store_description: "Welcome to the official Cubix store.", cat_all: "All", cart_title: "Cart", btn_add: "Add", btn_buy_now: "PAY NOW", cart_empty: "Cart is empty.", dur_week: "Week", dur_month: "Month", dur_year: "Year", dur_forever: "Forever", forbidden: "Impossible" }
     };
 
     const currencyConfig = { sk: { symbol: "€", rate: 1, pos: 'after' }, cz: { symbol: "Kč", rate: 25, pos: 'after' }, en: { symbol: "$", rate: 1.05, pos: 'before' } };
@@ -183,6 +186,8 @@
     let cart = JSON.parse(localStorage.getItem('cubix_cart')) || [];
 
     function formatPrice(euroAmount) { const conf = currencyConfig[currentLang]; const converted = (euroAmount * conf.rate).toFixed(2); return conf.pos === 'before' ? `${conf.symbol}${converted}` : `${converted} ${conf.symbol}`; }
+
+    function stepQty(id, amount) { const input = document.getElementById(`qty-${id}`); if (!input) return; const newVal = parseInt(input.value) + amount; if (newVal >= 1) { input.value = newVal; } }
 
     function filterCategory(cat, btn) { currentCategory = cat; document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); document.getElementById('rankDurationNav').style.display = (cat === 'Ranks') ? 'flex' : 'none'; renderProducts(); }
 
@@ -209,9 +214,13 @@
                     <i class="fas fa-info-circle info-trigger" onclick="openInfo(${p.id})"></i>
                     <div class="rank-big-name ${p.class}">${p.name}</div>
                     <div class="product-price">${priceDisplay}</div>
-                    
                     <div class="buy-controls">
-                        ${!isForeverRank ? `<input type="number" class="quantity-input" value="1" min="1" id="qty-${p.id}">` : ''}
+                        ${!isForeverRank ? `
+                        <div class="quantity-wrapper">
+                            <button class="qty-btn" onclick="stepQty(${p.id}, -1)">-</button>
+                            <input type="number" class="quantity-input" value="1" min="1" id="qty-${p.id}" readonly>
+                            <button class="qty-btn" onclick="stepQty(${p.id}, 1)">+</button>
+                        </div>` : ''}
                         <button class="buy-btn" onclick="handleAddToCart(${p.id}, '${priceDisplay}')" ${isForbidden ? 'disabled' : ''}>
                             ${translations[currentLang].btn_add}
                         </button>
