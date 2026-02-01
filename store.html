@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* MODRÁ TÉMA */
         :root {
             --primary-blue: #009dff;
             --dark-bg: #0d1117;
@@ -45,7 +44,6 @@
             gap: 25px; margin-bottom: 60px;
         }
 
-        /* PRODUKTOVÁ KARTA */
         .product-card {
             background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 15px;
             padding: 30px 25px; text-align: center; display: flex; flex-direction: column; position: relative;
@@ -53,7 +51,6 @@
         }
         .product-card:hover { transform: translateY(-10px); border-color: var(--primary-blue); }
 
-        /* ŠTÝL PRE VEĽKÉ NÁZVY RANKOV */
         .rank-big-name {
             font-size: 2.2rem; font-weight: 900; text-transform: uppercase; 
             margin-bottom: 20px; letter-spacing: -1px; line-height: 1;
@@ -88,8 +85,8 @@
         .checkout-btn { width: 100%; padding: 12px; background: #2ed573; color: white; border-radius: 8px; font-weight: 700; border: none; cursor: pointer; margin-top: 20px; }
         
         .lang-menu { display: flex; gap: 10px; margin-left: 15px; align-items: center; border-left: 1px solid var(--border-color); padding-left: 15px; }
-        .lang-flag { width: 28px; opacity: 0.4; cursor: pointer; transition: 0.3s; }
-        .lang-flag.active { opacity: 1; border: 2px solid var(--primary-blue); border-radius: 4px; }
+        .lang-flag { width: 28px; height: 18px; object-fit: cover; opacity: 0.4; cursor: pointer; transition: 0.3s; border-radius: 4px; }
+        .lang-flag.active { opacity: 1; border: 2px solid var(--primary-blue); }
     </style>
 </head>
 <body>
@@ -100,7 +97,7 @@
         <h2 style="margin-bottom: 20px;"><i class="fas fa-shopping-cart" style="color:var(--primary-blue)"></i> <span data-lang="cart_title">Košík</span></h2>
         <div id="cartItemsContainer"></div>
         <div id="cartTotalDisplay" style="text-align: right; font-weight: 800; margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 10px;">Total: 0.00 €</div>
-        <button class="checkout-btn" onclick="alert('System Cubix: Platba prebieha cez modrú bránu')" data-lang="btn_buy_now">ZAPLATIŤ</button>
+        <button class="checkout-btn" onclick="alert('System Cubix: Redirecting to payment...')" data-lang="btn_buy_now">ZAPLATIŤ</button>
     </div>
 </div>
 
@@ -121,8 +118,9 @@
                 <span class="cart-badge" id="cartBadge">0</span>
             </div>
             <div class="lang-menu">
-                <img src="https://flagcdn.com/w80/sk.png" class="lang-flag" id="lang-sk" onclick="setLang('sk')">
-                <img src="https://flagcdn.com/w80/gb.png" class="lang-flag" id="lang-en" onclick="setLang('en')">
+                <img src="https://flagcdn.com/w80/sk.png" class="lang-flag" id="lang-sk" onclick="setLang('sk')" title="Slovenčina">
+                <img src="https://flagcdn.com/w80/cz.png" class="lang-flag" id="lang-cz" onclick="setLang('cz')" title="Čeština">
+                <img src="https://flagcdn.com/w80/gb.png" class="lang-flag" id="lang-en" onclick="setLang('en')" title="English">
             </div>
         </div>
     </div>
@@ -134,16 +132,16 @@
         <p class="store-subtitle" data-lang="store_subtitle">Vyber si rank a získaj výhody na našom servery.</p>
         
         <div class="category-nav">
-            <button class="category-btn active" onclick="filterCategory('All', this)">Všetko</button>
+            <button class="category-btn active" onclick="filterCategory('All', this)" data-lang="cat_all">Všetko</button>
             <button class="category-btn" onclick="filterCategory('Ranks', this)">Ranks</button>
             <button class="category-btn" onclick="filterCategory('Boxfight', this)">Boxfight</button>
         </div>
 
         <div class="rank-duration-nav" id="rankDurationNav">
-            <button class="duration-btn" onclick="setDuration('week', this)">Týždeň</button>
-            <button class="duration-btn active" onclick="setDuration('month', this)">Mesiac</button>
-            <button class="duration-btn" onclick="setDuration('year', this)">Rok</button>
-            <button class="duration-btn" onclick="setDuration('forever', this)">Navždy</button>
+            <button class="duration-btn" onclick="setDuration('week', this)" data-lang="dur_week">Týždeň</button>
+            <button class="duration-btn active" onclick="setDuration('month', this)" data-lang="dur_month">Mesiac</button>
+            <button class="duration-btn" onclick="setDuration('year', this)" data-lang="dur_year">Rok</button>
+            <button class="duration-btn" onclick="setDuration('forever', this)" data-lang="dur_forever">Navždy</button>
         </div>
     </section>
 
@@ -152,8 +150,30 @@
 
 <script>
     const translations = {
-        sk: { nav_home: "Domov", nav_store: "Store", cart_title: "Košík", btn_add: "Pridať", btn_buy_now: "ZAPLATIŤ", cart_empty: "Košík je prázdny." },
-        en: { nav_home: "Home", nav_store: "Store", cart_title: "Cart", btn_add: "Add", btn_buy_now: "PAY NOW", cart_empty: "Cart is empty." }
+        sk: { 
+            nav_home: "Domov", nav_rules: "Pravidlá", nav_team: "Tím", nav_staff: "Nábory", nav_vote: "Hlasovanie", nav_store: "Store",
+            store_title: "Cubix Store", store_subtitle: "Vyber si rank a získaj výhody na našom servery.",
+            cat_all: "Všetko", cart_title: "Košík", btn_add: "Pridať", btn_buy_now: "ZAPLATIŤ", cart_empty: "Košík je prázdny.",
+            dur_week: "Týždeň", dur_month: "Mesiac", dur_year: "Rok", dur_forever: "Navždy", forbidden: "Nemožné"
+        },
+        cz: { 
+            nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování", nav_store: "Store",
+            store_title: "Cubix Store", store_subtitle: "Vyber si rank a získej výhody na našem serveru.",
+            cat_all: "Vše", cart_title: "Košík", btn_add: "Přidat", btn_buy_now: "ZAPLATIT", cart_empty: "Košík je prázdný.",
+            dur_week: "Týden", dur_month: "Měsíc", dur_year: "Rok", dur_forever: "Navždy", forbidden: "Nemožné"
+        },
+        en: { 
+            nav_home: "Home", nav_rules: "Rules", nav_team: "Staff", nav_staff: "Recruitment", nav_vote: "Vote", nav_store: "Store",
+            store_title: "Cubix Store", store_subtitle: "Choose your rank and get advantages on our server.",
+            cat_all: "All", cart_title: "Cart", btn_add: "Add", btn_buy_now: "PAY NOW", cart_empty: "Cart is empty.",
+            dur_week: "Week", dur_month: "Month", dur_year: "Year", dur_forever: "Forever", forbidden: "Impossible"
+        }
+    };
+
+    const currencyConfig = {
+        sk: { symbol: "€", rate: 1, pos: 'after' },
+        cz: { symbol: "Kč", rate: 25, pos: 'after' },
+        en: { symbol: "$", rate: 1.05, pos: 'before' }
     };
 
     const products = [
@@ -168,7 +188,14 @@
 
     let currentCategory = 'All';
     let currentDuration = 'month';
+    let currentLang = localStorage.getItem('selectedLanguage') || 'sk';
     let cart = JSON.parse(localStorage.getItem('cubix_cart')) || [];
+
+    function formatPrice(euroAmount) {
+        const conf = currencyConfig[currentLang];
+        const converted = (euroAmount * conf.rate).toFixed(2);
+        return conf.pos === 'before' ? `${conf.symbol}${converted}` : `${converted} ${conf.symbol}`;
+    }
 
     function filterCategory(cat, btn) {
         currentCategory = cat;
@@ -185,41 +212,65 @@
         renderProducts();
     }
 
-    function calculatePrice(product) {
-        if (product.cat !== 'Ranks') return product.price;
-        if (currentDuration === 'forever') return product.forever || null;
-        const mult = { week: 0.4, month: 1, year: 8 };
-        return (product.basePrice * mult[currentDuration]).toFixed(2);
-    }
-
     function renderProducts() {
         const grid = document.getElementById('productsGrid');
         grid.innerHTML = '';
-        const lang = localStorage.getItem('selectedLanguage') || 'sk';
+        const langData = translations[currentLang];
 
         products.forEach(p => {
             if (currentCategory !== 'All' && p.cat !== currentCategory) return;
-            const price = calculatePrice(p);
-            const isForbidden = (currentDuration === 'forever' && p.name === 'Immortal');
-            const displayPrice = isForbidden ? "Nemožné" : (price + " €");
+            
+            let finalPrice;
+            let isForbidden = false;
+
+            if (p.cat === 'Ranks') {
+                if (currentDuration === 'forever') {
+                    if (p.forever === false) isForbidden = true;
+                    else finalPrice = p.forever;
+                } else {
+                    const mult = { week: 0.4, month: 1, year: 8 };
+                    finalPrice = p.basePrice * mult[currentDuration];
+                }
+            } else {
+                finalPrice = p.price;
+            }
+
+            const priceDisplay = isForbidden ? langData.forbidden : formatPrice(finalPrice);
 
             grid.innerHTML += `
                 <div class="product-card">
                     <div class="rank-big-name ${p.class}">${p.name}</div>
                     <div style="color:var(--text-gray); font-size:0.8rem; margin-top:-10px;">
-                        ${p.cat === 'Ranks' ? currentDuration : 'Permanent'}
+                        ${p.cat === 'Ranks' ? langData['dur_'+currentDuration] : 'Permanent'}
                     </div>
-                    <div class="product-price">${displayPrice}</div>
-                    <button class="buy-btn" onclick="addToCart(${p.id}, '${displayPrice}')" ${isForbidden ? 'disabled' : ''}>
-                        ${translations[lang].btn_add}
+                    <div class="product-price">${priceDisplay}</div>
+                    <button class="buy-btn" onclick="addToCart(${p.id}, '${priceDisplay}')" ${isForbidden ? 'disabled' : ''}>
+                        ${langData.btn_add}
                     </button>
                 </div>`;
         });
     }
 
+    function setLang(l) {
+        currentLang = l;
+        localStorage.setItem('selectedLanguage', l);
+        updateUI();
+        renderProducts();
+    }
+
+    function updateUI() {
+        document.querySelectorAll('.lang-flag').forEach(f => f.classList.remove('active'));
+        document.getElementById('lang-' + currentLang).classList.add('active');
+        
+        document.querySelectorAll('[data-lang]').forEach(el => {
+            const key = el.getAttribute('data-lang');
+            if (translations[currentLang][key]) el.innerText = translations[currentLang][key];
+        });
+    }
+
     function addToCart(id, pStr) {
         const product = products.find(p => p.id === id);
-        cart.push({ ...product, displayPrice: pStr });
+        cart.push({ name: product.name, displayPrice: pStr });
         localStorage.setItem('cubix_cart', JSON.stringify(cart));
         updateCartBadge();
     }
@@ -232,18 +283,30 @@
 
     function openCart() {
         const c = document.getElementById('cartItemsContainer');
-        c.innerHTML = cart.length ? '' : `<p style="text-align:center">${translations[localStorage.getItem('selectedLanguage')||'sk'].cart_empty}</p>`;
+        const langData = translations[currentLang];
+        c.innerHTML = cart.length ? '' : `<p style="text-align:center">${langData.cart_empty}</p>`;
+        
+        let total = 0;
         cart.forEach((item, i) => {
             c.innerHTML += `<div class="cart-item"><span>${item.name}</span><b>${item.displayPrice}</b> <i class="fas fa-trash" onclick="removeFromCart(${i})" style="color:#ff4757; cursor:pointer"></i></div>`;
         });
         document.getElementById('cartModal').style.display = 'block';
     }
 
-    function removeFromCart(i) { cart.splice(i, 1); localStorage.setItem('cubix_cart', JSON.stringify(cart)); updateCartBadge(); openCart(); }
+    function removeFromCart(i) { 
+        cart.splice(i, 1); 
+        localStorage.setItem('cubix_cart', JSON.stringify(cart)); 
+        updateCartBadge(); 
+        openCart(); 
+    }
+    
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-    function setLang(l) { localStorage.setItem('selectedLanguage', l); location.reload(); }
 
-    window.onload = () => { updateCartBadge(); renderProducts(); };
+    window.onload = () => { 
+        updateUI();
+        updateCartBadge(); 
+        renderProducts(); 
+    };
 </script>
 </body>
 </html>
