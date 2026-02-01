@@ -7,68 +7,89 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        /* MODRÁ TÉMA */
+        :root {
+            --primary-blue: #009dff;
+            --dark-bg: #0d1117;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --text-gray: #8b949e;
+        }
+
         .store-header { padding: 40px 0; text-align: center; }
-        .store-title { font-size: 3rem; font-weight: 800; margin-bottom: 15px; color: #ffca28; }
-        .store-subtitle { color: #8b949e; font-size: 1.1rem; max-width: 600px; margin: 0 auto 40px; }
+        .store-title { font-size: 3rem; font-weight: 800; margin-bottom: 15px; color: var(--primary-blue); }
+        .store-subtitle { color: var(--text-gray); font-size: 1.1rem; max-width: 600px; margin: 0 auto 40px; }
 
         .category-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; }
         
         .category-btn {
-            background: #161b22; border: 1px solid #30363d; padding: 10px 25px;
+            background: var(--card-bg); border: 1px solid var(--border-color); padding: 10px 25px;
             border-radius: 30px; color: #fff; cursor: pointer; transition: 0.3s; font-weight: 600;
         }
 
         .category-btn:hover, .category-btn.active {
-            border-color: #ffca28; background: rgba(255, 202, 40, 0.1); color: #ffca28;
+            border-color: var(--primary-blue); background: rgba(0, 157, 255, 0.1); color: var(--primary-blue);
         }
 
-        /* ŠTÝL PRE PREPÍNAČ OBDOBIA */
         .rank-duration-nav { 
             display: none; justify-content: center; gap: 10px; margin-bottom: 40px; 
         }
         .duration-btn {
-            background: transparent; border: 1px solid #30363d; padding: 5px 15px;
-            border-radius: 15px; color: #8b949e; cursor: pointer; font-size: 0.9rem; transition: 0.3s;
+            background: transparent; border: 1px solid var(--border-color); padding: 5px 15px;
+            border-radius: 15px; color: var(--text-gray); cursor: pointer; font-size: 0.9rem; transition: 0.3s;
         }
-        .duration-btn.active { background: #ffca28; color: #000; border-color: #ffca28; }
+        .duration-btn.active { background: var(--primary-blue); color: #fff; border-color: var(--primary-blue); }
 
         .products-grid {
             display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 25px; margin-bottom: 60px;
         }
 
+        /* PRODUKTOVÁ KARTA */
         .product-card {
-            background: #161b22; border: 1px solid #30363d; border-radius: 15px;
-            padding: 25px; text-align: center; display: flex; flex-direction: column; position: relative;
+            background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 15px;
+            padding: 30px 25px; text-align: center; display: flex; flex-direction: column; position: relative;
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .product-card:hover { transform: translateY(-10px); border-color: #ffca28; }
+        .product-card:hover { transform: translateY(-10px); border-color: var(--primary-blue); }
 
-        .product-icon { font-size: 3.5rem; margin-bottom: 20px; }
-        .product-name { font-size: 1.5rem; font-weight: 700; margin-bottom: 10px; }
-        .product-price { font-size: 1.8rem; font-weight: 800; color: #ffca28; margin: 15px 0; }
+        /* ŠTÝL PRE VEĽKÉ NÁZVY RANKOV */
+        .rank-big-name {
+            font-size: 2.2rem; font-weight: 900; text-transform: uppercase; 
+            margin-bottom: 20px; letter-spacing: -1px; line-height: 1;
+        }
+        .rank-immortal { color: #ff4757; text-shadow: 0 0 15px rgba(255, 71, 87, 0.3); }
+        .rank-legend { color: #ffa502; }
+        .rank-ultra { color: #1e90ff; }
+        .rank-elite { color: #2ed573; }
+        .rank-vip { color: #eccc68; }
+        .item-default { color: #fff; }
+
+        .product-price { font-size: 1.8rem; font-weight: 800; color: var(--primary-blue); margin: 15px 0; }
 
         .buy-btn {
-            background: #ffca28; color: #000; border: none; padding: 12px;
+            background: var(--primary-blue); color: #fff; border: none; padding: 12px;
             border-radius: 8px; font-weight: 800; cursor: pointer; text-transform: uppercase; margin-top: auto;
+            transition: 0.3s;
         }
-        .buy-btn:disabled { background: #30363d; color: #8b949e; cursor: not-allowed; }
+        .buy-btn:hover { background: #33aeff; transform: scale(1.02); }
+        .buy-btn:disabled { background: #30363d; color: var(--text-gray); cursor: not-allowed; }
 
         .cart-wrapper { position: relative; margin-left: 15px; cursor: pointer; }
         .cart-badge { 
             position: absolute; top: -8px; right: -8px; background: #ff5252; 
             color: white; font-size: 0.7rem; font-weight: 800; padding: 2px 6px; 
-            border-radius: 50%; display: none; border: 1.5px solid #0d1117;
+            border-radius: 50%; display: none; border: 1.5px solid var(--dark-bg);
         }
 
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
-        .modal-content { background: #161b22; margin: 10% auto; padding: 30px; border: 1px solid #30363d; border-radius: 15px; width: 90%; max-width: 500px; color: #fff; position: relative; }
-        .cart-item { display: flex; justify-content: space-between; align-items: center; background: #0d1117; padding: 10px; border-radius: 8px; margin-bottom: 10px; }
+        .modal-content { background: var(--card-bg); margin: 10% auto; padding: 30px; border: 1px solid var(--border-color); border-radius: 15px; width: 90%; max-width: 500px; color: #fff; position: relative; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; background: var(--dark-bg); padding: 10px; border-radius: 8px; margin-bottom: 10px; }
         .checkout-btn { width: 100%; padding: 12px; background: #2ed573; color: white; border-radius: 8px; font-weight: 700; border: none; cursor: pointer; margin-top: 20px; }
         
-        .lang-menu { display: flex; gap: 10px; margin-left: 15px; align-items: center; border-left: 1px solid #30363d; padding-left: 15px; }
+        .lang-menu { display: flex; gap: 10px; margin-left: 15px; align-items: center; border-left: 1px solid var(--border-color); padding-left: 15px; }
         .lang-flag { width: 28px; opacity: 0.4; cursor: pointer; transition: 0.3s; }
-        .lang-flag.active { opacity: 1; border: 2px solid #009dff; border-radius: 4px; }
+        .lang-flag.active { opacity: 1; border: 2px solid var(--primary-blue); border-radius: 4px; }
     </style>
 </head>
 <body>
@@ -76,10 +97,10 @@
 <div id="cartModal" class="modal">
     <div class="modal-content">
         <span onclick="closeModal('cartModal')" style="float:right; cursor:pointer;">&times;</span>
-        <h2 style="margin-bottom: 20px;"><i class="fas fa-shopping-cart" style="color:#ffca28"></i> <span data-lang="cart_title">Košík</span></h2>
+        <h2 style="margin-bottom: 20px;"><i class="fas fa-shopping-cart" style="color:var(--primary-blue)"></i> <span data-lang="cart_title">Košík</span></h2>
         <div id="cartItemsContainer"></div>
-        <div id="cartTotalDisplay" style="text-align: right; font-weight: 800; margin-top: 20px; border-top: 1px solid #30363d; padding-top: 10px;">Total: 0.00 €</div>
-        <button class="checkout-btn" onclick="alert('System Cubix: Platba v príprave')" data-lang="btn_buy_now">ZAPLATIŤ</button>
+        <div id="cartTotalDisplay" style="text-align: right; font-weight: 800; margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 10px;">Total: 0.00 €</div>
+        <button class="checkout-btn" onclick="alert('System Cubix: Platba prebieha cez modrú bránu')" data-lang="btn_buy_now">ZAPLATIŤ</button>
     </div>
 </div>
 
@@ -93,10 +114,10 @@
                 <li><a href="team.html"><i class="fas fa-users"></i> <span data-lang="nav_team">Tím</span></a></li>
                 <li><a href="nabory.html"><i class="fas fa-user-plus"></i> <span data-lang="nav_staff">Nábory</span></a></li>
                 <li><a href="hlasovanie.html"><i class="fas fa-check-square"></i> <span data-lang="nav_vote">Hlasovanie</span></a></li>
-                <li><a href="store.html" class="active" style="color: #ffca28;"><i class="fas fa-shopping-cart"></i> <span data-lang="nav_store">Store</span></a></li>
+                <li><a href="store.html" class="active" style="color: var(--primary-blue);"><i class="fas fa-shopping-cart"></i> <span data-lang="nav_store">Store</span></a></li>
             </ul>
             <div class="cart-wrapper" onclick="openCart()">
-                <i class="fas fa-shopping-basket" style="font-size: 1.2rem; color: #8b949e;"></i>
+                <i class="fas fa-shopping-basket" style="font-size: 1.2rem; color: var(--text-gray);"></i>
                 <span class="cart-badge" id="cartBadge">0</span>
             </div>
             <div class="lang-menu">
@@ -109,8 +130,8 @@
 
 <main class="container">
     <section class="store-header">
-        <h1 class="store-title" data-lang="store_title">Server Store</h1>
-        <p class="store-subtitle" data-lang="store_subtitle">Podpor náš server a získaj unikátne výhody.</p>
+        <h1 class="store-title" data-lang="store_title">Cubix Store</h1>
+        <p class="store-subtitle" data-lang="store_subtitle">Vyber si rank a získaj výhody na našom servery.</p>
         
         <div class="category-nav">
             <button class="category-btn active" onclick="filterCategory('All', this)">Všetko</button>
@@ -136,15 +157,13 @@
     };
 
     const products = [
-        // RANKS (Ceny sú základné za MESIAC)
-        { id: 1, name: "Immortal", basePrice: 8.00, icon: "🛡️", cat: "Ranks", forever: false },
-        { id: 2, name: "Legend", basePrice: 10.00, icon: "👑", cat: "Ranks", forever: 20.00 },
-        { id: 3, name: "Ultra", basePrice: 6.00, icon: "✨", cat: "Ranks", forever: 15.00 },
-        { id: 4, name: "Elite", basePrice: 4.00, icon: "🏹", cat: "Ranks", forever: 10.00 },
-        { id: 5, name: "VIP", basePrice: 2.00, icon: "💎", cat: "Ranks", forever: 5.00 },
-        // BOXFIGHT
-        { id: 6, name: "Box Case", price: 2.50, icon: "📦", cat: "Boxfight" },
-        { id: 7, name: "Effect Pack", price: 3.00, icon: "🔥", cat: "Boxfight" }
+        { id: 1, name: "Immortal", basePrice: 8.00, class: "rank-immortal", cat: "Ranks", forever: false },
+        { id: 2, name: "Legend", basePrice: 10.00, class: "rank-legend", cat: "Ranks", forever: 20.00 },
+        { id: 3, name: "Ultra", basePrice: 6.00, class: "rank-ultra", cat: "Ranks", forever: 15.00 },
+        { id: 4, name: "Elite", basePrice: 4.00, class: "rank-elite", cat: "Ranks", forever: 10.00 },
+        { id: 5, name: "VIP", basePrice: 2.00, class: "rank-vip", cat: "Ranks", forever: 5.00 },
+        { id: 6, name: "Case Key", price: 2.50, class: "item-default", cat: "Boxfight" },
+        { id: 7, name: "Loot Case", price: 3.00, class: "item-default", cat: "Boxfight" }
     ];
 
     let currentCategory = 'All';
@@ -169,9 +188,8 @@
     function calculatePrice(product) {
         if (product.cat !== 'Ranks') return product.price;
         if (currentDuration === 'forever') return product.forever || null;
-        
-        const multipliers = { week: 0.4, month: 1, year: 8 };
-        return (product.basePrice * multipliers[currentDuration]).toFixed(2);
+        const mult = { week: 0.4, month: 1, year: 8 };
+        return (product.basePrice * mult[currentDuration]).toFixed(2);
     }
 
     function renderProducts() {
@@ -181,41 +199,42 @@
 
         products.forEach(p => {
             if (currentCategory !== 'All' && p.cat !== currentCategory) return;
-
             const price = calculatePrice(p);
-            const isDisabled = (currentDuration === 'forever' && p.name === 'Immortal');
-            const displayPrice = isDisabled ? "Nemožné" : (price + " €");
+            const isForbidden = (currentDuration === 'forever' && p.name === 'Immortal');
+            const displayPrice = isForbidden ? "Nemožné" : (price + " €");
 
             grid.innerHTML += `
                 <div class="product-card">
-                    <div class="product-icon">${p.icon}</div>
-                    <div class="product-name">${p.name} ${p.cat === 'Ranks' ? `<small style="display:block; font-size:0.7rem; color:#8b949e;">${currentDuration}</small>` : ''}</div>
+                    <div class="rank-big-name ${p.class}">${p.name}</div>
+                    <div style="color:var(--text-gray); font-size:0.8rem; margin-top:-10px;">
+                        ${p.cat === 'Ranks' ? currentDuration : 'Permanent'}
+                    </div>
                     <div class="product-price">${displayPrice}</div>
-                    <button class="buy-btn" onclick="addToCart(${p.id}, '${displayPrice}')" ${isDisabled ? 'disabled' : ''}>
+                    <button class="buy-btn" onclick="addToCart(${p.id}, '${displayPrice}')" ${isForbidden ? 'disabled' : ''}>
                         ${translations[lang].btn_add}
                     </button>
                 </div>`;
         });
     }
 
-    function addToCart(id, priceStr) {
+    function addToCart(id, pStr) {
         const product = products.find(p => p.id === id);
-        cart.push({ ...product, displayPrice: priceStr });
+        cart.push({ ...product, displayPrice: pStr });
         localStorage.setItem('cubix_cart', JSON.stringify(cart));
         updateCartBadge();
     }
 
     function updateCartBadge() {
-        const badge = document.getElementById('cartBadge');
-        badge.innerText = cart.length;
-        badge.style.display = cart.length > 0 ? 'block' : 'none';
+        const b = document.getElementById('cartBadge');
+        b.innerText = cart.length;
+        b.style.display = cart.length > 0 ? 'block' : 'none';
     }
 
     function openCart() {
-        const container = document.getElementById('cartItemsContainer');
-        container.innerHTML = cart.length ? '' : `<p style="text-align:center">${translations[localStorage.getItem('selectedLanguage') || 'sk'].cart_empty}</p>`;
+        const c = document.getElementById('cartItemsContainer');
+        c.innerHTML = cart.length ? '' : `<p style="text-align:center">${translations[localStorage.getItem('selectedLanguage')||'sk'].cart_empty}</p>`;
         cart.forEach((item, i) => {
-            container.innerHTML += `<div class="cart-item"><span>${item.name}</span><b>${item.displayPrice}</b> <i class="fas fa-trash" onclick="removeFromCart(${i})" style="color:#ff4757; cursor:pointer"></i></div>`;
+            c.innerHTML += `<div class="cart-item"><span>${item.name}</span><b>${item.displayPrice}</b> <i class="fas fa-trash" onclick="removeFromCart(${i})" style="color:#ff4757; cursor:pointer"></i></div>`;
         });
         document.getElementById('cartModal').style.display = 'block';
     }
