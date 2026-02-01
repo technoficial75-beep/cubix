@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        /* Pôvodné štýly */
         .store-section { padding: 60px 0; }
         .hero-title { font-size: 3.5rem; font-weight: 800; margin-bottom: 20px; color: #fff; text-align: center; }
         .hero-title span { color: #009dff; }
@@ -49,14 +50,30 @@
         .btn-donate { background: #ffca28; color: #000; }
         .btn-donate:hover:not(:disabled) { background: #ffd54f; box-shadow: 0 5px 15px rgba(255, 202, 40, 0.4); }
 
+        /* Modal Settings */
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
-        .modal-content { background: #161b22; margin: 10% auto; padding: 30px; border: 1px solid #30363d; border-radius: 15px; width: 90%; max-width: 500px; color: #fff; animation: modalAnim 0.3s ease; }
+        .modal-content { background: #161b22; margin: 10% auto; padding: 30px; border: 1px solid #30363d; border-radius: 15px; width: 90%; max-width: 500px; color: #fff; animation: modalAnim 0.3s ease; position: relative; }
         @keyframes modalAnim { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         .close-modal { float: right; cursor: pointer; color: #8b949e; font-size: 1.5rem; }
 
         .lang-menu { display: flex; gap: 12px; margin-left: 15px; align-items: center; border-left: 1px solid #30363d; padding-left: 15px; }
         .lang-flag { width: 28px; height: 18px; border-radius: 4px; cursor: pointer; opacity: 0.3; transition: 0.3s; border: 2px solid transparent; }
         .lang-flag.active { opacity: 1; border-color: #009dff; box-shadow: 0 0 12px rgba(0, 157, 255, 0.8); }
+
+        /* NOVÉ ŠTÝLY PRE KOŠÍK A CHECKOUT */
+        .cart-wrapper { position: relative; margin-left: 15px; cursor: pointer; }
+        .cart-icon { font-size: 1.2rem; color: #8b949e; transition: 0.3s; }
+        .cart-wrapper:hover .cart-icon { color: #fff; }
+        .cart-badge { position: absolute; top: -8px; right: -8px; background: #ff4757; color: white; font-size: 0.7rem; font-weight: 800; padding: 2px 6px; border-radius: 50%; display: none; }
+        
+        .cart-item { display: flex; justify-content: space-between; align-items: center; background: #0d1117; padding: 10px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #30363d; }
+        .cart-remove { color: #ff4757; cursor: pointer; margin-left: 10px; }
+        .cart-total { font-size: 1.2rem; font-weight: 800; text-align: right; margin-top: 20px; border-top: 1px solid #30363d; padding-top: 10px; }
+        
+        .checkout-form input, .checkout-form select { width: 100%; padding: 12px; background: #0d1117; border: 1px solid #30363d; border-radius: 8px; color: #fff; margin-bottom: 15px; font-family: inherit; }
+        .checkout-form input:focus { border-color: #009dff; outline: none; }
+        .checkout-label { display: block; margin-bottom: 5px; color: #8b949e; font-size: 0.9rem; font-weight: 600; }
+
         @media (max-width: 768px) { .store-container { flex-direction: column; } .sidebar { width: 100%; } }
     </style>
 </head>
@@ -64,9 +81,45 @@
 
 <div id="perksModal" class="modal">
     <div class="modal-content">
-        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <span class="close-modal" onclick="closeModal('perksModal')">&times;</span>
         <h2 id="modalTitle" style="color: #009dff; margin-bottom: 20px; text-transform: uppercase;"></h2>
         <ul id="modalList" style="list-style: none; padding: 0; line-height: 2;"></ul>
+    </div>
+</div>
+
+<div id="cartModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal('cartModal')">&times;</span>
+        <h2 style="margin-bottom: 20px;"><i class="fas fa-shopping-cart" style="color:#009dff"></i> <span data-lang="cart_title">Košík</span></h2>
+        <div id="cartItemsContainer">
+            <p style="color: #8b949e; text-align: center;" data-lang="cart_empty">Tvoj košík je prázdny.</p>
+        </div>
+        <div class="cart-total" id="cartTotalDisplay">Total: 0.00 €</div>
+        <button class="btn-buy" style="margin-top: 20px; background: #2ed573;" onclick="openCheckout()" id="btnCheckout" data-lang="btn_checkout">POKLADŇA</button>
+    </div>
+</div>
+
+<div id="checkoutModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal('checkoutModal')">&times;</span>
+        <h2 style="margin-bottom: 20px;"><i class="fas fa-credit-card" style="color:#2ed573"></i> <span data-lang="checkout_title">Platba</span></h2>
+        
+        <div class="checkout-form">
+            <label class="checkout-label" data-lang="form_mcname">Minecraft Meno (Nick)</label>
+            <input type="text" id="mcNick" placeholder="Steve">
+            
+            <label class="checkout-label">Email</label>
+            <input type="email" placeholder="name@example.com">
+            
+            <label class="checkout-label" data-lang="form_method">Spôsob platby</label>
+            <select>
+                <option value="card">Kreditná karta</option>
+                <option value="paypal">PayPal</option>
+                <option value="psc">Paysafecard</option>
+            </select>
+            
+            <button class="btn-buy" onclick="processPayment()" data-lang="btn_pay">ZAPLATIŤ</button>
+        </div>
     </div>
 </div>
 
@@ -82,6 +135,12 @@
                 <li><a href="hlasovanie.html"><i class="fas fa-check-square"></i> <span data-lang="nav_vote">Hlasovanie</span></a></li>
                 <li><a href="store.html" class="active" style="color: #ffca28;"><i class="fas fa-shopping-cart"></i> <span data-lang="nav_store">Store</span></a></li>
             </ul>
+            
+            <div class="cart-wrapper" onclick="openCart()">
+                <i class="fas fa-shopping-basket cart-icon"></i>
+                <span class="cart-badge" id="cartBadge">0</span>
+            </div>
+
             <div class="lang-menu">
                 <img src="https://flagcdn.com/w80/sk.png" class="lang-flag" id="lang-sk" onclick="setLang('sk')" title="Slovenčina">
                 <img src="https://flagcdn.com/w80/cz.png" class="lang-flag" id="lang-cz" onclick="setLang('cz')" title="Čeština">
@@ -137,7 +196,10 @@
             perks_ultra: ["Všetky výhody Elite", "Ultra prefix"],
             perks_elite: ["Všetky výhody VIP+", "Elitný prefix"],
             perks_vipp: ["Všetky výhody VIP", "VIP+ prefix"],
-            perks_vip: ["Základný VIP prefix", "Farebný chat"]
+            perks_vip: ["Základný VIP prefix", "Farebný chat"],
+            // Nové preklady pre košík
+            cart_title: "Košík", cart_empty: "Tvoj košík je prázdny.", btn_checkout: "POKLADŇA",
+            checkout_title: "Platba", form_mcname: "Minecraft Meno (Nick)", form_method: "Spôsob platby", btn_pay: "ZAPLATIŤ"
         },
         cz: {
             nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování", nav_store: "Store",
@@ -156,7 +218,9 @@
             perks_ultra: ["Všechny výhody Elite", "Ultra prefix"],
             perks_elite: ["Všechny výhody VIP+", "Elitní prefix"],
             perks_vipp: ["Všechny výhody VIP", "VIP+ prefix"],
-            perks_vip: ["Základní VIP prefix", "Barevný chat"]
+            perks_vip: ["Základní VIP prefix", "Barevný chat"],
+            cart_title: "Košík", cart_empty: "Tvůj košík je prázdný.", btn_checkout: "POKLADNA",
+            checkout_title: "Platba", form_mcname: "Minecraft Jméno (Nick)", form_method: "Způsob platby", btn_pay: "ZAPLATIT"
         },
         en: {
             nav_home: "Home", nav_rules: "Rules", nav_team: "Team", nav_staff: "Staff", nav_vote: "Vote", nav_store: "Store",
@@ -175,7 +239,9 @@
             perks_ultra: ["All Elite perks", "Ultra prefix"],
             perks_elite: ["All VIP+ perks", "Elite prefix"],
             perks_vipp: ["All VIP perks", "VIP+ prefix"],
-            perks_vip: ["Basic VIP prefix", "Color chat"]
+            perks_vip: ["Basic VIP prefix", "Color chat"],
+            cart_title: "Cart", cart_empty: "Your cart is empty.", btn_checkout: "CHECKOUT",
+            checkout_title: "Checkout", form_mcname: "Minecraft Username", form_method: "Payment Method", btn_pay: "PAY NOW"
         }
     };
 
@@ -197,6 +263,7 @@
 
     let activeDuration = 'lifetime';
     let activeTab = 'ranks';
+    let cart = []; // Ukladanie položiek v košíku
 
     function setLang(langId) {
         localStorage.setItem('selectedLanguage', langId);
@@ -213,6 +280,7 @@
             if (translations[langId] && translations[langId][key]) el.innerText = translations[langId][key];
         });
         renderStore();
+        updateCartDisplay(); // Aktualizuje aj texty v košíku
     }
 
     function setDuration(d) {
@@ -246,9 +314,95 @@
         document.getElementById('perksModal').style.display = 'block';
     }
 
-    function closeModal() {
-        document.getElementById('perksModal').style.display = 'none';
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = 'none';
     }
+
+    // --- LOGIKA KOŠÍKA ---
+
+    function addToCart(name, basePrice) {
+        // Vypočíta cenu podľa aktuálneho trvania (ak je to donate, basePrice sa berie priamo)
+        let finalPrice = basePrice;
+        let displayName = name;
+        
+        if (activeTab === 'ranks') {
+            finalPrice = basePrice * multipliers[activeDuration];
+            const lang = localStorage.getItem('selectedLanguage') || 'sk';
+            const durationText = document.querySelector('.duration-btn.active').innerText;
+            displayName = `${name} (${durationText})`;
+        }
+
+        cart.push({ name: displayName, price: finalPrice });
+        updateCartBadge();
+        // Malá animácia pre ikonku košíka
+        const icon = document.querySelector('.cart-icon');
+        icon.style.transform = "scale(1.2)";
+        setTimeout(() => icon.style.transform = "scale(1)", 200);
+    }
+
+    function updateCartBadge() {
+        const badge = document.getElementById('cartBadge');
+        badge.innerText = cart.length;
+        badge.style.display = cart.length > 0 ? 'block' : 'none';
+    }
+
+    function openCart() {
+        const modal = document.getElementById('cartModal');
+        const container = document.getElementById('cartItemsContainer');
+        const lang = localStorage.getItem('selectedLanguage') || 'sk';
+        const t = translations[lang];
+
+        container.innerHTML = '';
+        let total = 0;
+
+        if (cart.length === 0) {
+            container.innerHTML = `<p style="color: #8b949e; text-align: center;">${t.cart_empty}</p>`;
+            document.getElementById('btnCheckout').style.display = 'none';
+        } else {
+            document.getElementById('btnCheckout').style.display = 'block';
+            cart.forEach((item, index) => {
+                total += item.price;
+                container.innerHTML += `
+                    <div class="cart-item">
+                        <span>${item.name}</span>
+                        <div>
+                            <span style="font-weight:700; color:#2ed573">${formatPrice(item.price, lang)}</span>
+                            <i class="fas fa-trash cart-remove" onclick="removeFromCart(${index})"></i>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        document.getElementById('cartTotalDisplay').innerText = "Total: " + formatPrice(total, lang);
+        modal.style.display = 'block';
+    }
+
+    function removeFromCart(index) {
+        cart.splice(index, 1);
+        updateCartBadge();
+        openCart(); // Re-render cart
+    }
+
+    function openCheckout() {
+        closeModal('cartModal');
+        document.getElementById('checkoutModal').style.display = 'block';
+    }
+
+    function processPayment() {
+        const nick = document.getElementById('mcNick').value;
+        if (!nick) {
+            alert("Please enter your Minecraft Nickname!");
+            return;
+        }
+        // Tu by bola integrácia platobnej brány
+        alert(`Ďakujeme ${nick}! Toto je len demo, platba nebola stiahnutá.`);
+        cart = [];
+        updateCartBadge();
+        closeModal('checkoutModal');
+    }
+    
+    // --- KONIEC KOŠÍKA ---
 
     function renderStore() {
         const grid = document.getElementById('main-grid');
@@ -260,7 +414,10 @@
         if (activeTab === 'ranks') {
             rankList.forEach(rank => {
                 const isUnavailable = (activeDuration === 'lifetime' && !rank.hasLife);
-                const priceValue = isUnavailable ? "N/A" : formatPrice(rank.price * multipliers[activeDuration], lang);
+                const priceNum = rank.price * multipliers[activeDuration];
+                const priceValue = isUnavailable ? "N/A" : formatPrice(priceNum, lang);
+                
+                // Opravený button: volá addToCart namiesto prázdneho href
                 grid.innerHTML += `
                     <div class="rank-card ${isUnavailable ? 'disabled' : ''}">
                         <i class="fas fa-info-circle info-icon" onclick="openModal('${rank.name}', '${rank.perkKey}')" title="${t.perks_btn}"></i>
@@ -270,7 +427,7 @@
                         </div>
                         <div>
                             <div class="price-tag">${priceValue}</div>
-                            <button class="btn-buy" ${isUnavailable ? 'disabled' : ''}>${t.buy_btn}</button>
+                            <button class="btn-buy" onclick="addToCart('${rank.name}', ${rank.price})" ${isUnavailable ? 'disabled' : ''}>${t.buy_btn}</button>
                         </div>
                     </div>`;
             });
@@ -284,14 +441,18 @@
                         </div>
                         <div>
                             <div class="price-tag" style="color:#ffca28;">${formatPrice(amt, lang)}</div>
-                            <button class="btn-buy btn-donate">${t.donate_btn}</button>
+                            <button class="btn-buy btn-donate" onclick="addToCart('Donate', ${amt})">${t.donate_btn}</button>
                         </div>
                     </div>`;
             });
         }
     }
 
-    window.onclick = (e) => { if (e.target == document.getElementById('perksModal')) closeModal(); }
+    window.onclick = (e) => { 
+        if (e.target == document.getElementById('perksModal')) closeModal('perksModal');
+        if (e.target == document.getElementById('cartModal')) closeModal('cartModal');
+        if (e.target == document.getElementById('checkoutModal')) closeModal('checkoutModal');
+    }
 
     window.onload = () => {
         const savedLang = localStorage.getItem('selectedLanguage') || 'sk';
