@@ -41,7 +41,7 @@
         /* STORE DIZAJN */
         .store-header { padding: 40px 0; text-align: center; }
         .store-title { font-size: 3rem; font-weight: 800; margin-bottom: 15px; color: var(--primary-blue); }
-        .store-subtitle { color: var(--text-gray); font-size: 1.1rem; max-width: 600px; margin: 0 auto 40px; }
+        .store-subtitle { color: var(--text-gray); font-size: 1.1rem; max-width: 800px; margin: 0 auto 40px; line-height: 1.6; }
 
         .category-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; }
         .category-btn {
@@ -135,7 +135,11 @@
 <main class="container">
     <section class="store-header">
         <h1 class="store-title" data-lang="store_title">Cubix Store</h1>
-        <p class="store-subtitle" data-lang="store_subtitle">Vyber si rank a získaj výhody na našom servery.</p>
+        <p class="store-subtitle" data-lang="store_description">
+            Vitajte v oficiálnom obchode herného portálu Cubix. Tu môžete podporiť chod nášho servera a zároveň získať exkluzívne výhody, ktoré vám spríjemnia hru. 
+            Všetky príspevky putujú priamo na údržbu hardvéru, vývoj nových funkcií a vylepšovanie komunitného zážitku. 
+            Vyberte si z našej ponuky rankov alebo herných predmetov a staňte sa legendou ešte dnes!
+        </p>
         
         <div class="category-nav">
             <button class="category-btn active" onclick="filterCategory('All', this)" data-lang="cat_all">Všetko</button>
@@ -156,9 +160,21 @@
 
 <script>
     const translations = {
-        sk: { nav_home: "Domov", nav_store: "Store", store_title: "Cubix Store", cat_all: "Všetko", cart_title: "Košík", btn_add: "Pridať", btn_buy_now: "ZAPLATIŤ", cart_empty: "Košík je prázdny.", dur_week: "Týždeň", dur_month: "Mesiac", dur_year: "Rok", dur_forever: "Navždy", forbidden: "Nemožné" },
-        cz: { nav_home: "Domů", nav_store: "Store", store_title: "Cubix Store", cat_all: "Vše", cart_title: "Košík", btn_add: "Přidat", btn_buy_now: "ZAPLATIT", cart_empty: "Košík je prázdný.", dur_week: "Týden", dur_month: "Měsíc", dur_year: "Rok", dur_forever: "Navždy", forbidden: "Nemožné" },
-        en: { nav_home: "Home", nav_store: "Store", store_title: "Cubix Store", cat_all: "All", cart_title: "Cart", btn_add: "Add", btn_buy_now: "PAY NOW", cart_empty: "Cart is empty.", dur_week: "Week", dur_month: "Month", dur_year: "Year", dur_forever: "Forever", forbidden: "Impossible" }
+        sk: { 
+            nav_home: "Domov", nav_store: "Store", store_title: "Cubix Store", 
+            store_description: "Vitajte v oficiálnom obchode herného portálu Cubix. Tu môžete podporiť chod nášho servera a zároveň získať exkluzívne výhody, ktoré vám spríjemnia hru. Všetky príspevky putujú priamo na údržbu hardvéru, vývoj nových funkcií a vylepšovanie komunitného zážitku. Vyberte si z našej ponuky rankov alebo herných predmetov a staňte sa legendou ešte dnes!",
+            cat_all: "Všetko", cart_title: "Košík", btn_add: "Pridať", btn_buy_now: "ZAPLATIŤ", cart_empty: "Košík je prázdny.", dur_week: "Týždeň", dur_month: "Mesiac", dur_year: "Rok", dur_forever: "Navždy", forbidden: "Nemožné" 
+        },
+        cz: { 
+            nav_home: "Domů", nav_store: "Store", store_title: "Cubix Store", 
+            store_description: "Vítejte v oficiálním obchodě herního portálu Cubix. Zde můžete podpořit chod našeho serveru a zároveň získat exkluzivní výhody, které vám zpříjemní hru. Všechny příspěvky putují přímo na údržbu hardwaru, vývoj nových funkcí a vylepšování komunitního zážitku. Vyberte si z naší nabídky ranků nebo herních předmětů a staňte se legendou ještě dnes!",
+            cat_all: "Vše", cart_title: "Košík", btn_add: "Přidat", btn_buy_now: "ZAPLATIT", cart_empty: "Košík je prázdný.", dur_week: "Týden", dur_month: "Měsíc", dur_year: "Rok", dur_forever: "Navždy", forbidden: "Nemožné" 
+        },
+        en: { 
+            nav_home: "Home", nav_store: "Store", store_title: "Cubix Store", 
+            store_description: "Welcome to the official Cubix gaming portal store. Here you can support the operation of our server and at the same time gain exclusive benefits that will make your game more enjoyable. All contributions go directly to hardware maintenance, development of new features and improving the community experience. Choose from our range of ranks or game items and become a legend today!",
+            cat_all: "All", cart_title: "Cart", btn_add: "Add", btn_buy_now: "PAY NOW", cart_empty: "Cart is empty.", dur_week: "Week", dur_month: "Month", dur_year: "Year", dur_forever: "Forever", forbidden: "Impossible" 
+        }
     };
 
     const currencyConfig = {
@@ -167,13 +183,12 @@
         en: { symbol: "$", rate: 1.05, pos: 'before' }
     };
 
-    // TU SÚ NASTAVENÉ CENY PRE "NAVŽDY" (FOREVER)
     const products = [
-        { id: 1, name: "Immortal", foreverPrice: 40.00, class: "rank-immortal", cat: "Ranks" },
-        { id: 2, name: "Legend", foreverPrice: 25.00, class: "rank-legend", cat: "Ranks" },
-        { id: 3, name: "Ultra", foreverPrice: 20.00, class: "rank-ultra", cat: "Ranks" },
-        { id: 4, name: "Elite", foreverPrice: 15.00, class: "rank-elite", cat: "Ranks" },
-        { id: 5, name: "VIP", foreverPrice: 10.00, class: "rank-vip", cat: "Ranks" },
+        { id: 1, name: "Immortal", foreverPrice: 40.00, class: "rank-immortal", cat: "Ranks", allowForever: false },
+        { id: 2, name: "Legend", foreverPrice: 25.00, class: "rank-legend", cat: "Ranks", allowForever: true },
+        { id: 3, name: "Ultra", foreverPrice: 20.00, class: "rank-ultra", cat: "Ranks", allowForever: true },
+        { id: 4, name: "Elite", foreverPrice: 15.00, class: "rank-elite", cat: "Ranks", allowForever: true },
+        { id: 5, name: "VIP", foreverPrice: 10.00, class: "rank-vip", cat: "Ranks", allowForever: true },
         { id: 6, name: "Case Key", price: 2.50, class: "item-default", cat: "Boxfight" },
         { id: 7, name: "Loot Case", price: 3.00, class: "item-default", cat: "Boxfight" }
     ];
@@ -212,9 +227,12 @@
             let finalPrice, isForbidden = false;
             
             if (p.cat === 'Ranks') {
-                // KALKULÁCIA: Navždy (100%), Rok (60%), Mesiac (30%), Týždeň (15%)
-                const mult = { week: 0.15, month: 0.30, year: 0.60, forever: 1 };
-                finalPrice = p.foreverPrice * mult[currentDuration];
+                if (currentDuration === 'forever' && p.allowForever === false) {
+                    isForbidden = true;
+                } else {
+                    const mult = { week: 0.15, month: 0.30, year: 0.60, forever: 1 };
+                    finalPrice = p.foreverPrice * mult[currentDuration];
+                }
             } else {
                 finalPrice = p.price;
             }
