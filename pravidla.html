@@ -88,9 +88,15 @@
         .rule-item.active .fa-chevron-down { transform: rotate(180deg); color: #009dff; }
         .fa-chevron-down { color: #30363d; font-size: 0.7rem; transition: 0.3s; }
 
-        /* HEADER & CART STYLES FROM YOUR TEMPLATE */
         .cart-wrapper { position: relative; margin-left: 15px; cursor: pointer; }
-        .cart-badge { position: absolute; top: -8px; right: -8px; background: #ff4757; color: white; font-size: 0.7rem; font-weight: 800; padding: 2px 6px; border-radius: 50%; display: none; }
+        .cart-badge { 
+            position: absolute; top: -8px; right: -8px; 
+            background: #ff4757; color: white; 
+            font-size: 0.7rem; font-weight: 800; 
+            padding: 2px 6px; border-radius: 50%; 
+            display: none; /* Skryté, kým nie je v košíku niečo */
+        }
+        
         .lang-menu { display: flex; gap: 10px; margin-left: 15px; align-items: center; border-left: 1px solid #30363d; padding-left: 15px; }
         .lang-flag { width: 28px; height: 18px; object-fit: cover; border-radius: 4px; cursor: pointer; opacity: 0.4; transition: 0.3s; }
         .lang-flag.active { opacity: 1; border: 2px solid #009dff; }
@@ -113,7 +119,7 @@
                 <li><a href="store.html" style="color: #ffca28;"><i class="fas fa-shopping-cart"></i> <span data-lang="nav_store">Store</span></a></li>
             </ul>
 
-            <div class="cart-wrapper">
+            <div class="cart-wrapper" onclick="window.location.href='store.html'">
                 <i class="fas fa-shopping-basket" style="font-size: 1.2rem; color: #8b949e;"></i>
                 <span class="cart-badge" id="cartBadge">0</span>
             </div>
@@ -154,6 +160,18 @@
 </main>
 
 <script>
+    // --- FUNKCIA PRE KOŠÍK ---
+    function updateCartBadge() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const badge = document.getElementById('cartBadge');
+        if (cart.length > 0) {
+            badge.innerText = cart.length;
+            badge.style.display = 'block';
+        } else {
+            badge.style.display = 'none';
+        }
+    }
+
     const ruleData = {
         sk: {
             nav_home: "Domov", nav_rules: "Pravidlá", nav_team: "Tím", nav_staff: "Nábory", nav_vote: "Hlasovanie", nav_store: "Store",
@@ -220,7 +238,7 @@
             mc: [
                 { t: "Zákaz Cheatování", d: "Žádné externí výhody.", c: "Killaura, Fly, X-ray nebo AutoClicker nad 15 CPS jsou trestány perma banem." },
                 { t: "Zneužívání chyb", d: "Nahlašuj bugy, nezneužívej je.", c: "Zneužívání chyb hry, map nebo pluginů je přísně zakázáno." },
-                { t: "Vulgárnost a toxicita", d: "Udržujte slušnou komunitu.", c: "Nadávky a urážky v chatu budou trestány mutom nebo banem." },
+                { t: "Vulgárnost a toxicita", d: "Udržujte slušnou komunitu.", c: "Nadávky a urážky v chatu budou trestány mutom nebo banom." },
                 { t: "Zákaz reklamy", d: "Nepropagujte jiné servery.", c: "Propagace jiných projektů nebo IP adres v chatu je zakázána." },
                 { t: "Obcházení trestu", d: "Zákaz hraní během banu.", c: "Vstup na server přes jiný účet během banu vede k IP banu." },
                 { t: "Nevhodný skin / jméno", d: "Slušná prezentace hráče.", c: "NSFW skiny nebo urážlivé nicky nejsou povoleny." },
@@ -266,7 +284,7 @@
                 { t: "Inappropriate Identity", d: "Keep skin/nick appropriate.", c: "NSFW skins or offensive nicknames are not allowed." },
                 { t: "Teaming (Solo)", d: "No teaming in solo modes.", c: "Cooperation between players in solo Boxfights is forbidden." },
                 { t: "Lying to A-Team", d: "Be honest with admins.", c: "Providing false information to the AT is punished." },
-                { t: "Report Abuse", d: "Report real offenses only.", c: "Spamming /report with fake claims is prohibited." },
+                { t: "Report Abuse", d: "Report real offenses only.", c: "Spamowanie /report with fake claims is prohibited." },
                 { t: "Scamming", d: "No stealing during trades.", c: "Scams during agreed trades result in a ban." },
                 { t: "Server Lagging", d: "Don't cause server lag.", c: "Building lag-machines or entity overloading is prohibited." },
                 { t: "AT Provocation", d: "Respect administrators.", c: "Constantly questioning or provoking AT in chat is forbidden." },
@@ -316,6 +334,7 @@
     window.onload = () => {
         const savedLang = localStorage.getItem('selectedLanguage') || 'sk';
         setLang(savedLang);
+        updateCartBadge(); // Spustenie košíka pri načítaní
     };
 </script>
 
