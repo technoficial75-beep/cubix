@@ -161,7 +161,7 @@
             width: 100%; 
             height: 100%; 
             background: rgba(0,0,0,0.85); 
-            backdrop-filter: blur(10px); /* Silné zahmlenie pozadia */
+            backdrop-filter: blur(15px); /* Maximálne zahmlenie */
         }
         
         .modal-cart-content { 
@@ -174,7 +174,7 @@
             max-width: 500px; 
             color: #fff; 
             position: relative;
-            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+            box-shadow: 0 0 60px rgba(0,0,0,1);
         }
         
         .cart-item { 
@@ -189,16 +189,16 @@
         }
         
         .cart-item-info { display: flex; flex-direction: column; gap: 2px; }
-        .cart-item-price { font-weight: 700; color: #2ed573; } /* Zelená farba cien */
+        .cart-item-price { font-weight: 700; color: #2ed573; } /* Zelené ceny */
         
         .cart-item-remove { 
             color: #ff4757; 
             cursor: pointer; 
             transition: 0.2s; 
-            padding: 5px; 
+            padding: 8px; 
             font-size: 1.1rem;
         }
-        .cart-item-remove:hover { color: #ff6b81; transform: scale(1.2); }
+        .cart-item-remove:hover { color: #ff6b81; transform: scale(1.25); }
         
         .close-cart { float: right; cursor: pointer; color: #8b949e; font-size: 1.5rem; transition: 0.3s; }
         .close-cart:hover { color: #fff; }
@@ -220,7 +220,7 @@
             cursor: pointer; 
             margin-top: 15px;
         }
-        .checkout-btn:hover { background: #26af5f; transform: translateY(-2px); }
+        .checkout-btn:hover { background: #26af5f; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(46, 213, 115, 0.3); }
 
         .lang-menu { display: flex; gap: 10px; margin-left: 15px; align-items: center; border-left: 1px solid #30363d; padding-left: 15px; }
         .lang-flag { width: 28px; height: 18px; object-fit: cover; border-radius: 4px; cursor: pointer; opacity: 0.4; transition: 0.3s; border: 2px solid transparent; }
@@ -246,7 +246,7 @@
             Total: 0.00 €
         </div>
         
-        <button class="checkout-btn" onclick="location.href='store.html'" data-lang="btn_checkout">POKLADŇA</button>
+        <button class="checkout-btn" onclick="location.href='checkout.html'" data-lang="btn_checkout">POKLADŇA</button>
     </div>
 </div>
 
@@ -315,11 +315,36 @@
             dc: [
                 { t: "Žiadny spam", d: "Nespamuj správy, emoji ani linky.", c: "Nespamuj správami, príkazmi, emoji, obrázkami alebo odkazmi mimo príslušného kanála." },
                 { t: "Žiadny toxický obsah", d: "Urážky a diskriminácia sú zakázané.", c: "Zakázané urážky, rasizmus, xenofóbia, diskriminácia alebo nenávistné prejavy." },
-                { t: "Žiadny NSFW obsah", d: "Žiadna pornografia ani gore.", c: "Žiadna pornografia, sexuálne náznaky, gore alebo šokujúce materiály." }
+                { t: "Žiadny NSFW obsah", d: "Žiadna pornografia ani gore.", c: "Žiadna pornografia, sexuálne náznaky, gore alebo šokujúce materiály." },
+                { t: "Zbytočne nepinguj A-Team", d: "Pinguj len v dôležitých prípadoch.", c: "Pokiaľ nemáš vážny dôvod na pingnutie AT, tak to nerob." },
+                { t: "Správne pulty", d: "Zákaz hromadných pingov.", c: "Nepoužívaj @everyone, @here alebo masívne pulty bez súhlasu vedenia." },
+                { t: "Rešpektuj štruktúru", d: "Používaj kanály správne.", c: "Používaj kanály podľa ich témy a účelu – žiadne off-topic príspevky." },
+                { t: "Žiadne reklamy", d: "Zákaz propagácie iných serverov.", c: "Neposielaj reklamy, pozvanie na iné servery alebo promo materiály." },
+                { t: "Neobťažuj hráčov", d: "Nepýtaj sa na súkromné údaje.", c: "Nepýtaj sa na súkromné info alebo osobné údaje iných hráčov." },
+                { t: "Žiadne drámy", d: "Nerieš spory verejne.", c: "Nerieš spory verejne – rieš ich v súkromí cez moderátorov alebo ignoruj." },
+                { t: "Rešpektuj moderátorov", d: "Dbaj na pokyny Admin Tímu.", c: "Neprekračuj ich pokyny a neignoruj varovania moderátorov." },
+                { t: "Žiadne scam/podvody", d: "Zákaz falošných ponúk.", c: "Neponúkaj falošné ponuky, phishing linky alebo podozrivé služby." },
+                { t: "Správny jazyk", d: "Slušná komunikácia.", c: "Komunikuj slušne – žiadne nadávky, provokácie alebo flame wars." },
+                { t: "Žiadne exploits", d: "Dodržiavaj Discord TOS.", c: "Neporušuj Discord TOS, nezdieľaj súkromné kanály ani neobchádzaj obmedzenia." },
+                { t: "Reportuj problémy", d: "Hlásenie chýb moderátorom.", c: "Problémy hlás privátne moderátorom – nie verejne v kanáloch." },
+                { t: "Aktualizácie pravidiel", d: "Sleduj zmeny v pravidlách.", c: "Pravidlá sa môžu meniť – pravidelne sleduj kanál #pravidlá." }
             ],
             mc: [
                 { t: "Zákaz Cheatovania", d: "Žiadne externé výhody.", c: "Killaura, Fly, X-ray alebo AutoClicker nad 15 CPS sú trestané perma banom." },
-                { t: "Zneužívanie chýb", d: "Nahlasuj bugy, nezneužívaj ich.", c: "Zneužívanie chýb hry, máp alebo pluginov je prísne zakázané." }
+                { t: "Zneužívanie chýb", d: "Nahlasuj bugy, nezneužívaj ich.", c: "Zneužívanie chýb hry, máp alebo pluginov je prísne zakázané." },
+                { t: "Vulgárnosť a toxicita", d: "Udržuj slušnú komunitu.", c: "Nadávky a urážky v chate budú trestané mutom alebo banom." },
+                { t: "Zákaz reklamy", d: "Nepropaguj iné servery.", c: "Propagácia iných projektov alebo IP adries v chate je zakázaná." },
+                { t: "Obchádzanie trestu", d: "Zákaz hrania počas banu.", c: "Vstup na server cez iný účet počas banu vedie k IP banu." },
+                { t: "Nevhodný skin / meno", d: "Slušná prezentácia hráča.", c: "NSFW skiny alebo urážlivé nicky nie sú povolené." },
+                { t: "Teaming (Solo)", d: "Zákaz tímovania v solo módoch.", c: "V solo Boxfightech je spolupráca viacerých hráčov zakázaná." },
+                { t: "Klamanie A-Týmu", d: "Buď úprimný k adminom.", c: "Uvádzanie nepravdivých informací AT je trestané." },
+                { t: "Zneužívanie reportov", d: "Nahlasuj len reálne priestupky.", c: "Spamovanie /report falošnými hláseniami je zakázané." },
+                { t: "Scamovanie hráčov", d: "Zákaz okrádania pri tradovaní.", c: "Podvody pri dohodnutých obchodoch sú trestané banom." },
+                { t: "Zhadzovanie TPS", d: "Nespôsobuj lagy servera.", c: "Stavanie lag-strojov alebo preťažovanie entitami je zakázané." },
+                { t: "Provokovanie A-Týmu", d: "Rešpektuj administrátorov.", c: "Neustále provokovanie alebo spochybňovanie AT v chate je zakázané." },
+                { t: "Griefovanie lobby", d: "Nenič spoločné priestory.", c: "Akýkoľvek pokus o poškodenie spawnu alebo lobby je zakázaný." },
+                { t: "Spamovanie príkazov", d: "Nepoužívaj príkazy opakovane.", c: "Zahlcovanie konzoly príkazmi (spam) je trestané." },
+                { t: "Zodpovednosť za účet", d: "Tvoj účet, tvoja zodpovednosť.", c: "Za činy na tvojom účte zodpovedáš ty, bez ohľadu na to, kto hral." }
             ]
         },
         cz: {
@@ -332,11 +357,36 @@
             dc: [
                 { t: "Žádný spam", d: "Nespamuj zprávy, emoji ani linky.", c: "Nespamuj zprávami, příkazy, emoji, obrázky nebo odkazy mimo příslušný kanál." },
                 { t: "Žádný toxický obsah", d: "Urážky a diskriminace jsou zakázány.", c: "Zakázané urážky, rasismus, xenofobie, diskriminace nebo nenávistné projevy." },
-                { t: "Žádný NSFW obsah", d: "Žádná pornografie ani gore.", c: "Žádná pornografie, sexuální náznaky, gore nebo šokující materiály." }
+                { t: "Žádný NSFW obsah", d: "Žádná pornografie ani gore.", c: "Žádná pornografie, sexuální náznaky, gore nebo šokující materiály." },
+                { t: "Zbytečně nepinguj A-Team", d: "Pinguj jen v důležitých případech.", c: "Pokud nemáš vážný důvod pro pingnutí AT, tak to nedělej." },
+                { t: "Správné pulty", d: "Zákaz hromadných pingů.", c: "Nepoužívej @everyone, @here nebo masivní pulty bez souhlasu vedení." },
+                { t: "Respektuj strukturu", d: "Používej kanály správně.", c: "Používej kanály podle jejich tématu a účelu – žádné off-topic příspěvky." },
+                { t: "Žádné reklamy", d: "Zákaz propagace jiných serverů.", c: "Neposílej reklamy, pozvání na jiné servery nebo promo materiály." },
+                { t: "Neobtěžuj hráče", d: "Neptej se na soukromé údaje.", c: "Neptej se na soukromé info nebo osobné údaje jiných hráčů." },
+                { t: "Žádná dramata", d: "Neřeš spory veřejně.", c: "Neřeš spory veřejně – řeš je v soukromí přes moderátory nebo ignoruj." },
+                { t: "Respektuj moderátory", d: "Dbej na pokyny Admin Tímu.", c: "Nepřekračuj jejich pokyny a neignoruj varování moderátorů." },
+                { t: "Žádné scam/podvody", d: "Zákaz falešných nabídek.", c: "Nepodváděj, nenabízej phishing linky nebo podezřelé služby." },
+                { t: "Správný jazyk", d: "Slušná komunikace.", c: "Komunikuj slušně – žádné nadávky, provace nebo flame wars." },
+                { t: "Žádné exploits", d: "Dodržuj Discord TOS.", c: "Neporušuj Discord TOS, nesdílej soukromé kanály ani neobcházej omezení." },
+                { t: "Reportuj problémy", d: "Hlášení chyb moderátorům.", c: "Problémy hlas privátně moderátorům – ne veřejně v kanálech." },
+                { t: "Aktualizace pravidel", d: "Sleduj změny v pravidlech.", c: "Pravidla se mohou měnit – pravidelně sleduj kanál #pravidla." }
             ],
             mc: [
                 { t: "Zákaz Cheatování", d: "Žádné externí výhody.", c: "Killaura, Fly, X-ray nebo AutoClicker nad 15 CPS jsou trestány perma banem." },
-                { t: "Zneužívání chyb", d: "Nahlašuj bugy, nezneužívej je.", c: "Zneužívání chyb hry, map nebo pluginů je přísně zakázáno." }
+                { t: "Zneužívání chyb", d: "Nahlašuj bugy, nezneužívej je.", c: "Zneužívání chyb hry, map nebo pluginů je přísně zakázáno." },
+                { t: "Vulgárnost a toxicita", d: "Udržujte slušnou komunitu.", c: "Nadávky a urážky v chatu budou trestány mutem nebo banem." },
+                { t: "Zákaz reklamy", d: "Nepropagujte jiné servery.", c: "Propagace jiných projektů nebo IP adres v chatu je zakázána." },
+                { t: "Obcházení trestu", d: "Zákaz hraní během banu.", c: "Vstup na server přes jiný účet během banu vede k IP banu." },
+                { t: "Nevhodný skin / jméno", d: "Slušná prezentace hráče.", c: "NSFW skiny nebo urážlivé nicky nejsou povoleny." },
+                { t: "Teaming (Solo)", d: "Zákaz teamování v solo módech.", c: "V solo Boxfightech je spolupráce více hráčů zakázána." },
+                { t: "Lhaní A-Týmu", d: "Buďte upřímní k adminům.", c: "Uvádění nepravdivých informací AT je trestáno." },
+                { t: "Zneužívání reportů", d: "Nahlašujte jen reálné přestupky.", c: "Spamování /report falešnými hlášeními je zakázáno." },
+                { t: "Scamování hráčů", d: "Zákaz okrádání při obchodování.", c: "Podvody při dohodnutých obchodech jsou trestány banem." },
+                { t: "Shazování TPS", d: "Nezpůsobujte lagy serveru.", c: "Stavění lag-strojů nebo přetěžování entitami je zakázáno." },
+                { t: "Provokování A-Týmu", d: "Respektujte administrátory.", c: "Neustálé provokování nebo zpochybňování AT v chatu je zakázáno." },
+                { t: "Griefování lobby", d: "Neničte společné prostory.", c: "Jakýkoliv pokus o poškození spawnu nebo lobby je zakázán." },
+                { t: "Spamování příkazů", d: "Nepoužívejte příkazy opakovaně.", c: "Zahlcování konzole příkazy (spam) je trestáno." },
+                { t: "Zodpovednost za účet", d: "Tvůj účet, tvá zodpovědnost.", c: "Za činy na tvém účtu zodpovídáš ty, bez ohledu na to, kdo hrál." }
             ]
         },
         en: {
@@ -349,11 +399,36 @@
             dc: [
                 { t: "No spamming", d: "Do not spam messages, emojis or links.", c: "Do not spam messages, commands, emojis, or links outside the designated channels." },
                 { t: "No toxic content", d: "Insults and discrimination are banned.", c: "Banned insults, racism, xenophobia, discrimination or hate speech." },
-                { t: "No NSFW content", d: "No pornography or gore.", c: "No pornography, sexual suggestions, gore or shocking materials." }
+                { t: "No NSFW content", d: "No pornography or gore.", c: "No pornography, sexual suggestions, gore or shocking materials." },
+                { t: "Don't ping A-Team", d: "Ping only in serious cases.", c: "Do not ping AT unless you have a serious reason." },
+                { t: "Mass pings", d: "No unauthorized everyone/here.", c: "Do not use @everyone, @here or mass pings without leadership's consent." },
+                { t: "Respect structure", d: "Use channels correctly.", c: "Use channels according to their theme and purpose – no off-topic posts." },
+                { t: "No advertisements", d: "No promotion of other servers.", c: "Do not send advertisements, invites to other servers, or promo materials." },
+                { t: "Don't harass players", d: "Do not ask for private info.", c: "Do not ask for private info or personal data of other players." },
+                { t: "No drama", d: "Do not solve disputes publicly.", c: "Solve disputes privately through moderators or ignore them." },
+                { t: "Respect moderators", d: "Follow Admin Team's instructions.", c: "Do not ignore their instructions or warnings." },
+                { t: "No scams", d: "No fake offers or phishing.", c: "No phishing links, fake offers, or suspicious services." },
+                { t: "Proper language", d: "Respectful communication.", c: "Communicate politely – no insults, provocations or flame wars." },
+                { t: "No exploits", d: "Follow Discord TOS.", c: "Do not violate Discord TOS or bypass server restrictions." },
+                { t: "Report issues", d: "Report bugs to mods.", c: "Report problems privately to moderators – not publicly in channels." },
+                { t: "Rule updates", d: "Rules can change anytime.", c: "Rules may change – regularly check the #rules channel." }
             ],
             mc: [
                 { t: "No Cheating", d: "No external advantages.", c: "Killaura, Fly, X-ray or AutoClicker over 15 CPS result in a permanent ban." },
-                { t: "Bug Abuse", d: "Report bugs, don't use them.", c: "Abusing game, map or plugin bugs is strictly prohibited." }
+                { t: "Bug Abuse", d: "Report bugs, don't use them.", c: "Abusing game, map or plugin bugs is strictly prohibited." },
+                { t: "Toxicity", d: "Keep the community clean.", c: "Excessive swearing or insults will be punished by mute or ban." },
+                { t: "No Advertising", d: "Don't promote other servers.", c: "Sharing IP addresses of other servers is prohibited." },
+                { t: "Ban Evading", d: "Don't play during a ban.", c: "Entering the server with an alt account during a ban results in an IP ban." },
+                { t: "Inappropriate Identity", d: "Keep skin/nick appropriate.", c: "NSFW skins or offensive nicknames are not allowed." },
+                { t: "Teaming (Solo)", d: "No teaming in solo modes.", c: "Cooperation between players in solo Boxfights is forbidden." },
+                { t: "Lying to A-Team", d: "Be honest with admins.", c: "Providing false information to the AT is punished." },
+                { t: "Report Abuse", d: "Report real offenses only.", c: "Spamming /report with fake claims is prohibited." },
+                { t: "Scamming", d: "No stealing during trades.", c: "Scams during agreed trades result in a ban." },
+                { t: "Server Lagging", d: "Don't cause server lag.", c: "Building lag-machines or entity overloading is prohibited." },
+                { t: "AT Provocation", d: "Respect administrators.", c: "Constantly questioning or provoking AT in chat is forbidden." },
+                { t: "Lobby Griefing", d: "Don't destroy common areas.", c: "Any attempt to damage the spawn or lobby is forbidden." },
+                { t: "Command Spamming", d: "Don't reuse commands fast.", c: "Flooding the console with commands is punished." },
+                { t: "Account Responsibility", d: "Your account, your responsibility.", c: "You are responsible for all actions on your account." }
             ]
         }
     };
@@ -385,7 +460,7 @@
         cart.splice(index, 1);
         localStorage.setItem('cubix_cart', JSON.stringify(cart));
         updateCartBadge();
-        openCart(); // Refresh UI
+        openCart(); // Prekresli UI
     }
 
     function openCart() {
@@ -466,10 +541,13 @@
             const key = el.getAttribute('data-lang');
             if (ruleData[langId] && ruleData[langId][key]) el.innerText = ruleData[langId][key];
         });
+        
         renderAllRules(langId);
         
-        // Ak je košík otvorený, prekresli ho v novom jazyku/mene
-        if (document.getElementById('cartModal').style.display === 'block') openCart();
+        // Aktualizácia košíka pri zmene jazyka/meny
+        if (document.getElementById('cartModal').style.display === 'block') {
+            openCart();
+        }
     }
 
     window.onload = () => {
