@@ -68,6 +68,13 @@
         }
         .product-card:hover { transform: translateY(-10px); border-color: var(--primary-blue); }
 
+        /* IKONA INFO (i) */
+        .info-trigger {
+            position: absolute; top: 15px; right: 15px; color: var(--text-gray);
+            cursor: pointer; transition: 0.3s; font-size: 1.1rem;
+        }
+        .info-trigger:hover { color: var(--primary-blue); }
+
         /* RANKY - VEĽKÉ NÁZVY */
         .rank-big-name { font-size: 2.2rem; font-weight: 900; text-transform: uppercase; margin-bottom: 20px; letter-spacing: -1px; line-height: 1; }
         .rank-immortal { color: #ff4757; text-shadow: 0 0 15px rgba(255, 71, 87, 0.3); }
@@ -90,6 +97,11 @@
         .cart-item { display: flex; justify-content: space-between; align-items: center; background: var(--dark-bg); padding: 10px; border-radius: 8px; margin-bottom: 10px; }
         .checkout-btn { width: 100%; padding: 12px; background: #2ed573; color: white; border-radius: 8px; font-weight: 700; border: none; cursor: pointer; margin-top: 20px; }
         
+        /* INFO LIST STYLES */
+        .perks-list { text-align: left; list-style: none; padding: 0; margin-top: 15px; }
+        .perks-list li { margin-bottom: 10px; display: flex; align-items: center; gap: 10px; color: var(--text-gray); }
+        .perks-list li i { color: #2ed573; font-size: 0.9rem; }
+
         .lang-menu { display: flex; gap: 10px; margin-left: 15px; align-items: center; border-left: 1px solid var(--border-color); padding-left: 15px; }
         .lang-flag { width: 28px; height: 18px; object-fit: cover; opacity: 0.4; cursor: pointer; transition: 0.3s; border-radius: 4px; }
         .lang-flag.active { opacity: 1; border: 2px solid var(--primary-blue); }
@@ -104,6 +116,15 @@
         <div id="cartItemsContainer"></div>
         <div id="cartTotalDisplay" style="text-align: right; font-weight: 800; margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 10px;">Total: 0.00 €</div>
         <button class="checkout-btn" onclick="alert('System Cubix: Redirecting...')" data-lang="btn_buy_now">ZAPLATIŤ</button>
+    </div>
+</div>
+
+<div id="infoModal" class="modal">
+    <div class="modal-content">
+        <span onclick="closeModal('infoModal')" style="float:right; cursor:pointer;">&times;</span>
+        <h2 id="infoTitle" style="margin-bottom: 10px; color: var(--primary-blue);"></h2>
+        <p id="infoDesc" style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 20px;"></p>
+        <ul id="infoPerks" class="perks-list"></ul>
     </div>
 </div>
 
@@ -138,7 +159,7 @@
         <p class="store-subtitle" data-lang="store_description">
             Vitajte v oficiálnom obchode herného portálu Cubix. Tu môžete podporiť chod nášho servera a zároveň získať exkluzívne výhody, ktoré vám spríjemnia hru. 
             Všetky príspevky putujú priamo na údržbu hardvéru, vývoj nových funkcií a vylepšovanie komunitného zážitku. 
-            Vyberte si z našej ponuky rankov alebo herných predmetov a staňte sa legendou ešte dnes!
+            Získaním ranku nielen odlíšite svoje meno v chate, ale odomknete si aj špeciálne kity, príkazy a prednostný vstup na server.
         </p>
         
         <div class="category-nav">
@@ -162,17 +183,17 @@
     const translations = {
         sk: { 
             nav_home: "Domov", nav_store: "Store", store_title: "Cubix Store", 
-            store_description: "Vitajte v oficiálnom obchode herného portálu Cubix. Tu môžete podporiť chod nášho servera a zároveň získať exkluzívne výhody, ktoré vám spríjemnia hru. Všetky príspevky putujú priamo na údržbu hardvéru, vývoj nových funkcií a vylepšovanie komunitného zážitku. Vyberte si z našej ponuky rankov alebo herných predmetov a staňte sa legendou ešte dnes!",
+            store_description: "Vitajte v oficiálnom obchode herného portálu Cubix. Tu môžete podporiť chod nášho servera a zároveň získať exkluzívne výhody, ktoré vám spríjemnia hru. Všetky príspevky putujú priamo na údržbu hardvéru, vývoj nových funkcií a vylepšovanie komunitného zážitku. Získaním ranku nielen odlíšite svoje meno v chate, ale odomknete si aj špeciálne kity, príkazy a prednostný vstup na server.",
             cat_all: "Všetko", cart_title: "Košík", btn_add: "Pridať", btn_buy_now: "ZAPLATIŤ", cart_empty: "Košík je prázdny.", dur_week: "Týždeň", dur_month: "Mesiac", dur_year: "Rok", dur_forever: "Navždy", forbidden: "Nemožné" 
         },
         cz: { 
             nav_home: "Domů", nav_store: "Store", store_title: "Cubix Store", 
-            store_description: "Vítejte v oficiálním obchodě herního portálu Cubix. Zde můžete podpořit chod našeho serveru a zároveň získat exkluzivní výhody, které vám zpříjemní hru. Všechny příspěvky putují přímo na údržbu hardwaru, vývoj nových funkcí a vylepšování komunitního zážitku. Vyberte si z naší nabídky ranků nebo herních předmětů a staňte se legendou ještě dnes!",
+            store_description: "Vítejte v oficiálním obchodě herního portálu Cubix. Zde můžete podpořit chod našeho serveru a získat exkluzivní výhody. Všechny příspěvky putují přímo na údržbu hardwaru a vývoj nových funkcí. Získáním ranku nejen odlišíte své jméno v chatu, ale odemknete si i speciální kity a přednostní vstup na server.",
             cat_all: "Vše", cart_title: "Košík", btn_add: "Přidat", btn_buy_now: "ZAPLATIT", cart_empty: "Košík je prázdný.", dur_week: "Týden", dur_month: "Měsíc", dur_year: "Rok", dur_forever: "Navždy", forbidden: "Nemožné" 
         },
         en: { 
             nav_home: "Home", nav_store: "Store", store_title: "Cubix Store", 
-            store_description: "Welcome to the official Cubix gaming portal store. Here you can support the operation of our server and at the same time gain exclusive benefits that will make your game more enjoyable. All contributions go directly to hardware maintenance, development of new features and improving the community experience. Choose from our range of ranks or game items and become a legend today!",
+            store_description: "Welcome to the official Cubix store. Support our server and get exclusive benefits. All contributions go directly to maintenance and development. By getting a rank, you differentiate your name in chat and unlock special kits, commands, and priority access.",
             cat_all: "All", cart_title: "Cart", btn_add: "Add", btn_buy_now: "PAY NOW", cart_empty: "Cart is empty.", dur_week: "Week", dur_month: "Month", dur_year: "Year", dur_forever: "Forever", forbidden: "Impossible" 
         }
     };
@@ -184,13 +205,41 @@
     };
 
     const products = [
-        { id: 1, name: "Immortal", foreverPrice: 40.00, class: "rank-immortal", cat: "Ranks", allowForever: false },
-        { id: 2, name: "Legend", foreverPrice: 25.00, class: "rank-legend", cat: "Ranks", allowForever: true },
-        { id: 3, name: "Ultra", foreverPrice: 20.00, class: "rank-ultra", cat: "Ranks", allowForever: true },
-        { id: 4, name: "Elite", foreverPrice: 15.00, class: "rank-elite", cat: "Ranks", allowForever: true },
-        { id: 5, name: "VIP", foreverPrice: 10.00, class: "rank-vip", cat: "Ranks", allowForever: true },
-        { id: 6, name: "Case Key", price: 2.50, class: "item-default", cat: "Boxfight" },
-        { id: 7, name: "Loot Case", price: 3.00, class: "item-default", cat: "Boxfight" }
+        { 
+            id: 1, name: "Immortal", foreverPrice: 40.00, class: "rank-immortal", cat: "Ranks", allowForever: false,
+            desc: "Najvyšší možný rank pre skutočných vládcov Cubixu.",
+            perks: ["Špeciálny prefix [Immortal]", "Prístup ku všetkým kitom", "Možnosť lietať (/fly)", "Prioritné pripojenie", "Vlastná farba v tabe"]
+        },
+        { 
+            id: 2, name: "Legend", foreverPrice: 25.00, class: "rank-legend", cat: "Ranks", allowForever: true,
+            desc: "Staň sa legendou, o ktorej sa bude rozprávať.",
+            perks: ["Zlatý prefix [Legend]", "Legendárny kit každých 24h", "Príkaz /workbench", "Viac domovov (/sethome)"]
+        },
+        { 
+            id: 3, name: "Ultra", foreverPrice: 20.00, class: "rank-ultra", cat: "Ranks", allowForever: true,
+            desc: "Vylepšený zážitok s extra funkciami.",
+            perks: ["Modrý prefix [Ultra]", "Ultra kit", "Oprava vecí (/fix)", "Špeciálne particle efekty"]
+        },
+        { 
+            id: 4, name: "Elite", foreverPrice: 15.00, class: "rank-elite", cat: "Ranks", allowForever: true,
+            desc: "Pre hráčov, ktorí chcú niečo viac.",
+            perks: ["Zelený prefix [Elite]", "Elite kit", "Prístup k /hat", "Viac slotov v aukcii"]
+        },
+        { 
+            id: 5, name: "VIP", foreverPrice: 10.00, class: "rank-vip", cat: "Ranks", allowForever: true,
+            desc: "Základná podpora servera s peknými výhodami.",
+            perks: ["Žltý prefix [VIP]", "VIP kit", "Farebné písanie do chatu", "Slot na serveri vždy voľný"]
+        },
+        { 
+            id: 6, name: "Case Key", price: 2.50, class: "item-default", cat: "Boxfight",
+            desc: "Kľúč k náhodnej odmene.",
+            perks: ["Šanca na vzácny item", "Okamžité otvorenie v lobby"]
+        },
+        { 
+            id: 7, name: "Loot Case", price: 3.00, class: "item-default", cat: "Boxfight",
+            desc: "Box plný prekvapení.",
+            perks: ["Obsahuje hernú menu", "Možnosť nájsť zbrane"]
+        }
     ];
 
     let currentCategory = 'All';
@@ -219,6 +268,18 @@
         renderProducts();
     }
 
+    function openInfo(id) {
+        const p = products.find(prod => prod.id === id);
+        document.getElementById('infoTitle').innerText = p.name;
+        document.getElementById('infoDesc').innerText = p.desc;
+        const perkList = document.getElementById('infoPerks');
+        perkList.innerHTML = '';
+        p.perks.forEach(perk => {
+            perkList.innerHTML += `<li><i class="fas fa-check-circle"></i> ${perk}</li>`;
+        });
+        document.getElementById('infoModal').style.display = 'block';
+    }
+
     function renderProducts() {
         const grid = document.getElementById('productsGrid');
         grid.innerHTML = '';
@@ -240,6 +301,7 @@
             const priceDisplay = isForbidden ? translations[currentLang].forbidden : formatPrice(finalPrice);
             grid.innerHTML += `
                 <div class="product-card">
+                    <i class="fas fa-info-circle info-trigger" onclick="openInfo(${p.id})"></i>
                     <div class="rank-big-name ${p.class}">${p.name}</div>
                     <div class="product-price">${priceDisplay}</div>
                     <button class="buy-btn" onclick="addToCart(${p.id}, '${priceDisplay}')" ${isForbidden ? 'disabled' : ''}>${translations[currentLang].btn_add}</button>
@@ -281,6 +343,12 @@
 
     function removeFromCart(i) { cart.splice(i, 1); localStorage.setItem('cubix_cart', JSON.stringify(cart)); updateCartBadge(); openCart(); }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+    window.onclick = function(event) {
+        if (event.target.className === 'modal') {
+            event.target.style.display = "none";
+        }
+    }
 
     window.onload = () => { updateUI(); updateCartBadge(); renderProducts(); };
 </script>
