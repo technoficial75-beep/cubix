@@ -103,7 +103,7 @@
         <h2 style="margin-bottom: 20px;"><i class="fas fa-shopping-cart" style="color:#009dff"></i> <span data-lang="cart_title">Košík</span></h2>
         <div id="cartItemsContainer"></div>
         <div id="cartTotalDisplay" style="text-align: right; font-weight: 800; margin-top: 20px; border-top: 1px solid #30363d; padding-top: 10px;">Total: 0.00 €</div>
-        <button class="vote-btn" style="margin-top: 20px; background: #2ed573;" onclick="location.href='store.html'" data-lang="btn_back_store">SPÄŤ DO OBCHODU</button>
+        <button class="vote-btn" style="margin-top: 20px; background: #2ed573;" onclick="location.href='store.html'" data-lang="btn_checkout">POKLADŇA</button>
     </div>
 </div>
 
@@ -210,7 +210,7 @@
             reward_2nd: "2. Miesto", desc_2nd: "VIP na 14 dní + 2x VIP Key + [VIP] Tag na Discorde",
             reward_3rd: "3. Miesto", desc_3rd: "VIP na 7 dní + 1x VIP Key",
             reward_info: "* Odmeny sa vyhodnocujú a odovzdávajú automaticky na konci každého mesiaca.",
-            cart_title: "Košík", cart_empty: "Tvoj košík je prázdny.", btn_back_store: "SPÄŤ DO OBCHODU"
+            cart_title: "Košík", cart_empty: "Tvoj košík je prázdny.", btn_checkout: "POKLADŇA"
         },
         cz: {
             nav_home: "Domů", nav_rules: "Pravidla", nav_team: "Tým", nav_staff: "Nábory", nav_vote: "Hlasování", nav_store: "Store",
@@ -223,7 +223,7 @@
             reward_2nd: "2. Místo", desc_2nd: "VIP na 14 dní + 2x VIP Key + [VIP] Tag na Discordu",
             reward_3rd: "3. Místo", desc_3rd: "VIP na 7 dní + 1x VIP Key",
             reward_info: "* Odměny se vyhodnocují a odevzdávají automaticky na konci každého měsíce.",
-            cart_title: "Košík", cart_empty: "Tvůj košík je prázdný.", btn_back_store: "ZPĚT DO OBCHODU"
+            cart_title: "Košík", cart_empty: "Tvůj košík je prázdný.", btn_checkout: "POKLADNA"
         },
         en: {
             nav_home: "Home", nav_rules: "Rules", nav_team: "Team", nav_staff: "Staff", nav_vote: "Vote", nav_store: "Store",
@@ -236,7 +236,7 @@
             reward_2nd: "2nd Place", desc_2nd: "VIP for 14 days + 2x VIP Key + [VIP] Discord Tag",
             reward_3rd: "3rd Place", desc_3rd: "VIP for 7 days + 1x VIP Key",
             reward_info: "* Rewards are evaluated and distributed automatically at the end of each month.",
-            cart_title: "Cart", cart_empty: "Your cart is empty.", btn_back_store: "BACK TO STORE"
+            cart_title: "Cart", cart_empty: "Your cart is empty.", btn_checkout: "CHECKOUT"
         }
     };
 
@@ -246,7 +246,6 @@
         en: { symbol: "$", rate: 1.05, decimals: 2, pos: 'before' }
     };
 
-    /* --- LOGIKA KOŠÍKA --- */
     let cart = JSON.parse(localStorage.getItem('cubix_cart')) || [];
 
     function updateCartBadge() {
@@ -292,7 +291,6 @@
         document.getElementById(id).style.display = 'none';
     }
 
-    /* --- LOGIKA JAZYKOV --- */
     function setLang(langId) {
         localStorage.setItem('selectedLanguage', langId);
         updateUI(langId);
@@ -310,7 +308,6 @@
             }
         });
 
-        // Ak je košík otvorený, hneď ho prekresli s novou menou a prekladom
         if (document.getElementById('cartModal').style.display === 'block') openCart();
     }
 
