@@ -47,7 +47,6 @@
             align-items: flex-start;
         }
 
-        /* STYLY PRE FRAMY (STĹPCE S POZADÍM) */
         .rules-column { 
             flex: 1; 
             min-width: 300px; 
@@ -59,7 +58,6 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        /* DISCORD FRAME S OBRÁZKOM */
         .column-discord {
             background: linear-gradient(135deg, rgba(88, 101, 242, 0.2), rgba(13, 17, 23, 0.95)), 
                         url('https://wallpapers.com/images/featured/discord-background-78p6atv567v9p9p2.jpg');
@@ -68,7 +66,6 @@
             padding: 20px;
         }
 
-        /* MINECRAFT FRAME S OBRÁZKOM */
         .column-minecraft {
             background: linear-gradient(135deg, rgba(0, 157, 255, 0.2), rgba(13, 17, 23, 0.95)), 
                         url('https://i.pinimg.com/736x/d8/d8/19/d8d819984c09441d35dba2f81f32851c.jpg');
@@ -151,6 +148,19 @@
         .rule-item.active .fa-chevron-down { transform: rotate(180deg); color: #009dff; }
         .fa-chevron-down { color: #30363d; font-size: 0.7rem; transition: 0.3s; }
 
+        /* KOŠÍK ŠTÝLY */
+        .cart-wrapper { position: relative; margin-left: 15px; cursor: pointer; }
+        .cart-badge { position: absolute; top: -8px; right: -8px; background: #ff4757; color: white; font-size: 0.7rem; font-weight: 800; padding: 2px 6px; border-radius: 50%; display: none; }
+        .modal-cart { display: none; position: fixed; z-index: 1001; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
+        .modal-cart-content { background: #161b22; margin: 10% auto; padding: 30px; border: 1px solid #30363d; border-radius: 15px; width: 90%; max-width: 500px; color: #fff; position: relative; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; background: #0d1117; padding: 10px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #30363d; }
+        .cart-item-info { display: flex; flex-direction: column; gap: 2px; }
+        .cart-item-remove { color: #ff4757; cursor: pointer; transition: 0.2s; padding: 5px; }
+        .cart-item-remove:hover { color: #ff6b81; transform: scale(1.1); }
+        .close-cart { float: right; cursor: pointer; color: #8b949e; font-size: 1.5rem; }
+        .checkout-btn { display: inline-block; width: 100%; padding: 12px; background: #2ed573; color: white; text-decoration: none; border-radius: 8px; font-weight: 700; transition: 0.3s; text-transform: uppercase; text-align: center; font-size: 0.9rem; border: none; cursor: pointer; }
+        .checkout-btn:hover { background: #26af5f; }
+
         .lang-menu { display: flex; gap: 10px; margin-left: 15px; align-items: center; border-left: 1px solid #30363d; padding-left: 15px; }
         .lang-flag { width: 28px; height: 18px; object-fit: cover; border-radius: 4px; cursor: pointer; opacity: 0.4; transition: 0.3s; border: 2px solid transparent; }
         .lang-flag:hover { opacity: 0.8; }
@@ -164,6 +174,16 @@
 </head>
 <body>
 
+<div id="cartModal" class="modal-cart">
+    <div class="modal-cart-content">
+        <span class="close-cart" onclick="closeCartModal()">&times;</span>
+        <h2 style="margin-bottom: 20px;"><i class="fas fa-shopping-cart" style="color:#009dff"></i> <span data-lang="cart_title">Košík</span></h2>
+        <div id="cartItemsContainer"></div>
+        <div id="cartTotalDisplay" style="text-align: right; font-weight: 800; margin-top: 20px; border-top: 1px solid #30363d; padding-top: 10px;">Total: 0.00 €</div>
+        <button class="checkout-btn" style="margin-top: 20px;" onclick="location.href='store.html'" data-lang="btn_checkout">POKLADŇA</button>
+    </div>
+</div>
+
 <header>
     <div class="container header-wrap">
         <a href="index.html" class="logo"><img src="cubixtext.png" alt="Logo"></a>
@@ -176,6 +196,12 @@
                 <li><a href="hlasovanie.html"><i class="fas fa-check-square"></i> <span data-lang="nav_vote">Hlasovanie</span></a></li>
                 <li><a href="store.html" style="color: #ffca28;"><i class="fas fa-shopping-cart"></i> <span data-lang="nav_store">Store</span></a></li>
             </ul>
+
+            <div class="cart-wrapper" onclick="openCart()">
+                <i class="fas fa-shopping-basket" style="font-size: 1.2rem; color: #8b949e;"></i>
+                <span class="cart-badge" id="cartBadge">0</span>
+            </div>
+
             <div class="lang-menu">
                 <img src="https://flagcdn.com/w80/sk.png" class="lang-flag" id="lang-sk" onclick="setLang('sk')" title="Slovenčina">
                 <img src="https://flagcdn.com/w80/cz.png" class="lang-flag" id="lang-cz" onclick="setLang('cz')" title="Čeština">
@@ -218,6 +244,7 @@
             rules_main_title: "Pravidlá projektu",
             ban_title: "Dostal si ban neprávom?",
             ban_desc: "Ak si myslíš, že tvoj trest je nespravodlivý, neváhaj sa odvolať na našom Discord serveri.",
+            cart_title: "Košík", cart_empty: "Váš košík je prázdny.", btn_checkout: "POKLADŇA",
             dc: [
                 { t: "Žiadny spam", d: "Nespamuj správy, emoji ani linky.", c: "Nespamuj správami, príkazmi, emoji, obrázkami alebo odkazmi mimo príslušného kanála." },
                 { t: "Žiadny toxický obsah", d: "Urážky a diskriminácia sú zakázané.", c: "Zakázané urážky, rasizmus, xenofóbia, diskriminácia alebo nenávistné prejavy." },
@@ -258,6 +285,7 @@
             rules_main_title: "Pravidla projektu",
             ban_title: "Dostal jsi ban neprávem?",
             ban_desc: "Pokud si myslíš, že tvůj trest je nespravedlivý, neváhej se odvolat na našem Discord serveru.",
+            cart_title: "Košík", cart_empty: "Váš košík je prázdný.", btn_checkout: "POKLADNA",
             dc: [
                 { t: "Žádný spam", d: "Nespamuj zprávy, emoji ani linky.", c: "Nespamuj zprávami, příkazy, emoji, obrázky nebo odkazy mimo příslušný kanál." },
                 { t: "Žádný toxický obsah", d: "Urážky a diskriminace jsou zakázány.", c: "Zakázané urážky, rasismus, xenofobie, diskriminace nebo nenávistné projevy." },
@@ -268,7 +296,7 @@
                 { t: "Žádné reklamy", d: "Zákaz propagace jiných serverů.", c: "Neposílej reklamy, pozvání na jiné servery nebo promo materiály." },
                 { t: "Neobtěžuj hráče", d: "Neptej se na soukromé údaje.", c: "Neptej se na soukromé info nebo osobné údaje jiných hráčů." },
                 { t: "Žádná dramata", d: "Neřeš spory veřejně.", c: "Neřeš spory veřejně – řeš je v soukromí přes moderátory nebo ignoruj." },
-                { t: "Respektuj moderátory", d: "Dbej na pokyny Admin Týmu.", c: "Nepřekračuj jejich pokyny a neignoruj varování moderátorů." },
+                { t: "Respektuj moderátory", d: "Dbej na pokyny Admin Tímu.", c: "Nepřekračuj jejich pokyny a neignoruj varování moderátorů." },
                 { t: "Žádné scam/podvody", d: "Zákaz falešných nabídek.", c: "Nepodváděj, nenabízej phishing linky nebo podezřelé služby." },
                 { t: "Správný jazyk", d: "Slušná komunikace.", c: "Komunikuj slušně – žádné nadávky, provokace nebo flame wars." },
                 { t: "Žádné exploits", d: "Dodržuj Discord TOS.", c: "Neporušuj Discord TOS, nesdílej soukromé kanály ani neobcházej omezení." },
@@ -278,18 +306,18 @@
             mc: [
                 { t: "Zákaz Cheatování", d: "Žádné externí výhody.", c: "Killaura, Fly, X-ray nebo AutoClicker nad 15 CPS jsou trestány perma banem." },
                 { t: "Zneužívání chyb", d: "Nahlašuj bugy, nezneužívej je.", c: "Zneužívání chyb hry, map nebo pluginů je přísně zakázáno." },
-                { t: "Vulgárnost a toxicita", d: "Udržujme slušnou komunitu.", c: "Nadávky a urážky v chatu budou trestány mutom alebo banem." },
-                { t: "Zákaz reklamy", d: "Nepropaguj jiné servery.", c: "Propagace jiných projektů nebo IP adres v chatu je zakázána." },
+                { t: "Vulgárnost a toxicita", d: "Udržujte slušnou komunitu.", c: "Nadávky a urážky v chatu budou trestány mutem nebo banem." },
+                { t: "Zákaz reklamy", d: "Nepropagujte jiné servery.", c: "Propagace jiných projektů nebo IP adres v chatu je zakázána." },
                 { t: "Obcházení trestu", d: "Zákaz hraní během banu.", c: "Vstup na server přes jiný účet během banu vede k IP banu." },
-                { t: "Nevhodný skin / jméno", d: "Slušná prezentace hráče.", c: "NSFW skiny alebo urážlivé nicky nejsou povoleny." },
-                { t: "Teaming (Solo)", d: "Zákaz teaming v solo módech.", c: "V solo Boxfightech je spolupráce více hráčů zakázána." },
-                { t: "Lhaní A-Týmu", d: "Buď upřímný k adminům.", c: "Uvádění nepravdivých informací AT je trestáno." },
-                { t: "Zneužívání reportů", d: "Nahlašuj jen reálné přestupky.", c: "Spamování /report falešnými hlášeními je zakázáno." },
-                { t: "Scamování hráčov", d: "Zákaz okrádání při tradování.", c: "Podvody při dohodnutých obchodech jsou trestány banem." },
-                { t: "Shazování TPS", d: "Nezpůsobuj lagy serveru.", c: "Stavění lag-strojů nebo přetěžování entitami je zakázáno." },
-                { t: "Provokování A-Týmu", d: "Respektuj administrátory.", c: "Neustále provokování nebo zpochybňování AT v chatu je zakázáno." },
-                { t: "Griefování lobby", d: "Nenič společné prostory.", c: "Jakýkoliv pokus o poškození spawnu nebo lobby je zakázán." },
-                { t: "Spamování příkazů", d: "Nepoužívej příkazy opakovaně.", c: "Zahlcování konzole příkazy (spam) je trestáno." },
+                { t: "Nevhodný skin / jméno", d: "Slušná prezentace hráče.", c: "NSFW skiny nebo urážlivé nicky nejsou povoleny." },
+                { t: "Teaming (Solo)", d: "Zákaz teamování v solo módech.", c: "V solo Boxfightech je spolupráce více hráčů zakázána." },
+                { t: "Lhaní A-Týmu", d: "Buďte upřímní k adminům.", c: "Uvádění nepravdivých informací AT je trestáno." },
+                { t: "Zneužívání reportů", d: "Nahlašujte jen reálné přestupky.", c: "Spamování /report falešnými hlášeními je zakázáno." },
+                { t: "Scamování hráčů", d: "Zákaz okrádání při obchodování.", c: "Podvody při dohodnutých obchodech jsou trestány banem." },
+                { t: "Shazování TPS", d: "Nezpůsobujte lagy serveru.", c: "Stavění lag-strojů nebo přetěžování entitami je zakázáno." },
+                { t: "Provokování A-Týmu", d: "Respektujte administrátory.", c: "Neustálé provokování nebo zpochybňování AT v chatu je zakázáno." },
+                { t: "Griefování lobby", d: "Neničte společné prostory.", c: "Jakýkoliv pokus o poškození spawnu nebo lobby je zakázán." },
+                { t: "Spamování příkazů", d: "Nepoužívejte příkazy opakovaně.", c: "Zahlcování konzole příkazy (spam) je trestáno." },
                 { t: "Zodpovědnost za účet", d: "Tvůj účet, tvá zodpovědnost.", c: "Za činy na tvém účtu zodpovídáš ty, bez ohledu na to, kdo hrál." }
             ]
         },
@@ -298,6 +326,7 @@
             rules_main_title: "Project Rules",
             ban_title: "Banned unfairly?",
             ban_desc: "If you think your punishment is unfair, feel free to appeal on our Discord server.",
+            cart_title: "Cart", cart_empty: "Your cart is empty.", btn_checkout: "CHECKOUT",
             dc: [
                 { t: "No spamming", d: "Do not spam messages, emojis or links.", c: "Do not spam messages, commands, emojis, or links outside the designated channels." },
                 { t: "No toxic content", d: "Insults and discrimination are banned.", c: "Banned insults, racism, xenophobia, discrimination or hate speech." },
@@ -335,6 +364,69 @@
         }
     };
 
+    const currencyConfig = {
+        sk: { symbol: "€", rate: 1, decimals: 2, pos: 'after' },
+        cz: { symbol: "Kč", rate: 25, decimals: 0, pos: 'after' },
+        en: { symbol: "$", rate: 1.05, decimals: 2, pos: 'before' }
+    };
+
+    // KOŠÍK LOGIKA
+    let cart = JSON.parse(localStorage.getItem('cubix_cart')) || [];
+
+    function updateCartBadge() {
+        const badge = document.getElementById('cartBadge');
+        if(badge) {
+            badge.innerText = cart.length;
+            badge.style.display = cart.length > 0 ? 'block' : 'none';
+        }
+    }
+
+    function formatPrice(euroAmount, lang) {
+        const conf = currencyConfig[lang];
+        const converted = (euroAmount * conf.rate).toFixed(conf.decimals);
+        return conf.pos === 'before' ? `${conf.symbol}${converted}` : `${converted} ${conf.symbol}`;
+    }
+
+    function removeFromCart(index) {
+        cart.splice(index, 1);
+        localStorage.setItem('cubix_cart', JSON.stringify(cart));
+        updateCartBadge();
+        openCart(); // Refresh cart UI
+    }
+
+    function openCart() {
+        const modal = document.getElementById('cartModal');
+        const container = document.getElementById('cartItemsContainer');
+        const lang = localStorage.getItem('selectedLanguage') || 'sk';
+        const t = ruleData[lang];
+        
+        container.innerHTML = '';
+        let total = 0;
+
+        if (cart.length === 0) {
+            container.innerHTML = `<p style="text-align:center; color:#8b949e;">${t.cart_empty}</p>`;
+        } else {
+            cart.forEach((item, index) => {
+                total += item.price;
+                container.innerHTML += `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <span>${item.name}</span>
+                            <span style="font-weight:700; color:#009dff">${formatPrice(item.price, lang)}</span>
+                        </div>
+                        <i class="fas fa-trash-alt cart-item-remove" onclick="removeFromCart(${index})"></i>
+                    </div>`;
+            });
+        }
+        document.getElementById('cartTotalDisplay').innerText = "Total: " + formatPrice(total, lang);
+        modal.style.display = 'block';
+    }
+
+    function closeCartModal() {
+        document.getElementById('cartModal').style.display = 'none';
+    }
+
+    // PRAVIDLÁ LOGIKA
     function renderAllRules(langId) {
         const dcContainer = document.getElementById('discord-rules-container');
         const mcContainer = document.getElementById('minecraft-rules-container');
@@ -379,12 +471,18 @@
             if (ruleData[langId][key]) el.innerText = ruleData[langId][key];
         });
         renderAllRules(langId);
+        if (document.getElementById('cartModal').style.display === 'block') openCart();
     }
 
     window.onload = () => {
-        updateUI(localStorage.getItem('selectedLanguage') || 'sk');
+        const lang = localStorage.getItem('selectedLanguage') || 'sk';
+        updateUI(lang);
+        updateCartBadge();
+    };
+
+    window.onclick = (event) => {
+        if (event.target == document.getElementById('cartModal')) closeCartModal();
     };
 </script>
 </body>
 </html>
-
